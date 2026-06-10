@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Mastery Continuum K–6 · Curiosity Grove Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-dark:#085041;
+  --green-mid:#0F6E56;
+  --green-light:#E1F5EE;
+  --cream:#FAF8F4;
+  --sand:#F0EDE6;
+  --text:#1C1C1A;
+  --text-mid:#5A5955;
+  --text-light:#8A8880;
+  --border:#E2DFD8;
+  --e-color:#A32D2D;--e-bg:#FCEBEB;--e-text:#791F1F;
+  --d-color:#854F0B;--d-bg:#FAEEDA;--d-text:#633806;
+  --p-color:#0F6E56;--p-bg:#E1F5EE;--p-text:#085041;
+  --x-color:#185FA5;--x-bg:#E6F1FB;--x-text:#0C447C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+.site-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-leaf{width:28px;height:28px;background:var(--green-mid);border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center}
+.nav-leaf span{color:#fff;font-size:14px;font-weight:500;font-family:'DM Serif Display',serif;font-style:italic}
+.nav-name{font-size:14px;font-weight:500;color:var(--text)}
+.nav-sub{font-size:11px;color:var(--text-light)}
+.hero{padding:3rem 1.5rem 2rem;max-width:780px;margin:0 auto}
+.hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green-mid);font-weight:500;margin-bottom:0.75rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,42px);line-height:1.15;color:var(--text);margin-bottom:1rem;font-weight:400}
+.hero h1 em{font-style:italic;color:var(--green-mid)}
+.hero p{font-size:15px;color:var(--text-mid);line-height:1.7;max-width:560px;margin-bottom:2rem}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+.leg-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.fbtn{font-size:12px;padding:5px 16px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--text-mid);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.fbtn:hover{border-color:var(--green-mid);color:var(--green-dark)}
+.fbtn.active{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+.main{max-width:780px;margin:0 auto;padding:0 1.5rem 4rem}
+.domain{margin-bottom:1rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.d-head{padding:0.85rem 1.1rem;display:flex;align-items:center;gap:10px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.d-title{font-size:13px;font-weight:500}
+.d-sub{font-size:12px;color:var(--text-light)}
+.grade-row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--border)}
+.g-label{display:flex;align-items:flex-start;justify-content:center;padding:0.85rem 0.25rem;font-size:11px;font-weight:500;color:var(--text-light);border-right:1px solid var(--border);letter-spacing:0.03em;padding-top:0.95rem}
+.stds{padding:0.6rem 0.85rem;display:flex;flex-direction:column;gap:4px}
+.std-item{border-radius:8px;overflow:hidden}
+.std-row{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;cursor:pointer;border-radius:8px;transition:background 0.12s}
+.std-row:hover{background:var(--sand)}
+.std-row.open{background:var(--sand);border-radius:8px 8px 0 0}
+.std-code{font-size:11px;color:var(--text-light);white-space:nowrap;padding-top:2px;min-width:70px;flex-shrink:0;font-family:monospace}
+.std-text{flex:1;font-size:13px;line-height:1.55;color:var(--text)}
+.deep{font-size:10px;padding:2px 7px;border-radius:10px;background:#FAEEDA;color:#633806;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.chevron{font-size:9px;color:var(--text-light);flex-shrink:0;margin-top:5px;transition:transform 0.15s}
+.chevron.open{transform:rotate(90deg)}
+.cont-panel{display:none;padding:12px 10px 14px;background:var(--sand);border-radius:0 0 8px 8px;margin:0 2px 4px}
+.cont-panel.visible{display:block}
+.track{display:flex;gap:3px;margin-bottom:10px;align-items:center}
+.track-seg{flex:1;height:5px;border-radius:3px;cursor:pointer;transition:opacity 0.15s}
+.track-seg:hover{opacity:0.75}
+.track-seg.selected{height:8px}
+.bands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(max-width:600px){.bands-grid{grid-template-columns:repeat(2,1fr)}}
+.band-card{border-radius:8px;padding:9px 10px;cursor:pointer;border:1.5px solid transparent;transition:border-color 0.15s,transform 0.1s}
+.band-card:hover{transform:translateY(-1px)}
+.band-card.selected{border-color:currentColor}
+.band-name{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.band-desc{font-size:12px;line-height:1.55;color:var(--text-mid)}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+footer p{font-size:12px;color:var(--text-light)}
+footer a{color:var(--green-mid);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-brand">
+    <div class="nav-leaf"><span>CG</span></div>
+    <div>
+      <div class="nav-name">Curiosity Grove Academy</div>
+      <div class="nav-sub">Grand Junction, Colorado</div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Reading · K–6</div>
+  <h1>Where is my child on the <em>reading continuum?</em></h1>
+  <p>At CGA, every student grows as a reader at their own pace. This guide shows what reading looks like at each stage — tap any standard to see the full progression from just beginning to going deeper.</p>
+  <div class="legend-row">
+    <div class="leg-pill" style="background:var(--e-bg)"><div class="leg-dot" style="background:var(--e-color)"></div><span style="color:var(--e-text)">Emerging</span></div>
+    <div class="leg-pill" style="background:var(--d-bg)"><div class="leg-dot" style="background:var(--d-color)"></div><span style="color:var(--d-text)">Developing</span></div>
+    <div class="leg-pill" style="background:var(--p-bg)"><div class="leg-dot" style="background:var(--p-color)"></div><span style="color:var(--p-text)">Proficient</span></div>
+    <div class="leg-pill" style="background:var(--x-bg)"><div class="leg-dot" style="background:var(--x-color)"></div><span style="color:var(--x-text)">Extending</span></div>
+  </div>
+  <div class="filter-row" id="filters">
+    <button class="fbtn active" data-d="all">All strands</button>
+    <button class="fbtn" data-d="foundational">Foundational skills</button>
+    <button class="fbtn" data-d="literary">Literary text</button>
+    <button class="fbtn" data-d="informational">Informational text</button>
+    <button class="fbtn" data-d="craft">Craft & structure</button>
+    <button class="fbtn" data-d="integration">Integration of knowledge</button>
+  </div>
+</div>
+
+<main class="main" id="continuum"></main>
+
+<footer>
+  <p>Curiosity Grove Academy &nbsp;·&nbsp; <a href="https://curiositygroveacademy.com">curiositygroveacademy.com</a> &nbsp;·&nbsp; Grand Junction, CO</p>
+</footer>
+
+<script>
+const BANDS=[
+  {key:"emerging",label:"Emerging",color:"var(--e-color)",bg:"var(--e-bg)",text:"var(--e-text)"},
+  {key:"developing",label:"Developing",color:"var(--d-color)",bg:"var(--d-bg)",text:"var(--d-text)"},
+  {key:"proficient",label:"Proficient",color:"var(--p-color)",bg:"var(--p-bg)",text:"var(--p-text)"},
+  {key:"extending",label:"Extending",color:"var(--x-color)",bg:"var(--x-bg)",text:"var(--x-text)"}
+];
+
+const domains=[
+  {
+    id:"foundational",color:"#2D7D46",
+    title:"Foundational reading skills",
+    sub:"Print concepts, phonological awareness, phonics, word recognition, and fluency",
+    grades:[
+      {g:"K",stds:[
+        {code:"RF.K.1",text:"Demonstrate understanding of print concepts",
+         bands:{emerging:"Beginning to understand that print carries meaning; may not yet track left to right or understand word boundaries.",developing:"Tracks print left to right with a finger; understands that spaces separate words; recognizes some letters.",proficient:"Demonstrates all print concepts: directionality, word boundaries, first/last letter, punctuation awareness.",extending:"Applies print concepts automatically while reading and can explain them to a peer."}},
+        {code:"RF.K.2",text:"Demonstrate understanding of spoken words, syllables, and phonemes",deep:true,
+         bands:{emerging:"Hears and repeats rhymes; beginning to clap syllables; phoneme isolation is emerging.",developing:"Identifies rhymes, counts syllables, isolates initial sounds; blending and segmenting are developing.",proficient:"Blends and segments phonemes in spoken words; adds, deletes, and substitutes phonemes.",extending:"Manipulates phonemes with automaticity and uses phoneme awareness to decode unfamiliar words."}},
+        {code:"RF.K.3",text:"Apply phonics and word analysis in decoding words",
+         bands:{emerging:"Recognizes a few letters and their sounds; beginning to connect letters to sounds.",developing:"Knows most consonant sounds and short vowels; decodes simple CVC words with support.",proficient:"Decodes CVC words independently; recognizes common high-frequency words; beginning to read simple decodable texts.",extending:"Decodes CVC and CCVC words fluently; reads simple decodable sentences with confidence."}}
+      ]},
+      {g:"1",stds:[
+        {code:"RF.1.2",text:"Demonstrate phonological awareness — blending and segmenting",deep:true,
+         bands:{emerging:"Blends onset and rime; segments two- and three-phoneme words with support.",developing:"Blends and segments most words up to four phonemes; phoneme manipulation is emerging.",proficient:"Fluently blends and segments words; adds, deletes, and substitutes phonemes correctly.",extending:"Uses phoneme manipulation as a strategy when reading or spelling unfamiliar words."}},
+        {code:"RF.1.3",text:"Apply phonics — vowel patterns, common patterns, high-frequency words",deep:true,
+         bands:{emerging:"Knows basic CVC patterns; long vowel and vowel team patterns are just emerging.",developing:"Decodes CVC, CVCe, and some vowel teams; reads a growing bank of high-frequency words.",proficient:"Applies common vowel patterns including vowel teams, r-controlled vowels, and CVCe; reads grade-level high-frequency words.",extending:"Decodes multisyllabic words using pattern knowledge; self-corrects using phonics."}},
+        {code:"RF.1.4",text:"Read with sufficient accuracy and fluency to support comprehension",
+         bands:{emerging:"Reads slowly, word by word; rereading is frequent; expression is limited.",developing:"Reads with some phrasing; accuracy is developing; pauses at punctuation inconsistently.",proficient:"Reads grade-level text with accuracy, appropriate rate, and expression; self-corrects errors.",extending:"Reads fluently and expressively; uses prosody to convey meaning; adjusts rate to purpose."}}
+      ]},
+      {g:"2",stds:[
+        {code:"RF.2.3",text:"Apply phonics — prefixes, suffixes, multisyllabic words",
+         bands:{emerging:"Decodes one-syllable words reliably; multisyllabic words require significant support.",developing:"Decodes words with common prefixes and suffixes; two-syllable words are becoming more reliable.",proficient:"Decodes words with common prefixes, suffixes, and spelling patterns; reads multisyllabic words by syllable.",extending:"Applies morpheme knowledge (prefixes, suffixes, roots) to decode and determine meaning of unfamiliar words."}},
+        {code:"RF.2.4",text:"Read with sufficient accuracy and fluency — grade-level text",
+         bands:{emerging:"Reading is slow and effortful; frequent miscues; expression is minimal.",developing:"Reads with growing accuracy; some phrasing and expression; self-corrects obvious errors.",proficient:"Reads grade-level text accurately, at appropriate rate, with expression; uses context to self-correct.",extending:"Reads fluently with strong prosody; rate and accuracy allow full attention to comprehension."}}
+      ]},
+      {g:"3",stds:[
+        {code:"RF.3.3",text:"Apply phonics — multisyllabic words, irregular words",
+         bands:{emerging:"Decodes two-syllable words with support; multisyllabic and irregular words are challenging.",developing:"Decodes most two-syllable words; uses syllabication strategies with prompting.",proficient:"Decodes multisyllabic words using syllabication; reads common irregular words automatically.",extending:"Applies syllabication and morpheme knowledge independently to decode challenging words."}},
+        {code:"RF.3.4",text:"Read with accuracy and fluency — grade-level prose and poetry",
+         bands:{emerging:"Reading is halting; accuracy below 90%; expression is developing.",developing:"Reads with 90%+ accuracy; phrasing is improving; expression is present for familiar texts.",proficient:"Reads grade-level prose and poetry with accuracy, appropriate rate, and expression.",extending:"Reads fluently across text types; adjusts rate and expression for genre and purpose."}}
+      ]},
+      {g:"4-5",stds:[
+        {code:"RF.4-5.3",text:"Apply phonics — multisyllabic words across text types",
+         bands:{emerging:"Uses phonics for single-syllable words; multisyllabic and domain-specific words are challenging.",developing:"Decodes most multisyllabic words; may stumble on domain-specific or technical vocabulary.",proficient:"Uses syllabication, morphemes, and context to decode challenging multisyllabic words independently.",extending:"Analyzes word structure (roots, affixes, etymology) to decode and expand vocabulary simultaneously."}},
+        {code:"RF.4-5.4",text:"Read with sufficient accuracy and fluency across genres",
+         bands:{emerging:"Reading is effortful; accuracy and rate affect comprehension.",developing:"Reads with adequate accuracy; rate is sufficient for basic comprehension; expression varies.",proficient:"Reads grade-level text fluently with accuracy, appropriate rate, and expression across genres.",extending:"Reads demanding texts fluently; uses prosody to support comprehension and engagement."}}
+      ]}
+    ]
+  },
+  {
+    id:"literary",color:"#7B3FA0",
+    title:"Literary text — key ideas & details",
+    sub:"What the story says, how characters develop, and how plot and theme unfold",
+    grades:[
+      {g:"K",stds:[
+        {code:"RL.K.1",text:"Ask and answer questions about key details in a text",
+         bands:{emerging:"Listens to stories; answers simple who/what questions with support.",developing:"Answers who, what, and where questions about a read-aloud with minimal prompting.",proficient:"Asks and answers questions about key details in a text using evidence from the story.",extending:"Generates insightful questions that go beyond literal details; connects details across a text."}},
+        {code:"RL.K.2",text:"Retell familiar stories including key details",
+         bands:{emerging:"Retells one or two events from a story; may need picture support.",developing:"Retells beginning, middle, and end with some key details; may omit important events.",proficient:"Retells a story with key details in sequence; identifies the central message with support.",extending:"Retells with detail and expression; identifies the lesson or message and explains how the story shows it."}},
+        {code:"RL.K.3",text:"Identify characters, settings, and major events",
+         bands:{emerging:"Names the main character; setting and events require prompting.",developing:"Names characters and setting; describes one or two major events.",proficient:"Identifies characters, settings, and major events; describes characters' responses to events.",extending:"Explains how characters and setting shape events; makes connections between story elements."}}
+      ]},
+      {g:"1",stds:[
+        {code:"RL.1.1",text:"Ask and answer questions about key details — who, what, where, when, why, how",
+         bands:{emerging:"Answers literal who and what questions; why and how questions require support.",developing:"Answers most question types with text support; beginning to ask own questions.",proficient:"Asks and answers who, what, where, when, why, and how questions using text evidence.",extending:"Generates questions that reveal deeper thinking; uses multiple text details to answer complex questions."}},
+        {code:"RL.1.2",text:"Retell stories including key details; determine central message",
+         bands:{emerging:"Retells events with picture support; central message requires significant teacher guidance.",developing:"Retells with most key details; identifies a central message with prompting.",proficient:"Retells stories with key details; determines the central message or lesson independently.",extending:"Retells with sophistication; explains how specific details reveal the central message."}},
+        {code:"RL.1.3",text:"Describe characters, settings, and major events using key details",deep:true,
+         bands:{emerging:"Names characters and setting; describes events loosely.",developing:"Describes characters with some detail; connects characters to events.",proficient:"Describes characters, settings, and major events using key details from the text.",extending:"Explains how characters' traits drive plot events; analyzes how setting shapes the story."}}
+      ]},
+      {g:"2",stds:[
+        {code:"RL.2.1",text:"Ask and answer questions to demonstrate understanding; refer to text",
+         bands:{emerging:"Answers questions about stories; beginning to refer back to the text.",developing:"Uses the text to answer questions; sometimes paraphrases rather than citing.",proficient:"Asks and answers questions using specific text evidence; quotes or paraphrases accurately.",extending:"Generates interpretive questions; uses multiple text details to build a complete answer."}},
+        {code:"RL.2.2",text:"Recount stories; determine central message, lesson, or moral",deep:true,
+         bands:{emerging:"Recounts events with support; central message requires guidance.",developing:"Recounts most key events; identifies a central message with some prompting.",proficient:"Recounts stories with key details; determines central message and explains how it's conveyed.",extending:"Analyzes how the author builds the message across the whole story; connects to other texts or experiences."}},
+        {code:"RL.2.3",text:"Describe how characters respond to challenges",deep:true,
+         bands:{emerging:"Names what a character does; connecting response to challenge requires support.",developing:"Describes character actions during challenges; beginning to explain why.",proficient:"Describes how characters respond to challenges and explains what this reveals about them.",extending:"Analyzes character growth across a story; compares how different characters respond to similar challenges."}}
+      ]},
+      {g:"3",stds:[
+        {code:"RL.3.1",text:"Ask and answer questions to demonstrate understanding; refer explicitly to the text",
+         bands:{emerging:"Answers questions; uses the text with prompting.",developing:"Refers to the text to support answers; sometimes unclear about what counts as evidence.",proficient:"Asks and answers questions using explicit text evidence; distinguishes text evidence from inference.",extending:"Builds multi-part answers drawing on several text details; questions go beyond the literal."}},
+        {code:"RL.3.2",text:"Recount stories; determine central message and explain how it is conveyed",deep:true,
+         bands:{emerging:"Recounts events; central message identification requires teacher support.",developing:"Identifies a central message; explains one way the story shows it.",proficient:"Determines central message and explains how it is conveyed through characters, events, and details.",extending:"Traces how the message develops across the whole text; connects to universal themes."}},
+        {code:"RL.3.3",text:"Describe characters and explain how their actions contribute to the plot",deep:true,
+         bands:{emerging:"Describes characters by what they look like or do; plot connections need support.",developing:"Describes character traits with text evidence; connects characters to some plot events.",proficient:"Explains how characters' traits and motivations drive plot events; tracks character change over time.",extending:"Analyzes the relationship between character development and theme; compares characters within or across texts."}}
+      ]},
+      {g:"4",stds:[
+        {code:"RL.4.1",text:"Refer to details and examples when explaining text and drawing inferences",
+         bands:{emerging:"Makes some inferences; referring to specific text details requires prompting.",developing:"Makes inferences with text support; citations are sometimes vague.",proficient:"Refers to specific details and examples to explain and support inferences.",extending:"Makes sophisticated inferences; builds evidence-based arguments using multiple text details."}},
+        {code:"RL.4.2",text:"Determine theme from details; summarize text",deep:true,
+         bands:{emerging:"Identifies a topic; theme versus topic distinction is developing.",developing:"States a theme; summary includes most key events but may include minor details.",proficient:"Determines theme using key details; provides an accurate, focused summary without personal opinion.",extending:"Traces how theme develops across the whole text; compares themes within or across texts."}},
+        {code:"RL.4.3",text:"Describe character, setting, or events in depth using specific details",deep:true,
+         bands:{emerging:"Describes characters or settings; depth requires teacher prompting.",developing:"Describes characters and settings with some specific details; connections between them are developing.",proficient:"Describes characters, settings, and events in depth using specific text details.",extending:"Analyzes how setting and character interact to create conflict or advance theme."}}
+      ]},
+      {g:"5",stds:[
+        {code:"RL.5.1",text:"Quote accurately and explain what the text says and what it implies",
+         bands:{emerging:"Locates relevant quotes; explaining implied meaning requires support.",developing:"Quotes the text to support answers; inferences are sometimes underdeveloped.",proficient:"Quotes accurately and explains both what the text states explicitly and what it implies.",extending:"Uses well-chosen quotes to build nuanced arguments; distinguishes between strong and weak textual evidence."}},
+        {code:"RL.5.2",text:"Determine theme and explain how it is developed; summarize",deep:true,
+         bands:{emerging:"Identifies a theme; development across the text requires guidance.",developing:"States theme with some explanation of how it develops; summary is mostly accurate.",proficient:"Determines theme and explains how it develops through characters, setting, and plot.",extending:"Traces theme development with precision; analyzes how the author uses multiple elements to build theme."}},
+        {code:"RL.5.3",text:"Compare and contrast characters, settings, or events drawing on details",deep:true,
+         bands:{emerging:"Compares two elements with support; specific details are underdeveloped.",developing:"Makes comparisons using text details; analysis is sometimes surface-level.",proficient:"Compares and contrasts story elements drawing on specific details.",extending:"Analyzes how similarities and differences between story elements reveal theme or author's purpose."}}
+      ]},
+      {g:"6",stds:[
+        {code:"RL.6.1",text:"Cite textual evidence to support analysis of explicit and inferential meaning",
+         bands:{emerging:"Makes inferences; citing specific evidence requires prompting.",developing:"Cites some evidence; analysis is often summary rather than interpretation.",proficient:"Cites textual evidence to support both explicit and inferential analysis.",extending:"Selects and analyzes the most relevant evidence; builds layered interpretations supported by the text."}},
+        {code:"RL.6.2",text:"Determine theme and analyze its development; provide objective summary",deep:true,
+         bands:{emerging:"Identifies theme; analysis of development requires significant support.",developing:"States theme with partial explanation of development; summary includes some opinion.",proficient:"Determines theme and analyzes how it is developed over the course of the text; provides objective summary.",extending:"Traces multiple thematic threads; analyzes how they interact and resolve across the text."}},
+        {code:"RL.6.3",text:"Describe how plot unfolds and how characters respond and change",deep:true,
+         bands:{emerging:"Describes plot events; character change analysis requires support.",developing:"Explains how characters respond to events; change over time is partially developed.",proficient:"Describes how plot unfolds and analyzes how characters respond and change as the plot moves toward resolution.",extending:"Analyzes the relationship between character development and plot structure; connects to theme."}}
+      ]}
+    ]
+  },
+  {
+    id:"informational",color:"#1B5E9A",
+    title:"Informational text — key ideas & details",
+    sub:"What nonfiction texts say, how ideas connect, and what individuals and events mean",
+    grades:[
+      {g:"K",stds:[
+        {code:"RI.K.1",text:"Ask and answer questions about key details in informational text",
+         bands:{emerging:"Listens to nonfiction; answers simple questions with support.",developing:"Answers who/what/where questions about nonfiction read-alouds.",proficient:"Asks and answers questions about key details using text evidence.",extending:"Generates own questions before and during reading; uses multiple details to build answers."}},
+        {code:"RI.K.2",text:"Identify main topic and retell key details",
+         bands:{emerging:"Names the general subject of a text with support.",developing:"Identifies the main topic; retells one or two details.",proficient:"Identifies main topic and retells key details that support it.",extending:"Distinguishes main topic from details; explains how details support the topic."}},
+        {code:"RI.K.3",text:"Describe connections between individuals, events, ideas, or pieces of information",
+         bands:{emerging:"Names things in a text; connections between them require heavy support.",developing:"Identifies two related pieces of information with prompting.",proficient:"Describes connections between two individuals, events, or pieces of information.",extending:"Traces multiple connections; explains why the connections are important."}}
+      ]},
+      {g:"1",stds:[
+        {code:"RI.1.1",text:"Ask and answer questions about key details using text evidence",
+         bands:{emerging:"Answers literal questions; evidence-pointing requires prompting.",developing:"Uses the text to answer questions; beginning to cite page or illustration.",proficient:"Asks and answers questions using specific details from the text.",extending:"Generates insightful questions; supports answers with multiple text details."}},
+        {code:"RI.1.2",text:"Identify main topic of multi-paragraph text and key details",
+         bands:{emerging:"Identifies the general topic; multi-paragraph structure is confusing.",developing:"Identifies main topic and two or three key details.",proficient:"Identifies main topic and key details of a multi-paragraph text; distinguishes main idea from details.",extending:"Explains how each section contributes to the overall main idea."}},
+        {code:"RI.1.3",text:"Describe connections between pieces of information — cause/effect, steps in process",
+         bands:{emerging:"Identifies related facts; cause/effect and sequence connections need support.",developing:"Describes simple sequential or cause/effect connections with prompting.",proficient:"Describes connections between pieces of information including cause/effect and sequence.",extending:"Explains why connections matter; identifies multiple connected ideas in a text."}}
+      ]},
+      {g:"2",stds:[
+        {code:"RI.2.1",text:"Ask and answer questions to demonstrate understanding; refer to key details",
+         bands:{emerging:"Answers questions; referring back to specific text details requires support.",developing:"Uses the text to answer questions with some imprecision.",proficient:"Asks and answers questions using key details; quotes or paraphrases accurately.",extending:"Builds multi-layered answers using details from across the text."}},
+        {code:"RI.2.2",text:"Identify main topic of multi-paragraph text; focus of specific paragraphs",deep:true,
+         bands:{emerging:"Identifies the general topic; paragraph-level focus is emerging.",developing:"Identifies main topic; identifies the focus of some paragraphs.",proficient:"Identifies the main topic and explains the focus of individual paragraphs.",extending:"Explains how each paragraph builds toward the main topic; notices how the author organized the information."}},
+        {code:"RI.2.3",text:"Describe connections — historical, scientific, technical concepts",deep:true,
+         bands:{emerging:"Names facts from a text; connections between them need significant support.",developing:"Describes one or two connections between concepts or events with prompting.",proficient:"Describes connections between historical events, scientific concepts, or technical steps.",extending:"Explains why connections matter and how understanding them deepens the meaning of the whole text."}}
+      ]},
+      {g:"3",stds:[
+        {code:"RI.3.1",text:"Ask and answer questions to demonstrate understanding; refer explicitly to the text",
+         bands:{emerging:"Answers questions; explicit text references need prompting.",developing:"Refers to the text; sometimes uses vague evidence.",proficient:"Asks and answers questions using explicit textual evidence.",extending:"Evaluates the strength of different pieces of evidence; builds comprehensive answers."}},
+        {code:"RI.3.2",text:"Determine main idea; explain how key details support it; summarize",deep:true,
+         bands:{emerging:"Identifies main idea with support; summary includes irrelevant details.",developing:"States main idea; identifies supporting details; summary is mostly accurate.",proficient:"Determines main idea and explains how key details support it; provides focused summary.",extending:"Analyzes how the author chose and arranged details to build the main idea."}},
+        {code:"RI.3.3",text:"Describe relationship between events, concepts, steps in procedures",deep:true,
+         bands:{emerging:"Names events or steps; relationships between them require guidance.",developing:"Describes relationships with some support; may confuse cause/effect with sequence.",proficient:"Describes relationships between events, concepts, or steps using language like cause/effect and sequence.",extending:"Explains why relationships are structured the way they are; connects to author's purpose."}}
+      ]},
+      {g:"4",stds:[
+        {code:"RI.4.1",text:"Refer to details and examples; draw inferences from informational text",
+         bands:{emerging:"Answers literal questions; inference requires prompting.",developing:"Makes some inferences; textual support is sometimes vague.",proficient:"Draws inferences and refers to specific details and examples to support explanations.",extending:"Makes sophisticated inferences; evaluates which details provide the strongest support."}},
+        {code:"RI.4.2",text:"Determine main idea and explain how it is supported by details; summarize",deep:true,
+         bands:{emerging:"Identifies main idea; detail selection is underdeveloped.",developing:"States main idea with supporting details; summary sometimes includes opinion.",proficient:"Determines main idea and explains how key details support it; provides accurate objective summary.",extending:"Analyzes how the main idea develops across sections; evaluates the quality of supporting evidence."}},
+        {code:"RI.4.3",text:"Explain events, procedures, ideas, or concepts and what happened and why",deep:true,
+         bands:{emerging:"Explains what happened; the why requires support.",developing:"Explains events and gives some reasons; connections may be incomplete.",proficient:"Explains events, procedures, or concepts including what happened, why, and how they are connected.",extending:"Traces complex chains of cause and effect; explains how understanding one concept unlocks another."}}
+      ]},
+      {g:"5",stds:[
+        {code:"RI.5.1",text:"Quote accurately from text and explain what it says explicitly and by inference",
+         bands:{emerging:"Locates relevant text; explaining inferences requires support.",developing:"Quotes text to support answers; inferences sometimes lack development.",proficient:"Quotes accurately and explains both explicit meaning and inferences drawn from the text.",extending:"Selects the most revealing quotes; builds nuanced arguments from textual evidence."}},
+        {code:"RI.5.2",text:"Determine two or more main ideas and explain how they are supported; summarize",deep:true,
+         bands:{emerging:"Identifies one main idea; multiple main ideas and their interaction is emerging.",developing:"Identifies two main ideas with partial explanation of support.",proficient:"Determines two or more main ideas and explains how each is supported by key details.",extending:"Analyzes how multiple main ideas interact and build the overall argument of a text."}},
+        {code:"RI.5.3",text:"Explain relationships between concepts in a scientific or historical text",deep:true,
+         bands:{emerging:"Names related concepts; explaining relationships requires support.",developing:"Explains one relationship with partial development.",proficient:"Explains relationships between two or more scientific, historical, or technical concepts.",extending:"Analyzes how understanding the relationships transforms the reader's understanding of the whole text."}}
+      ]},
+      {g:"6",stds:[
+        {code:"RI.6.1",text:"Cite textual evidence to support analysis of explicit and inferential meaning",
+         bands:{emerging:"Makes inferences; citing specific evidence requires prompting.",developing:"Cites evidence; analysis is often at the surface level.",proficient:"Cites textual evidence to support both explicit and inferential analysis.",extending:"Selects the most powerful evidence; builds multi-layered analytical arguments."}},
+        {code:"RI.6.2",text:"Determine central idea and analyze its development; provide objective summary",deep:true,
+         bands:{emerging:"Identifies central idea; development analysis requires support.",developing:"States central idea with partial development explanation; summary sometimes includes opinion.",proficient:"Determines central idea and analyzes how it develops through details and examples.",extending:"Traces the development of central idea across the full text; analyzes the author's choices in building the argument."}},
+        {code:"RI.6.3",text:"Analyze how a section fits into the overall structure and contributes to ideas",deep:true,
+         bands:{emerging:"Describes what a section is about; how it fits the whole requires support.",developing:"Explains the focus of a section; partial connection to overall development.",proficient:"Analyzes how a particular section fits into the overall structure and contributes to the development of ideas.",extending:"Evaluates the effectiveness of the author's organizational choices; suggests alternatives."}}
+      ]}
+    ]
+  },
+  {
+    id:"craft",color:"#8B4513",
+    title:"Craft & structure",
+    sub:"How authors use words, structure, and point of view to shape meaning",
+    grades:[
+      {g:"K",stds:[
+        {code:"RL/RI.K.4",text:"Ask and answer questions about unknown words in a text",
+         bands:{emerging:"Notices unfamiliar words; using context to figure them out needs support.",developing:"Asks about unfamiliar words; uses pictures to help determine meaning.",proficient:"Asks and answers questions about unknown words using context and pictures.",extending:"Uses multiple strategies to determine word meaning; explains how word choice affects the text."}},
+        {code:"RL.K.5",text:"Recognize common types of texts — storybooks vs. poems",
+         bands:{emerging:"Distinguishes between books and other materials; text type categories are emerging.",developing:"Identifies storybooks and poems as different types of text.",proficient:"Recognizes common text types and can explain what makes each different.",extending:"Describes how the features of a text type (rhyme, story structure) shape the reading experience."}},
+        {code:"RL.K.6",text:"Name the author and illustrator; define role of each",
+         bands:{emerging:"Knows books have authors; the illustrator's role is emerging.",developing:"Names author and illustrator; explains that one writes and one draws.",proficient:"Names author and illustrator; explains what each contributes to telling the story.",extending:"Analyzes how illustrations and words work together to tell the story; notices when they add different information."}}
+      ]},
+      {g:"1",stds:[
+        {code:"RL.1.4",text:"Identify words and phrases that suggest feelings or appeal to the senses",
+         bands:{emerging:"Notices interesting words; connecting them to feelings or senses needs support.",developing:"Identifies words that suggest feelings or sensory images with prompting.",proficient:"Identifies words and phrases that suggest feelings or appeal to the senses.",extending:"Explains how specific word choices create a particular mood or feeling in the reader."}},
+        {code:"RL.1.5",text:"Explain major differences between books that tell stories and books that give information",
+         bands:{emerging:"Identifies fiction and nonfiction as different but cannot explain how.",developing:"Names one or two differences between story books and information books.",proficient:"Explains major differences between literary and informational texts.",extending:"Uses knowledge of text type to set reading purpose and choose appropriate strategies."}},
+        {code:"RL.1.6",text:"Identify who is telling the story at various points in the text",
+         bands:{emerging:"Knows stories have a narrator; identifying narrator at different points requires support.",developing:"Identifies the narrator for most of the story; shifts in narrator are confusing.",proficient:"Identifies who is telling the story at various points and explains how they know.",extending:"Analyzes how the narrator's perspective shapes what the reader learns; considers what a different narrator would reveal."}}
+      ]},
+      {g:"2",stds:[
+        {code:"RL.2.4",text:"Describe how words and phrases supply rhythm and meaning in stories and poems",
+         bands:{emerging:"Notices that poems sound different; rhythm and meaning connections need support.",developing:"Identifies rhythmic language in poems; explains basic meaning of figurative phrases.",proficient:"Describes how words and phrases supply rhythm and meaning in stories and poems.",extending:"Analyzes how specific language choices create effects; begins to use similar techniques in own writing."}},
+        {code:"RL.2.5",text:"Describe overall structure of a story — beginning, middle, end",
+         bands:{emerging:"Identifies beginning and end; the middle is less clear.",developing:"Describes beginning, middle, and end; story structure terms are developing.",proficient:"Describes overall structure using story terms; explains how each part contributes.",extending:"Analyzes how the author structured the story to build suspense or convey the theme."}},
+        {code:"RL.2.6",text:"Acknowledge differences in points of view of characters and narrator",deep:true,
+         bands:{emerging:"Knows different characters have different feelings; point of view is emerging.",developing:"Identifies that characters see events differently; narrator's perspective is beginning.",proficient:"Acknowledges differences in characters' and narrator's points of view.",extending:"Explains how point of view shapes what the reader knows and feels; considers what information the narrator withholds."}}
+      ]},
+      {g:"3",stds:[
+        {code:"RL.3.4",text:"Determine meaning of words and phrases including figurative language",deep:true,
+         bands:{emerging:"Identifies figurative language; interpreting non-literal meaning requires support.",developing:"Interprets common similes and metaphors with prompting; connects to overall meaning.",proficient:"Determines meaning of words and phrases including figurative language; explains effect.",extending:"Analyzes how the author's word choices — including figurative language — shape the reader's experience."}},
+        {code:"RL.3.5",text:"Refer to story parts — chapter, scene, stanza — and how they build the story",
+         bands:{emerging:"Identifies chapters or stanzas; explaining how they build the story is emerging.",developing:"Describes the function of a chapter or stanza; connections across sections developing.",proficient:"Refers to chapters, scenes, or stanzas and explains how each builds the story.",extending:"Analyzes how the author's structural choices create meaning; compares across genres."}},
+        {code:"RL.3.6",text:"Distinguish own point of view from narrator's or characters' point of view",deep:true,
+         bands:{emerging:"Shares own reaction; distinguishing from narrator's perspective needs support.",developing:"Identifies the narrator's or character's point of view; sometimes conflates with own.",proficient:"Distinguishes own point of view from that of the narrator or characters.",extending:"Analyzes how differences between own and narrator's perspective create irony or deeper meaning."}}
+      ]},
+      {g:"4",stds:[
+        {code:"RL.4.4",text:"Determine meaning of words and phrases including figurative language and connotations",deep:true,
+         bands:{emerging:"Interprets common figurative language; connotation is emerging.",developing:"Interprets figurative language; beginning to notice connotative differences between words.",proficient:"Determines meaning of figurative language and considers connotations; explains effect on tone.",extending:"Analyzes how specific word choices — especially connotations — shape theme and character."}},
+        {code:"RL.4.5",text:"Explain major structural differences between poems, drama, and prose",
+         bands:{emerging:"Identifies different text types; explaining structural differences needs support.",developing:"Names key structural features of poems, drama, and prose.",proficient:"Explains major structural differences between poems, drama, and prose; describes how structure shapes meaning.",extending:"Analyzes how the same content would feel different in a different genre; evaluates author's structural choices."}},
+        {code:"RL.4.6",text:"Compare and contrast first- and third-person narration",deep:true,
+         bands:{emerging:"Identifies first- and third-person narration; comparison requires support.",developing:"Explains the difference between first and third person; comparison is partially developed.",proficient:"Compares and contrasts the effect of first- and third-person narration on the reader's experience.",extending:"Analyzes why the author chose a specific narrative perspective and how it shapes meaning."}}
+      ]},
+      {g:"5",stds:[
+        {code:"RL.5.4",text:"Determine meaning of figurative language including metaphors and similes",deep:true,
+         bands:{emerging:"Interprets similes and common metaphors; complex figurative language needs support.",developing:"Interprets most figurative language; sometimes explains literally.",proficient:"Determines meaning of figurative language including metaphors, similes, and allusions.",extending:"Analyzes how figurative language builds character, mood, and theme; uses in own writing."}},
+        {code:"RL.5.5",text:"Explain how chapters, scenes, or stanzas fit together to provide overall structure",deep:true,
+         bands:{emerging:"Summarizes individual sections; how they build the whole needs support.",developing:"Explains the function of individual sections; connections to overall structure are developing.",proficient:"Explains how chapters, scenes, or stanzas fit together to provide the text's overall structure.",extending:"Analyzes how structural choices create tension, contrast, or thematic development."}},
+        {code:"RL.5.6",text:"Describe narrator's or speaker's point of view and how it affects description",deep:true,
+         bands:{emerging:"Identifies narrator's point of view; effect on description requires support.",developing:"Describes narrator's perspective; beginning to explain how it shapes the reader's understanding.",proficient:"Describes how the narrator's or speaker's point of view influences descriptions of events.",extending:"Analyzes how an unreliable or limited narrator shapes what the reader knows and doesn't know."}}
+      ]},
+      {g:"6",stds:[
+        {code:"RL.6.4",text:"Determine meaning of words and phrases including figurative and connotative meanings",deep:true,
+         bands:{emerging:"Interprets figurative language; connotation and tone connections need support.",developing:"Explains figurative language and some connotations; tone analysis is developing.",proficient:"Determines figurative and connotative meanings; analyzes impact on meaning and tone.",extending:"Analyzes how the author's precise word choices — including connotations — build character, mood, and theme."}},
+        {code:"RL.6.5",text:"Analyze how a sentence, chapter, or stanza fits into overall structure",deep:true,
+         bands:{emerging:"Summarizes sections; structural analysis requires significant support.",developing:"Explains the function of a section; connection to overall structure is partially developed.",proficient:"Analyzes how a particular sentence, chapter, or stanza fits into the overall structure and contributes to theme.",extending:"Evaluates the effectiveness of the author's structural decisions; explains alternatives the author could have chosen."}},
+        {code:"RL.6.6",text:"Explain how author develops point of view and distinguish it from own",deep:true,
+         bands:{emerging:"Identifies author's or narrator's perspective; distinguishing from own is developing.",developing:"Describes how the author develops point of view with some examples.",proficient:"Explains how the author develops the narrator's or speaker's point of view and distinguishes it from own.",extending:"Analyzes how the author uses craft choices to build and sustain a distinctive point of view."}}
+      ]}
+    ]
+  },
+  {
+    id:"integration",color:"#2D6B7F",
+    title:"Integration of knowledge & ideas",
+    sub:"Comparing texts, evaluating arguments, and connecting reading to other sources",
+    grades:[
+      {g:"K",stds:[
+        {code:"RL.K.9",text:"Compare and contrast adventures of characters in familiar stories",
+         bands:{emerging:"Talks about one story at a time; comparison requires heavy support.",developing:"Compares two stories with teacher-guided questions.",proficient:"Compares and contrasts the adventures or experiences of characters across two stories.",extending:"Independently identifies specific similarities and differences; explains what the comparison reveals."}},
+        {code:"RI.K.9",text:"Identify basic similarities and differences between two texts on the same topic",
+         bands:{emerging:"Talks about one text at a time; cross-text comparison needs significant support.",developing:"Names one similarity or difference between two texts on the same topic.",proficient:"Identifies basic similarities and differences between two texts on the same topic.",extending:"Explains why texts on the same topic might be different and what each adds."}}
+      ]},
+      {g:"1",stds:[
+        {code:"RL.1.9",text:"Compare and contrast experiences of characters in different stories",
+         bands:{emerging:"Describes one character's experience; comparison requires support.",developing:"Makes one comparison between characters across stories.",proficient:"Compares and contrasts characters' experiences in stories by the same or different authors.",extending:"Identifies meaningful patterns in comparison; connects to theme or author's craft."}},
+        {code:"RI.1.9",text:"Identify basic similarities and differences in two texts on the same topic",
+         bands:{emerging:"Talks about one text at a time; comparison is emerging.",developing:"Names a similarity and a difference between two texts.",proficient:"Identifies similarities and differences in two texts on the same topic.",extending:"Explains what each text contributes that the other doesn't; evaluates which is more helpful."}}
+      ]},
+      {g:"2",stds:[
+        {code:"RL.2.9",text:"Compare and contrast two or more versions of the same story",deep:true,
+         bands:{emerging:"Retells each version; comparison requires teacher support.",developing:"Identifies one similarity and one difference between versions.",proficient:"Compares and contrasts two or more versions of the same story by different authors.",extending:"Analyzes why different authors made different choices and what effect those choices have."}},
+        {code:"RI.2.9",text:"Compare and contrast most important points in two texts on the same topic",deep:true,
+         bands:{emerging:"Identifies points from each text separately; comparison needs support.",developing:"Compares one or two points across texts.",proficient:"Compares and contrasts the most important points in two texts on the same topic.",extending:"Evaluates how the two texts together give a more complete picture than either alone."}}
+      ]},
+      {g:"3",stds:[
+        {code:"RL.3.9",text:"Compare and contrast themes, settings, and plots of stories by same author",deep:true,
+         bands:{emerging:"Describes individual story elements; cross-text comparison needs support.",developing:"Makes comparisons between two stories; analysis may be surface-level.",proficient:"Compares and contrasts themes, settings, and plots across stories by the same author.",extending:"Identifies the author's signature themes and craft moves; explains what makes their work distinctive."}},
+        {code:"RI.3.9",text:"Compare and contrast most important points across two texts on the same topic",deep:true,
+         bands:{emerging:"Describes each text's main points separately; cross-text comparison needs support.",developing:"Makes one or two comparisons; analysis may miss the most important points.",proficient:"Compares and contrasts the most important points across two texts on the same topic.",extending:"Synthesizes information from both texts to build a fuller understanding than either provides alone."}}
+      ]},
+      {g:"4",stds:[
+        {code:"RL.4.9",text:"Compare and contrast treatment of similar themes and topics across genres",deep:true,
+         bands:{emerging:"Identifies a theme in one text; cross-genre comparison needs support.",developing:"Compares themes across two texts; genre differences may not be addressed.",proficient:"Compares and contrasts the treatment of similar themes and topics across different genres.",extending:"Analyzes how genre shapes the treatment of theme; evaluates which genre is most effective for a given purpose."}},
+        {code:"RI.4.9",text:"Integrate information from two texts on same topic to write or speak knowledgeably",deep:true,
+         bands:{emerging:"Uses one text at a time; integrating information across texts needs support.",developing:"Combines information from two texts; may not synthesize into a unified understanding.",proficient:"Integrates information from two texts on the same topic to speak or write knowledgeably.",extending:"Evaluates source quality; synthesizes across texts to build a perspective neither text alone provides."}}
+      ]},
+      {g:"5",stds:[
+        {code:"RL.5.9",text:"Compare and contrast stories in the same genre on approach to theme",deep:true,
+         bands:{emerging:"Identifies theme in individual texts; comparison across texts needs support.",developing:"Compares themes with partial development; genre analysis is emerging.",proficient:"Compares and contrasts stories in the same genre on their approach to themes and topics.",extending:"Analyzes how genre conventions shape thematic possibilities; evaluates which approaches are most effective."}},
+        {code:"RI.5.9",text:"Integrate information from several texts to write or speak about subject knowledgeably",deep:true,
+         bands:{emerging:"Uses one or two texts; integration of multiple sources needs support.",developing:"Combines information from two or three texts; synthesis is partial.",proficient:"Integrates information from several texts on the same topic to write or speak knowledgeably.",extending:"Critically evaluates sources; synthesizes information into a coherent and well-supported position."}}
+      ]},
+      {g:"6",stds:[
+        {code:"RL.6.9",text:"Compare and contrast texts in different forms or genres on approach to theme",deep:true,
+         bands:{emerging:"Compares texts within a genre; cross-genre comparison needs support.",developing:"Makes comparisons across genres; analysis of approach is partially developed.",proficient:"Compares and contrasts texts in different forms or genres in terms of approach to themes and topics.",extending:"Analyzes how form and genre fundamentally shape what can be expressed about a theme."}},
+        {code:"RI.6.9",text:"Compare and contrast how two or more authors present information on same topic",deep:true,
+         bands:{emerging:"Describes what each author says; comparison of how needs support.",developing:"Compares authors' main points; analysis of their approaches is developing.",proficient:"Compares and contrasts how two or more authors present information, including what is emphasized.",extending:"Evaluates the authors' reasoning and evidence; synthesizes a well-supported position from multiple perspectives."}}
+      ]}
+    ]
+  }
+];
+
+let openId=null;
+let uid=0;
+domains.forEach(d=>d.grades.forEach(g=>g.stds.forEach(s=>s._id='s'+(uid++))));
+
+function bandCard(s,b){
+  return `<div class="band-card" id="bc-${s._id}-${b.key}" style="background:${b.bg}" onclick="selectBand('${s._id}','${b.key}')">
+    <div class="band-name" style="color:${b.text}">${b.label}</div>
+    <div class="band-desc">${s.bands[b.key]}</div>
+  </div>`;
+}
+
+function stdHTML(s,color){
+  const trackSegs=BANDS.map(b=>`<div class="track-seg" id="ts-${s._id}-${b.key}" style="background:${b.color}" onclick="selectBand('${s._id}','${b.key}')" title="${b.label}"></div>`).join('');
+  const cards=BANDS.map(b=>bandCard(s,b)).join('');
+  return `<div class="std-item">
+    <div class="std-row" id="sr-${s._id}" onclick="toggle('${s._id}')">
+      <span class="std-code">${s.code}</span>
+      <span class="std-text">${s.text}${s.deep?'<span class="deep">go deep</span>':''}</span>
+      <span class="chevron" id="chev-${s._id}">▶</span>
+    </div>
+    <div class="cont-panel" id="cp-${s._id}">
+      <div class="track">${trackSegs}</div>
+      <div class="bands-grid">${cards}</div>
+    </div>
+  </div>`;
+}
+
+function selectBand(id,key){
+  BANDS.forEach(b=>{
+    const card=document.getElementById(`bc-${id}-${b.key}`);
+    const seg=document.getElementById(`ts-${id}-${b.key}`);
+    if(card){card.classList.toggle('selected',b.key===key);card.style.borderColor=b.key===key?b.color:'transparent';}
+    if(seg){seg.classList.toggle('selected',b.key===key);}
+  });
+}
+
+function toggle(id){
+  const panel=document.getElementById('cp-'+id);
+  const chev=document.getElementById('chev-'+id);
+  const row=document.getElementById('sr-'+id);
+  const isOpen=panel.classList.contains('visible');
+  if(openId&&openId!==id){
+    document.getElementById('cp-'+openId)?.classList.remove('visible');
+    document.getElementById('chev-'+openId)?.classList.remove('open');
+    document.getElementById('sr-'+openId)?.classList.remove('open');
+  }
+  panel.classList.toggle('visible',!isOpen);
+  chev.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+  openId=isOpen?null:id;
+}
+
+function render(filter){
+  const cont=document.getElementById('continuum');
+  cont.innerHTML='';
+  const list=filter==='all'?domains:domains.filter(d=>d.id===filter);
+  list.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='domain';
+    el.innerHTML=`<div class="d-head" style="background:${d.color}12">
+      <div class="dot" style="background:${d.color}"></div>
+      <div><div class="d-title" style="color:${d.color}">${d.title}</div><div class="d-sub">${d.sub}</div></div>
+    </div>`+d.grades.map(g=>`<div class="grade-row">
+      <div class="g-label">Gr ${g.g}</div>
+      <div class="stds">${g.stds.map(s=>stdHTML(s,d.color)).join('')}</div>
+    </div>`).join('');
+    cont.appendChild(el);
+  });
+}
+
+document.getElementById('filters').addEventListener('click',e=>{
+  const btn=e.target.closest('.fbtn');
+  if(!btn)return;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openId=null;
+  render(btn.dataset.d);
+});
+
+render('all');
+</script>
+</body>
+</html>
