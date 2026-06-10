@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGA Math Curriculum Map</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: #f5f4f0; color: #1a1a18; padding: 2rem 1rem; }
+.page { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 2rem; }
+
+.band-toggle { display: flex; gap: 8px; margin-bottom: 1.75rem; }
+.band-btn { font-size: 13px; padding: 7px 20px; border-radius: 24px; border: 1px solid #ccc; background: #fff; color: #5f5e5a; cursor: pointer; font-weight: 400; transition: all 0.15s; }
+.band-btn:hover { border-color: #888; color: #1a1a18; }
+.band-btn.active-k2 { background: #0F6E56; border-color: #0F6E56; color: #fff; font-weight: 500; }
+.band-btn.active-36 { background: #185FA5; border-color: #185FA5; color: #fff; font-weight: 500; }
+
+.band-section { display: none; }
+.band-section.visible { display: block; }
+
+.band-header { border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1.25rem; }
+.band-header.k2 { background: #E1F5EE; }
+.band-header.t36 { background: #E6F1FB; }
+.band-header h2 { font-size: 17px; font-weight: 500; margin-bottom: 4px; }
+.band-header.k2 h2 { color: #0F6E56; }
+.band-header.t36 h2 { color: #185FA5; }
+.band-header p { font-size: 13px; color: #5f5e5a; line-height: 1.5; }
+
+.units-grid { display: flex; flex-direction: column; gap: 1rem; }
+
+.unit-card { background: #fff; border-radius: 12px; border: 1px solid #e0dfd9; overflow: hidden; }
+.unit-header { display: grid; grid-template-columns: 44px 1fr; }
+.unit-number { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #fff; }
+.unit-number.k2 { background: #0F6E56; }
+.unit-number.t36 { background: #185FA5; }
+.unit-title-block { padding: 0.75rem 1rem; border-bottom: 1px solid #f0efe9; }
+.unit-name { font-size: 15px; font-weight: 500; color: #1a1a18; margin-bottom: 2px; }
+.unit-big-idea { font-size: 13px; color: #5f5e5a; line-height: 1.5; }
+
+.unit-body { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid #f0efe9; }
+.unit-col { padding: 0.75rem 1rem; }
+.unit-col + .unit-col { border-left: 1px solid #f0efe9; }
+.col-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: #b4b2a9; margin-bottom: 6px; }
+.col-content { font-size: 12.5px; color: #1a1a18; line-height: 1.6; }
+.col-content li { margin-left: 14px; margin-bottom: 2px; }
+
+.week-badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; margin-bottom: 6px; }
+.week-badge.k2 { background: #E1F5EE; color: #0F6E56; }
+.week-badge.t36 { background: #E6F1FB; color: #185FA5; }
+
+.deep-tag { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 10px; background: #FAEEDA; color: #633806; margin-left: 4px; vertical-align: middle; }
+
+.seesaw-col { background: #fafaf8; }
+.seesaw-col .col-content { color: #444441; font-style: italic; }
+
+.print-note { font-size: 12px; color: #b4b2a9; margin-top: 2rem; text-align: center; }
+
+@media print {
+  .band-toggle { display: none; }
+  .band-section { display: block !important; page-break-after: always; }
+  body { background: white; }
+  .print-note { display: none; }
+}
+@media (max-width: 620px) {
+  .unit-body { grid-template-columns: 1fr; }
+  .unit-col + .unit-col { border-left: none; border-top: 1px solid #f0efe9; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>CGA Math Curriculum Map</h1>
+  <p class="subtitle">Curiosity Grove Academy &nbsp;·&nbsp; Two-band model &nbsp;·&nbsp; Based on CCSS progressions</p>
+
+  <div class="band-toggle">
+    <button class="band-btn active-k2" onclick="showBand('k2')">K–2 Band</button>
+    <button class="band-btn" onclick="showBand('36')">3–6 Band</button>
+  </div>
+
+  <!-- K-2 BAND -->
+  <div class="band-section visible" id="band-k2">
+    <div class="band-header k2">
+      <h2>K–2 Band</h2>
+      <p>Concrete, hands-on, playful. The environment and materials do most of the teaching. Kids are building number sense, learning to count and compose, and beginning to add and subtract with meaning. Fractions aren't formal yet — just sharing and partitioning language. Units run shorter because attention spans are shorter and concepts need lots of repetition across different contexts.</p>
+    </div>
+    <div class="units-grid" id="units-k2"></div>
+  </div>
+
+  <!-- 3-6 BAND -->
+  <div class="band-section" id="band-36">
+    <div class="band-header t36">
+      <h2>3–6 Band</h2>
+      <p>Conceptual depth over coverage. Multiplication and division are the gateway to everything — fractions, decimals, ratios, expressions. Units are longer because kids need time to encounter each concept in multiple ways: concrete, visual, abstract, and applied. The "go deep" units are the ones worth slowing down for, even if it means other things get less time.</p>
+    </div>
+    <div class="units-grid" id="units-36"></div>
+  </div>
+
+  <p class="print-note">File → Print to save as PDF &nbsp;·&nbsp; Curiosity Grove Academy</p>
+</div>
+
+<script>
+const k2Units = [
+  {
+    name: "How numbers work",
+    weeks: "3–4 weeks",
+    bigIdea: "Numbers tell us how many. We can count, compare, and write them — and every number is one more than the one before.",
+    standards: ["K.CC.1–5", "1.NBT.1", "2.NBT.1–4"],
+    approaches: ["Counting collections", "Dot cards and subitizing", "Number lines on the floor", "Tens frames"],
+    seesaw: "Photo or video of child counting a collection; recording how many"
+  },
+  {
+    name: "Building and breaking numbers",
+    weeks: "3–4 weeks",
+    bigIdea: "Numbers can be taken apart and put back together in different ways. Ten is a special building block.",
+    standards: ["K.OA.3–4", "K.NBT.1", "1.NBT.2", "2.NBT.1"],
+    deep: true,
+    approaches: ["Snap cubes and ten-frames", "Part-part-whole mats", "Number bonds", "Building numbers with base-ten blocks"],
+    seesaw: "Child explains how they built a number two different ways using manipulatives"
+  },
+  {
+    name: "Adding and subtracting — making sense of it",
+    weeks: "4–5 weeks",
+    bigIdea: "Addition means putting together. Subtraction means taking apart or finding the difference. Both tell a story.",
+    standards: ["K.OA.1–2", "1.OA.1–2", "1.OA.6", "2.OA.1–2"],
+    deep: true,
+    approaches: ["Story problems with real objects", "Acting out equations", "Number talks", "Rekenrek"],
+    seesaw: "Child records a word problem they solved and explains their strategy in a voice recording"
+  },
+  {
+    name: "Measuring the world around us",
+    weeks: "2–3 weeks",
+    bigIdea: "We can measure things to compare them. Length, weight, and time are all around us.",
+    standards: ["K.MD.1–2", "1.MD.1–3", "2.MD.1–4", "2.MD.7–8"],
+    approaches: ["Non-standard units first (hands, blocks)", "Ruler introduction", "Telling time on analog clock", "Measuring classroom objects"],
+    seesaw: "Photo essay: child measures 5 things in the room and records findings"
+  },
+  {
+    name: "Shapes and the world we see",
+    weeks: "2–3 weeks",
+    bigIdea: "Shapes have attributes that define them. We can find them everywhere and build new things with them.",
+    standards: ["K.G.1–6", "1.G.1–3", "2.G.1–3"],
+    approaches: ["Shape hunts indoors and outside", "Building with pattern blocks", "Sorting and classifying", "Partitioning shapes into equal shares"],
+    seesaw: "Child photographs shapes in real life and labels their attributes"
+  },
+  {
+    name: "Adding and subtracting bigger numbers",
+    weeks: "3–4 weeks",
+    bigIdea: "The same ideas work with bigger numbers. Place value helps us add and subtract efficiently.",
+    standards: ["1.NBT.4–6", "2.NBT.5–8", "2.OA.1"],
+    approaches: ["Base-ten blocks", "Open number lines", "Mental math strategies", "Vertical whiteboards — solve and explain"],
+    seesaw: "Whiteboard photo showing strategy used to solve a two- or three-digit problem"
+  },
+  {
+    name: "Collecting and making sense of data",
+    weeks: "2 weeks",
+    bigIdea: "We can ask questions, collect information, and show what we found in different ways.",
+    standards: ["1.MD.4", "2.MD.9–10"],
+    approaches: ["Class surveys", "Tally marks and picture graphs", "Bar graphs", "Asking our own questions"],
+    seesaw: "Child's graph of a question they chose, with explanation of what they noticed"
+  },
+  {
+    name: "Putting it all together — math in real life",
+    weeks: "2–3 weeks",
+    bigIdea: "Math is everywhere. We use numbers, shapes, and measurement to solve real problems.",
+    standards: ["Review and application across all domains"],
+    approaches: ["Project: design a garden, plan a party, build something", "Math journals", "Student-chosen problems", "Showcase preparation"],
+    seesaw: "Project documentation showing math thinking across multiple concepts"
+  }
+];
+
+const t36Units = [
+  {
+    name: "Multiplication — what it really means",
+    weeks: "4–5 weeks",
+    bigIdea: "Multiplication is about equal groups. It's not just memorizing facts — it's understanding a powerful idea.",
+    standards: ["3.OA.1–4", "3.OA.5", "4.OA.1–3"],
+    deep: true,
+    approaches: ["Arrays with tiles and graph paper", "Number talks with dot images", "Vertical whiteboards — grouping problems", "Skip counting patterns", "Real contexts: rows of chairs, packages of things"],
+    seesaw: "Video explaining what multiplication means using a real object array"
+  },
+  {
+    name: "Multiplication fluency and division",
+    weeks: "4–5 weeks",
+    bigIdea: "Multiplication and division are a family. Knowing one helps you know the other. Fluency comes from understanding, not just drilling.",
+    standards: ["3.OA.6–7", "4.NBT.5–6", "5.NBT.5–6"],
+    deep: true,
+    approaches: ["Fact strategy games", "Whiteboard practice — show your thinking", "Multiplication/division relationship explorations", "Multi-digit multiplication with area models"],
+    seesaw: "Child demonstrates a multiplication or division strategy on whiteboard and explains why it works"
+  },
+  {
+    name: "Fractions — building the concept",
+    weeks: "4–5 weeks",
+    bigIdea: "A fraction is a number, not just a piece of a pie. It lives on the number line and has a real value we can compare.",
+    standards: ["3.NF.1–3", "4.NF.1"],
+    deep: true,
+    approaches: ["Fraction strips", "Number lines — placing fractions", "Equivalence explorations with pattern blocks", "Comparing fractions with same numerator or denominator"],
+    seesaw: "Child places fractions on a number line and explains their reasoning in a voice note"
+  },
+  {
+    name: "Fractions — operating with them",
+    weeks: "4–5 weeks",
+    bigIdea: "We can add, subtract, and multiply fractions. The denominator tells us what kind of piece we're working with.",
+    standards: ["4.NF.3–4", "5.NF.1", "5.NF.3–7"],
+    deep: true,
+    approaches: ["Fraction strips for adding/subtracting", "Area models for multiplying", "Real contexts: cooking, measuring, sharing", "Whiteboard problem solving in groups"],
+    seesaw: "Photo of fraction work with written or recorded explanation of the strategy"
+  },
+  {
+    name: "Decimals — playing with place value",
+    weeks: "4–5 weeks",
+    bigIdea: "Decimals are just fractions in disguise. Place value extends in both directions from the ones place — endlessly.",
+    standards: ["4.NF.5–7", "5.NBT.1–4", "5.NBT.7"],
+    deep: true,
+    approaches: ["Base-ten blocks representing tenths and hundredths", "Meter sticks and measuring tape", "Money as a decimal context", "Decimal number lines", "Whiteboard: place decimals, compare, compute"],
+    seesaw: "Child uses base-ten blocks to represent a decimal and connects it to its fraction form on video"
+  },
+  {
+    name: "Measurement, area, and volume",
+    weeks: "3–4 weeks",
+    bigIdea: "Measurement connects to multiplication. Area is rows times columns. Volume is layers of area.",
+    standards: ["3.MD.5–8", "4.MD.1–4", "5.MD.1–5"],
+    deep: true,
+    approaches: ["Tiling rectangles to discover area formula", "Building with unit cubes", "Conversion challenges", "Real measurement projects in the room or outside"],
+    seesaw: "Documentation of a measurement project with calculations shown"
+  },
+  {
+    name: "Geometry and the coordinate plane",
+    weeks: "3–4 weeks",
+    bigIdea: "Shapes have properties that let us classify and reason about them. The coordinate plane gives us a map for math.",
+    standards: ["4.G.1–3", "5.G.1–4", "6.G.1–4"],
+    approaches: ["Attribute sorting games", "Drawing and classifying polygons", "Coordinate plane graphing — real contexts", "Area of triangles and special quadrilaterals"],
+    seesaw: "Child plots a design or path on a coordinate plane and explains the coordinates"
+  },
+  {
+    name: "Ratios, rates, and proportional thinking",
+    weeks: "3–4 weeks",
+    bigIdea: "When two quantities are related in a consistent way, we can use that relationship to solve problems. This is one of the most useful ideas in all of math.",
+    standards: ["6.RP.1–3", "6.NS.1–3"],
+    deep: true,
+    approaches: ["Double number lines", "Tables of equivalent ratios", "Unit rate problems with real contexts", "Recipe scaling", "Whiteboard group problems"],
+    seesaw: "Child explains a ratio relationship using a double number line or table they created"
+  },
+  {
+    name: "Expressions, equations, and algebraic thinking",
+    weeks: "3–4 weeks",
+    bigIdea: "Variables are just placeholders for unknown quantities. Equations are balance. This is math becoming a language.",
+    standards: ["6.EE.1–8", "5.OA.1–3"],
+    approaches: ["Balance scale models for equations", "Writing expressions from real situations", "Order of operations through puzzles", "Pattern tables and graphing"],
+    seesaw: "Child writes and solves their own equation from a real-life situation they chose"
+  }
+];
+
+function buildCard(unit, band, index) {
+  const isK2 = band === 'k2';
+  const colorClass = isK2 ? 'k2' : 't36';
+  return `
+    <div class="unit-card">
+      <div class="unit-header">
+        <div class="unit-number ${colorClass}">U${index + 1}</div>
+        <div class="unit-title-block">
+          <div class="unit-name">${unit.name}${unit.deep ? '<span class="deep-tag">go deep</span>' : ''}</div>
+          <div class="unit-big-idea">${unit.bigIdea}</div>
+        </div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-col">
+          <div class="col-label">Standards covered</div>
+          <div class="week-badge ${colorClass}">${unit.weeks}</div>
+          <div class="col-content"><ul>${unit.standards.map(s => `<li>${s}</li>`).join('')}</ul></div>
+        </div>
+        <div class="unit-col">
+          <div class="col-label">How we teach it</div>
+          <div class="col-content"><ul>${unit.approaches.map(a => `<li>${a}</li>`).join('')}</ul></div>
+        </div>
+        <div class="unit-col seesaw-col">
+          <div class="col-label">Seesaw evidence</div>
+          <div class="col-content">${unit.seesaw}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+document.getElementById('units-k2').innerHTML = k2Units.map((u, i) => buildCard(u, 'k2', i)).join('');
+document.getElementById('units-36').innerHTML = t36Units.map((u, i) => buildCard(u, '36', i)).join('');
+
+function showBand(band) {
+  document.querySelectorAll('.band-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.band-btn').forEach(b => { b.className = 'band-btn'; });
+  document.getElementById('band-' + (band === '36' ? '36' : 'k2')).classList.add('visible');
+  const btns = document.querySelectorAll('.band-btn');
+  if (band === 'k2') btns[0].classList.add('active-k2');
+  else btns[1].classList.add('active-36');
+}
+</script>
+</body>
+</html>

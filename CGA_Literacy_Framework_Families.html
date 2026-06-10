@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading at Curiosity Grove Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #2C4A2E;
+    --moss: #4A7C59;
+    --sage: #8BAF8E;
+    --bark: #6B4226;
+    --warm: #F9F5EF;
+    --paper: #FEFCF8;
+    --ink: #1E1E1E;
+    --soft: #6E6E6E;
+    --gold: #C4943A;
+    --u1: #3B6E8C;
+    --u2: #7A4B8C;
+    --u3: #8C5C3B;
+    --u4: #3B7A5C;
+    --u1l: #EBF3F8;
+    --u2l: #F3EBF8;
+    --u3l: #F8F0EB;
+    --u4l: #EBF8F2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(44,74,46,0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center;
+    padding: 0 2rem; height: 60px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-right: auto;
+  }
+  .nav-leaf {
+    width: 32px; height: 32px;
+    background: var(--sage);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-brand-text {
+    font-family: 'Fraunces', serif;
+    color: var(--warm); font-size: 1rem;
+    font-weight: 700; letter-spacing: 0.01em;
+  }
+  .nav-brand-text span { color: var(--sage); }
+  nav ul {
+    list-style: none; display: flex; gap: 0;
+  }
+  nav ul a {
+    color: rgba(247,243,238,0.75);
+    text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; padding: 0 1rem;
+    height: 60px; display: flex; align-items: center;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--warm); }
+  @media (max-width: 600px) { nav ul { display: none; } }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 2rem 5rem;
+    background: var(--forest);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(74,124,89,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(107,66,38,0.2) 0%, transparent 50%);
+  }
+  .hero-leaves {
+    position: absolute; right: -60px; bottom: -40px;
+    width: 500px; height: 500px; opacity: 0.07;
+    background-image: radial-gradient(circle, #8BAF8E 2px, transparent 2px);
+    background-size: 30px 30px;
+  }
+  .hero-content { max-width: 700px; margin: 0 auto; position: relative; text-align: center; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(196,148,58,0.2); border: 1px solid rgba(196,148,58,0.4);
+    color: var(--gold); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    margin-bottom: 2rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--warm);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { color: var(--sage); font-style: italic; }
+  .hero-sub {
+    font-size: 1.15rem; color: rgba(247,243,238,0.75);
+    line-height: 1.7; max-width: 560px; margin: 0 auto 3rem;
+  }
+  .hero-scroll {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--sage); font-size: 0.85rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; }
+  section:nth-child(even) { background: var(--paper); }
+  .section-inner { max-width: 860px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--moss); margin-bottom: 0.75rem;
+  }
+  h2.section-h {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900; line-height: 1.15;
+    color: var(--forest); margin-bottom: 1rem;
+  }
+  h2.section-h em { color: var(--bark); font-style: italic; }
+  .section-lead {
+    font-size: 1.1rem; color: var(--soft);
+    max-width: 640px; line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  /* HOW IT WORKS STEPS */
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1.5rem; }
+  .step {
+    background: var(--warm);
+    border-radius: 12px; padding: 1.5rem;
+    border: 1px solid rgba(0,0,0,0.07);
+    position: relative;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--forest); color: var(--warm);
+    font-family: 'Fraunces', serif;
+    font-size: 1rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+  .step h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem; color: var(--forest);
+    margin-bottom: 0.4rem;
+  }
+  .step p { font-size: 0.88rem; color: var(--soft); line-height: 1.65; }
+
+  /* UNIT CARDS */
+  .unit-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 640px) { .unit-cards { grid-template-columns: 1fr; } }
+  .unit-card {
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .unit-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+  .uc-top { padding: 2rem 2rem 1.5rem; }
+  .uc-top.u1 { background: var(--u1); }
+  .uc-top.u2 { background: var(--u2); }
+  .uc-top.u3 { background: var(--u3); }
+  .uc-top.u4 { background: var(--u4); }
+  .uc-season {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); margin-bottom: 0.5rem;
+  }
+  .uc-top h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: white; line-height: 1.2; margin-bottom: 0.25rem;
+  }
+  .uc-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .uc-body { background: white; padding: 1.5rem 2rem; }
+  .uc-q {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem; font-style: italic;
+    color: var(--ink); line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .uc-pairing {
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.4rem;
+    color: var(--soft);
+  }
+  .uc-pairing::before { content: '⬡'; font-size: 0.9em; }
+  .uc-expand {
+    margin-top: 1rem; font-size: 0.82rem;
+    color: var(--moss); font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  /* EXPANDED UNIT */
+  .unit-expanded {
+    display: none;
+    background: white;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+  .unit-expanded.open { display: block; }
+  .ue-header { padding: 2rem 2.5rem 1.5rem; }
+  .ue-header.u1 { background: var(--u1l); border-left: 5px solid var(--u1); }
+  .ue-header.u2 { background: var(--u2l); border-left: 5px solid var(--u2); }
+  .ue-header.u3 { background: var(--u3l); border-left: 5px solid var(--u3); }
+  .ue-header.u4 { background: var(--u4l); border-left: 5px solid var(--u4); }
+  .ue-body { padding: 2rem 2.5rem; }
+  .ue-body h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem; color: var(--forest);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .ue-body h4:first-child { margin-top: 0; }
+  .ue-body p { font-size: 0.93rem; color: var(--soft); line-height: 1.7; margin-bottom: 0.5rem; }
+  .ue-body ul { padding-left: 1.2rem; }
+  .ue-body li { font-size: 0.93rem; color: var(--soft); margin-bottom: 0.3rem; }
+  .book-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; }
+  .book-chip {
+    background: var(--warm); border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 100px; padding: 0.25rem 0.8rem;
+    font-size: 0.82rem; color: var(--ink);
+  }
+  .book-chip.hi { border-color: var(--u2); color: var(--u2); }
+  .ue-close {
+    display: block; text-align: center;
+    padding: 1rem; font-size: 0.82rem;
+    color: var(--soft); cursor: pointer;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    font-weight: 600; letter-spacing: 0.05em;
+  }
+  .ue-close:hover { color: var(--forest); }
+
+  /* CHOICE SECTION */
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 640px) { .choice-grid { grid-template-columns: 1fr; } }
+  .choice-card {
+    background: var(--warm);
+    border-radius: 12px; padding: 1.5rem;
+    border: 1px solid rgba(0,0,0,0.07); text-align: center;
+  }
+  .choice-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+  .choice-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem; color: var(--forest);
+    margin-bottom: 0.5rem;
+  }
+  .choice-card p { font-size: 0.85rem; color: var(--soft); line-height: 1.6; }
+
+  /* YEAR TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 3px; background: var(--sage);
+    border-radius: 2px;
+  }
+  .tl-item { position: relative; margin-bottom: 1.75rem; }
+  .tl-dot {
+    position: absolute; left: -2.35rem; top: 0.35rem;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--forest);
+    border: 3px solid var(--warm);
+  }
+  .tl-dot.u1 { background: var(--u1); }
+  .tl-dot.u2 { background: var(--u2); }
+  .tl-dot.u3 { background: var(--u3); }
+  .tl-dot.u4 { background: var(--u4); }
+  .tl-dot.special { background: var(--gold); }
+  .tl-date { font-size: 0.75rem; font-weight: 600; color: var(--soft); margin-bottom: 0.15rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .tl-title { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--forest); font-weight: 700; }
+  .tl-note { font-size: 0.85rem; color: var(--soft); margin-top: 0.2rem; }
+
+  /* FAQ */
+  .faq { display: grid; gap: 1rem; }
+  .faq-item {
+    background: var(--warm); border-radius: 10px;
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.07);
+  }
+  .faq-q {
+    padding: 1.1rem 1.5rem;
+    font-weight: 600; font-size: 0.95rem;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    color: var(--forest);
+  }
+  .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--sage); transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    display: none; padding: 0 1.5rem 1.25rem;
+    font-size: 0.92rem; color: var(--soft); line-height: 1.75;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding-top: 1rem;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* CTA */
+  .cta {
+    background: var(--forest); color: white;
+    text-align: center; padding: 5rem 2rem;
+  }
+  .cta h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 900; margin-bottom: 1rem; color: var(--warm);
+  }
+  .cta p { color: var(--sage); max-width: 500px; margin: 0 auto 2rem; font-size: 1rem; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--gold); color: var(--forest);
+    font-weight: 700; font-size: 0.95rem;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .cta-btn:hover { background: #D4A44A; }
+
+  footer {
+    background: #1A2E1B; color: rgba(247,243,238,0.5);
+    text-align: center; padding: 2rem;
+    font-size: 0.82rem;
+  }
+
+  /* READING LEVEL EXPLAINER */
+  .level-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.5rem 0; }
+  .level-pill {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--warm); border-radius: 100px;
+    padding: 0.5rem 1rem; font-size: 0.85rem;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .level-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-leaf"></div>
+    <div class="nav-brand-text">Curiosity Grove <span>Academy</span></div>
+  </div>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#units">Our Units</a></li>
+    <li><a href="#year">The Year</a></li>
+    <li><a href="#faq">Questions</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-leaves"></div>
+  <div class="hero-content">
+    <div class="hero-badge">📚 2026–2027 School Year</div>
+    <h1>Reading that <em>grows</em><br>with your child</h1>
+    <p class="hero-sub">At Curiosity Grove, every student reads books they love — at their level, in their genre — and comes together for rich conversations about big ideas. Here's what that looks like this year.</p>
+    <div class="hero-scroll">Scroll to explore ↓</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">Our Approach</div>
+    <h2 class="section-h">Reading that <em>connects</em></h2>
+    <p class="section-lead">This year, our literacy program is built around four big questions — one per unit — that every student explores through the book of their choice. Here's how each unit works.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>We launch together</h3>
+        <p>Every unit starts with the whole class exploring the big idea together — through a film, a short story, or a poem — so everyone has shared vocabulary before branching out.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Your child chooses their book</h3>
+        <p>Students choose from a curated menu of books — fiction, graphic novels, and classics — matched to their reading level and interests. Nobody reads the same book they read last year.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>We connect to real life</h3>
+        <p>Mid-unit, the whole class reads a nonfiction text that connects what they're reading to real science, history, or current events. Stories become more meaningful when they connect to the real world.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>We discuss together</h3>
+        <p>Students bring their different books to a shared discussion and compare. A student reading a dragon fantasy and a student reading a classic myth are both answering the same big question.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h3>They write what they think</h3>
+        <p>Each unit ends with a piece of writing where students make an argument about their book using evidence. By the end of the year, they've written across four different genres and questions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHOICE -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">Student Choice</div>
+    <h2 class="section-h">Every child finds <em>their</em> book</h2>
+    <p class="section-lead">Our book menus span from 2nd grade reading level up to 7th. Level labels are for our use — students choose by what excites them.</p>
+    <div class="choice-grid">
+      <div class="choice-card">
+        <div class="choice-icon">🐉</div>
+        <h3>Fantasy & Adventure</h3>
+        <p>Dragons, quests, magic systems, and worlds unlike our own. For students who want to be transported.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">📖</div>
+        <h3>Realistic Fiction</h3>
+        <p>Stories about real kids navigating real things — friendship, family, identity, belonging.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🏛️</div>
+        <h3>Classics</h3>
+        <p>From The Secret Garden to The Outsiders to The Odyssey — stories that have stood the test of time.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🎨</div>
+        <h3>Graphic Novels</h3>
+        <p>Every unit has a graphic novel option. Amulet, El Deafo, New Kid — visual storytelling at its best.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">📜</div>
+        <h3>Historical Fiction</h3>
+        <p>Stories set in real times and places, from the American Revolution to 20th-century immigrant experiences.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">✏️</div>
+        <h3>Verse Novels</h3>
+        <p>Books told in poetry — like Inside Out and Back Again — that bridge our poetry and fiction units beautifully.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNITS -->
+<section id="units">
+  <div class="section-inner">
+    <div class="section-tag">This Year's Units</div>
+    <h2 class="section-h">Four big <em>questions</em></h2>
+    <p class="section-lead">Each unit is anchored by a question worth arguing about — one that every student can engage with, no matter which book they're reading.</p>
+
+    <div class="unit-cards">
+      <div class="unit-card" onclick="toggleUnit(1)">
+        <div class="uc-top u1">
+          <div class="uc-icon">🦸</div>
+          <div class="uc-season">Fall · August–October</div>
+          <h3>Hero's Journey</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"What does a hero have to lose before they can truly transform?"</div>
+          <div class="uc-pairing">Connected to: Dinosaurs & Rocks</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(2)">
+        <div class="uc-top u2">
+          <div class="uc-icon">🌱</div>
+          <div class="uc-season">Fall · October–November</div>
+          <h3>Character & Transformation</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"Can a character change without wanting to — and is that still transformation?"</div>
+          <div class="uc-pairing">Connected to: Native Peoples</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(3)">
+        <div class="uc-top u3">
+          <div class="uc-icon">🔭</div>
+          <div class="uc-season">Spring · January–February</div>
+          <h3>Point of View</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"Whose story isn't being told — and why does that matter?"</div>
+          <div class="uc-pairing">Connected to: Poetry</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(4)">
+        <div class="uc-top u4">
+          <div class="uc-icon">🦋</div>
+          <div class="uc-season">Spring · February–April</div>
+          <h3>Belonging & Identity</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"Does belonging require you to change, or to find people who accept who you are?"</div>
+          <div class="uc-pairing">Connected to: Plants & Bugs</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPANDED UNIT DETAILS -->
+    <div id="unit-exp-1" class="unit-expanded">
+      <div class="ue-header u1">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u1);">Unit 1 — Hero's Journey</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">August 11 – October 3 · Paired with Dinosaurs & Rocks</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Students learn the hero's journey framework — the ancient story structure found in everything from Greek mythology to Wings of Fire — then choose a book and track how their hero moves through it. Mid-unit, the whole class reads about a real scientist (like Mary Anning, who made her first major paleontology discovery at age 12) and compares her real-life journey to the fictional one they're reading.</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"What does a hero — real or fictional — have to lose before they can truly transform?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">How to Train Your Dragon</span>
+          <span class="book-chip">Hatchet</span>
+          <span class="book-chip">Amulet (graphic novel)</span>
+          <span class="book-chip">Dragon Rider</span>
+          <span class="book-chip">Wings of Fire: Legends — Dragonslayer</span>
+          <span class="book-chip hi">A Wrinkle in Time</span>
+          <span class="book-chip hi">The Odyssey</span>
+          <span class="book-chip hi">Esperanza Rising</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>We'll use clips from Moana, The Lion King, and Hercules to build the shared framework before students branch into their books.</p>
+        <h4>For K–2 students</h4>
+        <p>Younger students explore the hero's journey through picture books read aloud together — Last Stop on Market Street, Brave Irene, and The Adventures of Beekle (a Caldecott winner where every stage of the hero's journey is clearly visible). They discuss the same questions as older students, just through a shared text rather than individual books.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading from a tiered menu — picture books for developing readers, early chapter books like My Father's Dragon for mid-level readers, and options like The Wild Robot or How to Train Your Dragon for strong readers.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(1)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-2" class="unit-expanded">
+      <div class="ue-header u2">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u2);">Unit 2 — Character & Transformation</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">October 6 – November 21 · Paired with Native Peoples</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Students explore the difference between external pressure and internal change — things that happen to a character versus what shifts inside them. This connects deeply to our Native Peoples unit, where we read nonfiction about Indigenous resilience and what it means to hold onto who you are when outside forces push you to change.</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"Can a character change without wanting to — and is that still transformation?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Wonder</span>
+          <span class="book-chip">Holes</span>
+          <span class="book-chip">El Deafo (graphic novel)</span>
+          <span class="book-chip">Because of Winn-Dixie</span>
+          <span class="book-chip">Inside Out and Back Again</span>
+          <span class="book-chip hi">The Secret Garden</span>
+          <span class="book-chip hi">Little Women</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>We'll use clips from Up (the first 10 minutes are one of the most powerful character transformation sequences ever filmed), Encanto, and Brave.</p>
+        <h4>For K–2 students</h4>
+        <p>K–2 students explore transformation through picture books like The Name Jar (a girl who reclaims her identity rather than changing it to fit in) and Each Kindness (whose transformation is incomplete — powerful for discussing what it means when someone misses their chance to change). These conversations go surprisingly deep even with young children.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading options include Charlotte's Web, Because of Winn-Dixie, Shiloh, and for strong readers, Wonder or Holes.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(2)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-3" class="unit-expanded">
+      <div class="ue-header u3">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u3);">Unit 3 — Point of View & Narrator's Lens</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">January 5 – February 20 · Paired with Poetry</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>We start this unit with poetry — because poems are the perfect place to feel how a narrator's perspective shapes every word. Students study speakers in poems by Langston Hughes, Mary Oliver, and others before choosing a novel and asking the same questions: What does this narrator know? What don't they know? Whose story isn't being told?</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"Whose story isn't being told — in your novel or in the poems we read — and why does that matter?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Coraline</span>
+          <span class="book-chip">Counting by 7s</span>
+          <span class="book-chip">Hilo (graphic novel)</span>
+          <span class="book-chip">My Father's Dragon</span>
+          <span class="book-chip hi">Charlotte Doyle</span>
+          <span class="book-chip hi">Treasure Island</span>
+          <span class="book-chip hi">Fever 1793</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>Harriet the Spy (a notebook is literally a narrator's lens), Megamind (what it looks like when the villain tells the story), and The Princess Bride.</p>
+        <h4>For K–2 students</h4>
+        <p>The True Story of the Three Little Pigs is the anchor at every grade level — we use it first, always. K–2 students also explore Voices in the Park (four characters experience the same park visit with wildly different perspectives) and Duck! Rabbit! as a playful entry point. These are picture books doing genuinely sophisticated literary work.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading options include Nate the Great (a first-person narrator detective — what does he miss?), Hilo as a graphic novel option, and Coraline or The View from Saturday for strong readers.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(3)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-4" class="unit-expanded">
+      <div class="ue-header u4">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u4);">Unit 4 — Belonging & Identity</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">February 23 – April 17 · Paired with Plants & Bugs</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Our capstone unit pairs beautifully with Plants & Bugs — because metamorphosis is one of the oldest metaphors for becoming who you were meant to be. Students read about caterpillars that have to completely dissolve before they can reform, and connect that to their novels. The big seminar question this unit tends to produce the most powerful discussions of the year.</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"Does belonging require you to change who you are, or does it require finding people who accept who you already are?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Front Desk</span>
+          <span class="book-chip">The Giver</span>
+          <span class="book-chip">New Kid (graphic novel)</span>
+          <span class="book-chip">The Girl Who Drank the Moon</span>
+          <span class="book-chip hi">The Outsiders</span>
+          <span class="book-chip hi">Refugee</span>
+          <span class="book-chip hi">Anne of Green Gables</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>Coco is our anchor film — it holds belonging to family, culture, and your own dreams all in tension at once. We also use Lilo and Stitch and Soul.</p>
+        <h4>For K–2 students</h4>
+        <p>The Velveteen Rabbit is our K–2 anchor — the question of becoming "real" through love maps almost perfectly onto our seminar question about belonging. We also use Big Al (a fish who keeps trying to change himself to fit in, until he discovers the answer was never changing at all) and other picture books about finding your place. The conversations kindergarteners have with these books are extraordinary.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading includes Charlotte's Web, Because of Winn-Dixie, and for strong readers, Front Desk, The Girl Who Drank the Moon, or New Kid as a graphic novel.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(4)">Close ↑</div>
+    </div>
+  </div>
+</section>
+
+<!-- YEAR TIMELINE -->
+<section id="year">
+  <div class="section-inner">
+    <div class="section-tag">The Full Year</div>
+    <h2 class="section-h">A year of <em>connected</em> learning</h2>
+    <p class="section-lead">Literacy and content work together all year long. Here's the full calendar.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot u1"></div>
+        <div class="tl-date">August 11 – October 3</div>
+        <div class="tl-title">Unit 1 — Hero's Journey</div>
+        <div class="tl-note">Alongside: Dinosaurs & Rocks · Nonfiction: Mary Anning, paleontologist</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u2"></div>
+        <div class="tl-date">October 6 – November 21</div>
+        <div class="tl-title">Unit 2 — Character & Transformation</div>
+        <div class="tl-note">Alongside: Native Peoples · Nonfiction: Indigenous resilience and identity</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot special"></div>
+        <div class="tl-date">December 1 – 19</div>
+        <div class="tl-title">Holidays Around the World</div>
+        <div class="tl-note">Reading and writing about holiday traditions from many cultures</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u3"></div>
+        <div class="tl-date">January 5 – February 20</div>
+        <div class="tl-title">Unit 3 — Point of View & Narrator's Lens</div>
+        <div class="tl-note">Alongside: Poetry · Two weeks of poetry study before novel reading begins</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u4"></div>
+        <div class="tl-date">February 23 – April 17</div>
+        <div class="tl-title">Unit 4 — Belonging & Identity</div>
+        <div class="tl-note">Alongside: Plants & Bugs · Nonfiction: Metamorphosis as transformation</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">April 20 – May 21</div>
+        <div class="tl-title">Weather Unit</div>
+        <div class="tl-note">Informational reading and writing · Independent reading for pleasure</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-tag">Questions</div>
+    <h2 class="section-h">What families <em>ask us</em></h2>
+    <p class="section-lead">A few things that come up often.</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does my child choose their book? What if they pick something too easy or hard?</div>
+        <div class="faq-a">We guide students toward books that are a great fit for their reading level — but we frame it around genre and interest, not labels. A student who loves dragons might choose How to Train Your Dragon or The Hobbit depending on where they are as a reader. We'll talk with you and your child at the start of each unit if there are any concerns.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Will my child read the same books as their classmates?</div>
+        <div class="faq-a">Not necessarily — and that's the point. Students choose from a menu of 8–12 books per unit, so a mixed-age group might have five or six different books in one class discussion. The magic is that they're all answering the same question, just with different evidence. This develops higher-order thinking skills that reading the same book together can't.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does the nonfiction pairing work?</div>
+        <div class="faq-a">Mid-way through each unit, the whole class reads and discusses one nonfiction text together. This might be a picture book biography, a chapter from a longer book, or a short article — depending on the age range. The goal is to connect what students are reading in their novels to something real. During the hero's journey unit, we read about Mary Anning, who made her first major scientific discovery at 12 years old. Students then compare her real journey to the fictional one they're tracking in their novel.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is a Socratic seminar and how does my child prepare for it?</div>
+        <div class="faq-a">A Socratic seminar is a structured discussion where students bring their books and ideas and talk through a big question together. There's no right answer — the goal is to make an argument, listen to others, and change your thinking when someone makes a good point. Students prepare by keeping a reading journal throughout the unit, so they have notes and thinking ready to bring to the discussion.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">My child doesn't love reading. Will this work for them?</div>
+        <div class="faq-a">Student choice is one of the most powerful tools for building reading engagement. When a child picks a book they actually want to read — in a genre they care about, at a level that feels manageable — something shifts. We also include graphic novels in every unit specifically because they are fully rigorous works of literature and they're a great bridge for students who find prose challenging or unexciting. We'd love to talk about your child specifically and help find the right fit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What standards does this cover?</div>
+        <div class="faq-a">The framework is built on Common Core State Standards for ELA, specifically the reading literature standards (RL.5 and RL.6) for story structure, character, point of view, and cross-text comparison — as well as informational reading standards (RI.5 and RI.6) and opinion writing standards (W.5.1 and W.6.1). The capstone essay in Unit 4 is the most rigorous writing piece of the year and directly addresses grade-level writing standards.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>Questions about your reader?</h2>
+  <p>We'd love to talk through how this framework fits your child and what books might be the best fit for them.</p>
+  <a href="mailto:hello@curiositygrove.org" class="cta-btn">Get in touch →</a>
+</div>
+
+<footer>
+  © 2026 Curiosity Grove Academy · Grand Junction, Colorado · All rights reserved
+</footer>
+
+<script>
+function toggleUnit(n) {
+  const el = document.getElementById('unit-exp-' + n);
+  el.classList.toggle('open');
+  if (el.classList.contains('open')) {
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+}
+
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>

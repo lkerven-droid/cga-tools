@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGA Literacy Framework — Teacher Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest: #2C4A2E; --moss: #4A7C59; --sage: #8BAF8E; --bark: #6B4226;
+  --cream: #F7F3EE; --paper: #FDFAF6; --ink: #1A1A1A; --muted: #6B6B6B;
+  --gold: #C4943A; --green: #375623;
+  --u1: #3B6E8C; --u2: #7A4B8C; --u3: #8C5C3B; --u4: #3B7A5C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--forest);display:flex;align-items:center;gap:0;padding:0 2rem;height:56px;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.nav-logo{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;font-weight:700;margin-right:auto;letter-spacing:.02em}
+.nav-logo span{color:var(--sage)}
+nav a{color:var(--sage);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:0 .9rem;height:56px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+nav a:hover,nav a.active{color:var(--cream);border-bottom-color:var(--gold)}
+.page{display:none;padding:70px 0 60px;min-height:100vh}
+.page.active{display:block}
+.container{max-width:960px;margin:0 auto;padding:0 2rem}
+
+/* HERO */
+.hero{background:var(--forest);color:var(--cream);padding:4rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234A7C59' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");opacity:.5}
+.hero-badge{display:inline-block;background:var(--gold);color:var(--forest);font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem 1rem;border-radius:2px;margin-bottom:1.5rem;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:1rem;position:relative}
+.hero h1 em{color:var(--sage);font-style:normal}
+.hero p{font-size:1.05rem;color:rgba(247,243,238,.8);max-width:600px;margin:0 auto 2rem;position:relative}
+.hero-meta{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;position:relative}
+.hero-meta-item .val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);display:block}
+.hero-meta-item .lbl{font-size:.75rem;color:var(--sage);text-transform:uppercase;letter-spacing:.1em}
+
+/* GRADE TABS */
+.grade-switcher{display:flex;background:white;border-bottom:2px solid #E5E0D8;position:sticky;top:56px;z-index:50;overflow-x:auto}
+.grade-tab{padding:.75rem 1.4rem;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-2px}
+.grade-tab:hover{color:var(--forest)}
+.grade-tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+.grade-band{display:none;padding:2rem 0}
+.grade-band.active{display:block}
+
+/* SECTION HEADINGS */
+.section-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--forest);margin:2.5rem 0 1.25rem;padding-bottom:.5rem;border-bottom:3px solid var(--sage)}
+.section-title span{color:var(--gold)}
+
+/* CALENDAR */
+.calendar{display:grid;gap:.7rem;margin:1.5rem 0}
+.cal-row{display:grid;grid-template-columns:155px 1fr;gap:1rem;align-items:center}
+.cal-date{font-size:.75rem;font-weight:600;color:var(--muted);text-align:right}
+.cal-bar{height:42px;border-radius:4px;display:flex;align-items:center;padding:0 1rem;font-weight:600;font-size:.88rem;color:white;cursor:pointer;transition:filter .2s}
+.cal-bar:hover{filter:brightness(1.1)}
+.cal-bar.u1{background:var(--u1)}.cal-bar.u2{background:var(--u2)}.cal-bar.u3{background:var(--u3)}.cal-bar.u4{background:var(--u4)}
+.cal-bar.holiday{background:var(--gold);color:var(--forest)}.cal-bar.flex{background:#999}.cal-bar.weather{background:#5B8FA8}
+.cal-tag{margin-left:auto;font-size:.68rem;background:rgba(255,255,255,.25);padding:.12rem .5rem;border-radius:2px}
+
+/* UNIT CARDS */
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1.5rem 0}
+@media(max-width:640px){.unit-grid{grid-template-columns:1fr}}
+.unit-card{border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s,box-shadow .2s;background:var(--paper)}
+.unit-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.uc-head{padding:1.1rem 1.4rem;color:white}
+.uc-head.u1{background:var(--u1)}.uc-head.u2{background:var(--u2)}.uc-head.u3{background:var(--u3)}.uc-head.u4{background:var(--u4)}
+.uc-num{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:.2rem}
+.uc-head h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;line-height:1.2}
+.uc-body{padding:1.1rem 1.4rem}
+.uc-pairing{font-size:.78rem;color:var(--bark);font-weight:600;background:var(--cream);padding:.35rem .7rem;border-radius:3px;margin-bottom:.7rem}
+.uc-q{font-size:.85rem;color:var(--muted);font-style:italic;line-height:1.4}
+.uc-arrow{text-align:right;margin-top:.75rem;font-size:.75rem;font-weight:600;color:var(--forest);text-transform:uppercase;letter-spacing:.05em}
+
+/* UNIT DETAIL */
+.unit-hero{padding:3rem 2rem 2rem;color:white}
+.unit-hero.u1{background:var(--u1)}.unit-hero.u2{background:var(--u2)}.unit-hero.u3{background:var(--u3)}.unit-hero.u4{background:var(--u4)}
+.unit-back{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7;cursor:pointer;margin-bottom:.75rem;display:inline-flex;align-items:center;gap:.4rem}
+.unit-back:hover{opacity:1}
+.unit-hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;line-height:1.1;margin-bottom:.5rem}
+.unit-meta{display:flex;gap:2rem;flex-wrap:wrap;font-size:.83rem;opacity:.85;margin-top:.75rem}
+.unit-meta span::before{content:'⬤ ';font-size:.55em}
+
+/* CONTENT TABS */
+.tabs{display:flex;background:white;border-bottom:2px solid #E5E0D8;position:sticky;top:56px;z-index:50;overflow-x:auto}
+.tab{padding:.85rem 1.2rem;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-2px}
+.tab:hover{color:var(--forest)}.tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+.panel{display:none;padding:2rem}.panel.active{display:block}
+
+/* GRADE BAND PILLS inside panels */
+.band-pills{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0 .75rem}
+.band-pill{padding:.35rem .9rem;border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.band-pill.k2{background:#EBF8F2;color:#2C6B4A;border-color:#A8D4BC}
+.band-pill.g34{background:#EBF0F8;color:#2C4A7A;border-color:#A8BCd4}
+.band-pill.g56{background:#F8EBF0;color:#7A2C4A;border-color:#D4A8BC}
+.band-pill.active.k2{background:#3B7A5C;color:white;border-color:#3B7A5C}
+.band-pill.active.g34{background:#3B6E8C;color:white;border-color:#3B6E8C}
+.band-pill.active.g56{background:#7A4B8C;color:white;border-color:#7A4B8C}
+.band-content{display:none}.band-content.active{display:block}
+
+/* CONTENT BLOCKS */
+.why-box{background:var(--paper);border-left:4px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.25rem 0;font-size:.93rem;line-height:1.7}
+.week-block{margin:.85rem 0}
+.week-label{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.week-text{background:var(--paper);padding:.85rem 1.1rem;border-radius:6px;font-size:.9rem;line-height:1.65}
+.seminar-q{background:var(--forest);color:var(--cream);padding:1.25rem 1.75rem;border-radius:8px;margin:1.25rem 0}
+.sq-label{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem}
+.seminar-q p{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;line-height:1.5}
+.sq-follow{margin-top:.6rem;font-size:.83rem;color:rgba(247,243,238,.7);line-height:1.6}
+h3.sub{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--forest);margin:1.75rem 0 .65rem}
+h4.sublabel{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:1.1rem 0 .4rem}
+.prompt{background:var(--paper);border-radius:6px;padding:.85rem 1.1rem;margin:.4rem 0;font-size:.88rem;line-height:1.6;border-left:3px solid var(--sage)}
+.nfcard{background:var(--paper);border-radius:6px;padding:.85rem 1.1rem;margin:.4rem 0;border-left:3px solid var(--gold);font-size:.88rem}
+.nfcard strong{color:var(--bark)}
+.nfnote{font-size:.78rem;color:var(--muted);margin-top:.15rem}
+.film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.65rem;margin:.75rem 0}
+.film-card{background:var(--paper);border:1px solid #E5E0D8;border-radius:6px;padding:.65rem .9rem;font-size:.83rem}
+.film-card strong{display:block;color:var(--forest);margin-bottom:.15rem}
+.book-list{list-style:none}
+.book-list li{padding:.45rem 0;border-bottom:1px solid #EDE8E0;font-size:.9rem;display:flex;align-items:baseline;gap:.65rem;flex-wrap:wrap}
+.book-list li:last-child{border-bottom:none}
+.book-title{font-weight:600}.book-author{color:var(--muted);font-size:.85rem}
+.book-note{font-size:.73rem;background:#EDE8E0;padding:.08rem .45rem;border-radius:2px;color:var(--bark);font-weight:600;white-space:nowrap}
+.lvl{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .55rem;border-radius:2px;margin-right:.4rem}
+.lvl-k2{background:#D4EDD8;color:#2C6B35}.lvl-34{background:#D4E4F0;color:#1A4F7A}.lvl-56{background:#EDD4F0;color:#5A1A7A}
+.lvl-gn{background:#F0E4D4;color:#7A4A1A}.lvl-lo{background:#D4EDD8;color:#2C6B35}.lvl-mid{background:#D4E4F0;color:#1A4F7A}.lvl-hi{background:#EDD4F0;color:#5A1A7A}.lvl-cl{background:#F0D4D4;color:#7A1A1A}
+.note-box{background:#FFF8E8;border:1px solid #E8D8A0;border-radius:6px;padding:.85rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#7A5A10}
+.note-box::before{content:'⚠ ';font-weight:700}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+@media(max-width:540px){.vocab-grid{grid-template-columns:1fr}}
+.vocab-item{background:var(--paper);border-radius:6px;padding:.65rem .9rem;font-size:.85rem;border-left:3px solid var(--moss)}
+.vocab-item strong{color:var(--forest)}
+.writing-band{background:var(--paper);border-radius:8px;padding:1rem 1.25rem;margin:.5rem 0;border-left:4px solid var(--moss)}
+.writing-band-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--moss);margin-bottom:.3rem}
+
+/* STANDARDS PAGE */
+.std-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+@media(max-width:640px){.std-grid{grid-template-columns:1fr}}
+.std-card{background:var(--paper);border-radius:8px;padding:1.1rem;border:1px solid #E5E0D8}
+.std-card h4{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem}
+.std-row{display:flex;gap:.65rem;padding:.35rem 0;border-bottom:1px solid #EDE8E0;font-size:.83rem}
+.std-row:last-child{border-bottom:none}
+.std-code{font-weight:700;color:var(--forest);min-width:115px}
+.std-desc{color:var(--muted)}
+
+/* BOOKS PAGE */
+.books-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}
+.filter-btn{padding:.3rem .85rem;border-radius:100px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid #C8C0B4;background:var(--paper);color:var(--ink);transition:all .15s}
+.filter-btn.active{background:var(--forest);color:white;border-color:var(--forest)}
+
+footer{text-align:center;padding:2.5rem;font-size:.8rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Curiosity Grove <span>Academy</span></div>
+  <a href="#" class="active" onclick="showPage('home',this)">Overview</a>
+  <a href="#" onclick="showPage('units',this)">Units</a>
+  <a href="#" onclick="showPage('standards',this)">Standards</a>
+  <a href="#" onclick="showPage('books',this)">Books</a>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">Teacher Edition · 2026–2027</div>
+    <h1>CGA Literacy &amp; Content <em>Framework</em></h1>
+    <p>Four literary lenses. Cross-curricular nonfiction pairings. Student choice across K–6.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="val">4</span><span class="lbl">Literary Units</span></div>
+      <div class="hero-meta-item"><span class="val">K–6</span><span class="lbl">All Grades</span></div>
+      <div class="hero-meta-item"><span class="val">36</span><span class="lbl">School Weeks</span></div>
+      <div class="hero-meta-item"><span class="val">3</span><span class="lbl">Grade Tiers</span></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- GRADE SWITCHER -->
+    <div class="grade-switcher">
+      <button class="grade-tab active" onclick="switchGrade('all',this)">All Grades</button>
+      <button class="grade-tab" onclick="switchGrade('k2',this)">K–2 Read-Aloud</button>
+      <button class="grade-tab" onclick="switchGrade('g34',this)">Grades 3–4 Partner</button>
+      <button class="grade-tab" onclick="switchGrade('g56',this)">Grades 5–6 Solo</button>
+    </div>
+
+    <div id="band-all" class="grade-band active">
+      <h2 class="section-title">Year at a <span>Glance</span></h2>
+      <div class="calendar">
+        <div class="cal-row"><div class="cal-date">Aug 11 – Oct 3</div><div class="cal-bar u1" onclick="openUnit(1)">Unit 1 — Hero's Journey <span class="cal-tag">Dinosaurs & Rocks</span></div></div>
+        <div class="cal-row"><div class="cal-date">Oct 6 – Nov 21</div><div class="cal-bar u2" onclick="openUnit(2)">Unit 2 — Character & Transformation <span class="cal-tag">Native Peoples</span></div></div>
+        <div class="cal-row"><div class="cal-date">Dec 1 – Dec 19</div><div class="cal-bar holiday">Holidays Around the World</div></div>
+        <div class="cal-row"><div class="cal-date">~Dec 22</div><div class="cal-bar flex">Flex Week</div></div>
+        <div class="cal-row"><div class="cal-date">Jan 5 – Feb 20</div><div class="cal-bar u3" onclick="openUnit(3)">Unit 3 — Point of View & Narrator's Lens <span class="cal-tag">Poetry</span></div></div>
+        <div class="cal-row"><div class="cal-date">Feb 23 – Apr 17</div><div class="cal-bar u4" onclick="openUnit(4)">Unit 4 — Theme Across Texts & Genres <span class="cal-tag">Plants & Bugs</span></div></div>
+        <div class="cal-row"><div class="cal-date">Apr 20 – May 21</div><div class="cal-bar weather">Weather Unit — Informational Reading & Writing</div></div>
+        <div class="cal-row"><div class="cal-date">Late May</div><div class="cal-bar flex">Flex Week</div></div>
+      </div>
+
+      <h2 class="section-title">Three-Tier <span>Structure</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:2rem">
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #3B7A5C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3B7A5C;margin-bottom:.4rem">K–2</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Picture Book Read-Aloud</strong>
+          <span style="font-size:.85rem;color:var(--muted)">One shared picture book read aloud by the teacher. All discussion, comprehension, and vocabulary work through that shared text. Oral and drawn responses for K–1.</span>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #3B6E8C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3B6E8C;margin-bottom:.4rem">Grades 3–4</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Partner Reading</strong>
+          <span style="font-size:.85rem;color:var(--muted)">Tiered menu: picture books for developing readers, early chapter books for mid-level, shorter novels for strong readers. Partners read together, discuss, then join whole-class seminar.</span>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #7A4B8C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7A4B8C;margin-bottom:.4rem">Grades 5–6</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Solo Independent Reading</strong>
+          <span style="font-size:.85rem;color:var(--muted)">Full book menu, individual reading journals, full Socratic seminar. Same literary lens and driving question as K–4 with more analytical writing expectations.</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Seminar Questions at a <span>Glance</span></h2>
+      <div style="display:grid;gap:.65rem;margin-bottom:2.5rem">
+        <div class="seminar-q"><div class="sq-label">Unit 1 — Hero's Journey</div><p>What does a hero — real or fictional — have to lose before they can truly transform?</p></div>
+        <div class="seminar-q" style="background:var(--u2)"><div class="sq-label">Unit 2 — Character & Transformation</div><p>Can a character change without wanting to — and is that still transformation?</p></div>
+        <div class="seminar-q" style="background:var(--u3)"><div class="sq-label">Unit 3 — Point of View</div><p>Whose story isn't being told — in your novel or in the poems we read — and why does that matter?</p></div>
+        <div class="seminar-q" style="background:var(--u4)"><div class="sq-label">Unit 4 — Belonging & Identity</div><p>Does belonging require you to change who you are, or does it require finding people who accept who you already are?</p></div>
+      </div>
+    </div>
+
+    <div id="band-k2" class="grade-band">
+      <h2 class="section-title">K–2 <span>Picture Book Anchors</span></h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem">One primary anchor per unit read multiple times. First for enjoyment, second for noticing, third for discussion and response.</p>
+      <div style="display:grid;gap:1rem">
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u1);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 1 — Hero's Journey</strong></div>
+          <div style="padding:1rem 1.25rem">
+            <div style="font-size:.85rem;margin-bottom:.5rem"><strong>Primary:</strong> Last Stop on Market Street, Brave Irene, The Empty Pot</div>
+            <div style="font-size:.85rem;color:var(--muted)"><strong>Additional:</strong> Jabari Jumps, The Adventures of Beekle ⭐, How to Catch a Star</div>
+            <div class="note-box" style="margin-top:.75rem">Beekle is especially powerful for framework-building — every hero's journey stage is visible. Use it first to map stages explicitly.</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u2);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 2 — Character & Transformation</strong></div>
+          <div style="padding:1rem 1.25rem">
+            <div style="font-size:.85rem;margin-bottom:.5rem"><strong>Primary:</strong> The Name Jar, Enemy Pie, Each Kindness</div>
+            <div style="font-size:.85rem;color:var(--muted)"><strong>Additional:</strong> Those Shoes, Fry Bread, When We Were Alone</div>
+            <div class="note-box" style="margin-top:.75rem">Each Kindness is powerful because the transformation is incomplete — she misses her chance. Creates rich discussion about what doesn't change and why.</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u3);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 3 — Point of View</strong></div>
+          <div style="padding:1rem 1.25rem">
+            <div style="font-size:.85rem;margin-bottom:.5rem"><strong>Primary:</strong> The True Story of the Three Little Pigs ⭐, Voices in the Park, Wolf!</div>
+            <div style="font-size:.85rem;color:var(--muted)"><strong>Additional:</strong> Alfie, The Day You Begin, Duck! Rabbit!</div>
+            <div class="note-box" style="margin-top:.75rem">True Story of the Three Little Pigs is the universal hook at every grade level. Use this first — always.</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u4);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 4 — Belonging & Identity</strong></div>
+          <div style="padding:1rem 1.25rem">
+            <div style="font-size:.85rem;margin-bottom:.5rem"><strong>Primary:</strong> The Velveteen Rabbit ⭐, Big Al, Each Little Bird That Sings</div>
+            <div style="font-size:.85rem;color:var(--muted)"><strong>Additional:</strong> The Day You Begin, Hair Love, We Are Water Protectors, The Smallest Girl</div>
+            <div class="note-box" style="margin-top:.75rem">The Velveteen Rabbit is the richest anchor — becoming 'real' through love maps directly onto the belonging seminar question. Read it slowly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="band-g34" class="grade-band">
+      <h2 class="section-title">Grades 3–4 <span>Partner Reading Menus</span></h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem">Each menu is tiered. Partners choose one book together. They discuss with their partner before joining the whole-class seminar conversation.</p>
+      <div style="display:grid;gap:1rem">
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u1);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 1 — Hero's Journey</strong></div>
+          <div style="padding:1rem 1.25rem;font-size:.85rem">
+            <div><strong>Picture book:</strong> Brave Irene, The Adventures of Beekle</div>
+            <div style="margin-top:.5rem"><strong>Early chapter book:</strong> My Father's Dragon, Flat Stanley, The Boxcar Children</div>
+            <div style="margin-top:.5rem"><strong>Shorter novel:</strong> Zita the Spacegirl, The Wild Robot, How to Train Your Dragon</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u2);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 2 — Character & Transformation</strong></div>
+          <div style="padding:1rem 1.25rem;font-size:.85rem">
+            <div><strong>Picture book:</strong> The Name Jar, Each Kindness</div>
+            <div style="margin-top:.5rem"><strong>Early chapter book:</strong> Charlotte's Web, Because of Winn-Dixie, Shiloh, Sarah Plain and Tall</div>
+            <div style="margin-top:.5rem"><strong>Shorter novel:</strong> Wonder, Holes, Inside Out and Back Again (verse)</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u3);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 3 — Point of View</strong></div>
+          <div style="padding:1rem 1.25rem;font-size:.85rem">
+            <div><strong>Picture book:</strong> Voices in the Park, The True Story of the Three Little Pigs</div>
+            <div style="margin-top:.5rem"><strong>Early chapter book:</strong> My Father's Dragon, Nate the Great, Hilo (graphic novel)</div>
+            <div style="margin-top:.5rem"><strong>Shorter novel:</strong> Coraline, The View from Saturday, Counting by 7s</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;overflow:hidden;border:1px solid #E5E0D8">
+          <div style="background:var(--u4);padding:.75rem 1.25rem"><strong style="color:white;font-size:.9rem">Unit 4 — Belonging & Identity</strong></div>
+          <div style="padding:1rem 1.25rem;font-size:.85rem">
+            <div><strong>Picture book:</strong> Big Al, The Velveteen Rabbit, The Day You Begin</div>
+            <div style="margin-top:.5rem"><strong>Early chapter book:</strong> Charlotte's Web, Because of Winn-Dixie, Each Little Bird That Sings, The Cay</div>
+            <div style="margin-top:.5rem"><strong>Shorter novel:</strong> Front Desk, The Girl Who Drank the Moon, New Kid (graphic novel)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="band-g56" class="grade-band">
+      <h2 class="section-title">Grades 5–6 <span>Unit Cards</span></h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem">Click any unit to see the full detail. Full book menus are in the Books tab.</p>
+      <div class="unit-grid">
+        <div class="unit-card" onclick="showPage('units',document.querySelector(\'nav a:nth-child(3)\')); setTimeout(()=>openUnit(1),50)">
+          <div class="uc-head u1"><div class="uc-num">Unit 1 · Aug–Oct · 7 weeks</div><h3>Hero's Journey</h3></div>
+          <div class="uc-body"><div class="uc-pairing">Paired with: Dinosaurs & Rocks</div><div class="uc-q">"What does a hero have to lose before they can truly transform?"</div><div class="uc-arrow">Open unit →</div></div>
+        </div>
+        <div class="unit-card" onclick="showPage('units',document.querySelector(\'nav a:nth-child(3)\')); setTimeout(()=>openUnit(2),50)">
+          <div class="uc-head u2"><div class="uc-num">Unit 2 · Oct–Nov · 7 weeks</div><h3>Character & Transformation</h3></div>
+          <div class="uc-body"><div class="uc-pairing">Paired with: Native Peoples</div><div class="uc-q">"Can a character change without wanting to — and is that still transformation?"</div><div class="uc-arrow">Open unit →</div></div>
+        </div>
+        <div class="unit-card" onclick="showPage('units',document.querySelector(\'nav a:nth-child(3)\')); setTimeout(()=>openUnit(3),50)">
+          <div class="uc-head u3"><div class="uc-num">Unit 3 · Jan–Feb · 7 weeks</div><h3>Point of View & Narrator's Lens</h3></div>
+          <div class="uc-body"><div class="uc-pairing">Paired with: Poetry</div><div class="uc-q">"Whose story isn't being told — and why does that matter?"</div><div class="uc-arrow">Open unit →</div></div>
+        </div>
+        <div class="unit-card" onclick="showPage('units',document.querySelector(\'nav a:nth-child(3)\')); setTimeout(()=>openUnit(4),50)">
+          <div class="uc-head u4"><div class="uc-num">Unit 4 · Feb–Apr · 7 weeks</div><h3>Theme Across Texts & Genres</h3></div>
+          <div class="uc-body"><div class="uc-pairing">Paired with: Plants & Bugs</div><div class="uc-q">"Does belonging require you to change, or find people who accept you?"</div><div class="uc-arrow">Open unit →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UNITS -->
+<div id="page-units" class="page">
+  <div id="unit-list">
+    <div style="padding:3rem 0 1rem;background:var(--forest)"></div>
+    <div class="container">
+      <h2 class="section-title" style="margin-top:2rem">Four <span>Units</span></h2>
+      <div class="unit-grid">
+        <div class="unit-card" onclick="openUnit(1)"><div class="uc-head u1"><div class="uc-num">Unit 1 · Aug–Oct · 7 weeks</div><h3>Hero's Journey</h3></div><div class="uc-body"><div class="uc-pairing">Paired with: Dinosaurs & Rocks</div><div class="uc-q">"What does a hero have to lose before they can truly transform?"</div><div class="uc-arrow">Explore →</div></div></div>
+        <div class="unit-card" onclick="openUnit(2)"><div class="uc-head u2"><div class="uc-num">Unit 2 · Oct–Nov · 7 weeks</div><h3>Character & Transformation</h3></div><div class="uc-body"><div class="uc-pairing">Paired with: Native Peoples</div><div class="uc-q">"Can a character change without wanting to?"</div><div class="uc-arrow">Explore →</div></div></div>
+        <div class="unit-card" onclick="openUnit(3)"><div class="uc-head u3"><div class="uc-num">Unit 3 · Jan–Feb · 7 weeks</div><h3>Point of View & Narrator's Lens</h3></div><div class="uc-body"><div class="uc-pairing">Paired with: Poetry</div><div class="uc-q">"Whose story isn't being told — and why?"</div><div class="uc-arrow">Explore →</div></div></div>
+        <div class="unit-card" onclick="openUnit(4)"><div class="uc-head u4"><div class="uc-num">Unit 4 · Feb–Apr · 7 weeks</div><h3>Theme Across Texts & Genres</h3></div><div class="uc-body"><div class="uc-pairing">Paired with: Plants & Bugs</div><div class="uc-q">"Does belonging require you to change or to find acceptance?"</div><div class="uc-arrow">Explore →</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="unit-detail" style="display:none">
+    <div id="ud-hero" class="unit-hero u1">
+      <div class="container">
+        <div class="unit-back" onclick="backToUnits()">← All Units</div>
+        <h2 id="ud-title">Unit</h2>
+        <div class="unit-meta" id="ud-meta"></div>
+      </div>
+    </div>
+    <div class="tabs" id="ud-tabs">
+      <button class="tab active" onclick="showTab('arc',this)">Unit Arc</button>
+      <button class="tab" onclick="showTab('nonfiction',this)">Nonfiction</button>
+      <button class="tab" onclick="showTab('seminar',this)">Seminar</button>
+      <button class="tab" onclick="showTab('books56',this)">5–6 Books</button>
+      <button class="tab" onclick="showTab('books34',this)">3–4 Books</button>
+      <button class="tab" onclick="showTab('booksk2',this)">K–2 Books</button>
+      <button class="tab" onclick="showTab('vocab',this)">Vocab & Writing</button>
+      <button class="tab" onclick="showTab('films',this)">Films</button>
+    </div>
+    <div class="container">
+      <div id="panel-arc" class="panel active"></div>
+      <div id="panel-nonfiction" class="panel"></div>
+      <div id="panel-seminar" class="panel"></div>
+      <div id="panel-books56" class="panel"></div>
+      <div id="panel-books34" class="panel"></div>
+      <div id="panel-booksk2" class="panel"></div>
+      <div id="panel-vocab" class="panel"></div>
+      <div id="panel-films" class="panel"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STANDARDS -->
+<div id="page-standards" class="page">
+  <div class="container">
+    <h2 class="section-title" style="margin-top:2rem">CCSS <span>Alignment</span></h2>
+    <p style="color:var(--muted);margin-bottom:2rem">The anchor standard across all four units is RL.5.9 / RL.6.9 — cross-text comparison. Informational standards are hit authentically through the nonfiction pairings.</p>
+    <div class="std-grid">
+      <div class="std-card"><h4>Literary Reading (RL)</h4>
+        <div class="std-row"><span class="std-code">RL.5.2 / RL.6.2</span><span class="std-desc">Theme and summary — Units 1, 2</span></div>
+        <div class="std-row"><span class="std-code">RL.5.3 / RL.6.3</span><span class="std-desc">Character, setting, plot — Unit 2</span></div>
+        <div class="std-row"><span class="std-code">RL.5.5 / RL.6.5</span><span class="std-desc">Story structure — Unit 1</span></div>
+        <div class="std-row"><span class="std-code">RL.5.6 / RL.6.6</span><span class="std-desc">Point of view — Unit 3</span></div>
+        <div class="std-row"><span class="std-code">RL.5.9 / RL.6.9</span><span class="std-desc">Cross-text comparison — All units ⭐</span></div>
+      </div>
+      <div class="std-card"><h4>Informational Reading (RI)</h4>
+        <div class="std-row"><span class="std-code">RI.5.3 / RI.6.3</span><span class="std-desc">Relationships between concepts — Units 1, 2</span></div>
+        <div class="std-row"><span class="std-code">RI.5.6 / RI.6.6</span><span class="std-desc">Author's purpose in nonfiction — Units 2, 3</span></div>
+        <div class="std-row"><span class="std-code">RI.5.9 / RI.6.9</span><span class="std-desc">Integrating multiple sources — Unit 4, Weather</span></div>
+      </div>
+      <div class="std-card"><h4>Writing (W)</h4>
+        <div class="std-row"><span class="std-code">W.5.1 / W.6.1</span><span class="std-desc">Opinion writing — Units 1, 2, 4</span></div>
+        <div class="std-row"><span class="std-code">W.5.2 / W.6.2</span><span class="std-desc">Informational writing — Holidays, Weather</span></div>
+      </div>
+      <div class="std-card"><h4>Writing by Grade Band</h4>
+        <div class="std-row"><span class="std-code">K–1</span><span class="std-desc">Drawing, dictated sentences, oral response</span></div>
+        <div class="std-row"><span class="std-code">2nd</span><span class="std-desc">3–5 sentence paragraph</span></div>
+        <div class="std-row"><span class="std-code">3rd</span><span class="std-desc">Paragraph with claim + 2 evidence pieces</span></div>
+        <div class="std-row"><span class="std-code">4th</span><span class="std-desc">Multi-paragraph comparative response</span></div>
+        <div class="std-row"><span class="std-code">5th</span><span class="std-desc">5-paragraph opinion essay</span></div>
+        <div class="std-row"><span class="std-code">6th</span><span class="std-desc">Comparative analytical essay (2+ texts)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKS -->
+<div id="page-books" class="page">
+  <div class="container">
+    <h2 class="section-title" style="margin-top:2rem">Complete Book <span>Menus</span></h2>
+    <div class="books-filter">
+      <button class="filter-btn active" onclick="filterBooks('all',this)">All</button>
+      <button class="filter-btn" onclick="filterBooks('k2',this)">K–2 Picture Books</button>
+      <button class="filter-btn" onclick="filterBooks('g34',this)">3–4 Partner</button>
+      <button class="filter-btn" onclick="filterBooks('g56',this)">5–6 Solo</button>
+      <button class="filter-btn" onclick="filterBooks('u1',this)">Unit 1</button>
+      <button class="filter-btn" onclick="filterBooks('u2',this)">Unit 2</button>
+      <button class="filter-btn" onclick="filterBooks('u3',this)">Unit 3</button>
+      <button class="filter-btn" onclick="filterBooks('u4',this)">Unit 4</button>
+    </div>
+
+    <div id="books-content"></div>
+    <div style="height:3rem"></div>
+  </div>
+</div>
+
+<footer>Curiosity Grove Academy · Literacy & Content Framework · 2026–2027 · Teacher Edition</footer>
+
+<script>
+const UNITS = {
+  1: {
+    title:"Hero's Journey", color:"u1",
+    meta:["Aug 11 – Oct 3","7 Weeks","Paired: Dinosaurs & Rocks"],
+    why:"The scientists who shaped paleontology — Mary Anning, Roy Chapman Andrews — lived stories that map almost perfectly onto the hero's journey framework. They received a call (obsessive curiosity), crossed into the unknown, faced trials, and returned with something that changed humanity's understanding of the world. Reading their nonfiction stories mid-unit makes the framework feel ancient and alive rather than like a literary formula.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Everyone together. Introduce the hero's journey using a film clip (Moana Act 1 or Hercules). Build a class anchor chart of the stages. Students practice applying the framework to something they already know."},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose their text. Introduce the reading journal. Begin conferences. Students are locating their hero in the framework, not analyzing deeply yet."},
+      {l:"Weeks 3–4 — Nonfiction Pairing",t:"Mid-unit pivot. Whole class reads a shared nonfiction text about a real-life hero's journey in science. Discussion bridge: How does Mary Anning's story follow the same stages as your fictional hero?"},
+      {l:"Week 5 — Mid-Unit Discussion",t:"Small groups comparing where each hero currently is. 'My hero just crossed the threshold — has yours? What did that look like?'"},
+      {l:"Week 6 — Socratic Seminar",t:"Driving question: What does a hero have to lose before they can truly transform? Students bring all three texts."},
+      {l:"Week 7 — Culminating Writing",t:"5th: Opinion paragraph on the most essential stage of the hero's journey. 6th: Comparative paragraph connecting novel hero to real scientist."},
+    ],
+    nfShared:[
+      {t:"Fossil Hunter: How Mary Anning Changed the Science of Prehistoric Life",a:"Cheryl Blackford",n:"Grades 4–6; narrative nonfiction"},
+      {t:"Dinosaur Lady",a:"Linda Skeers",n:"Picture book biography; great for K–4"},
+      {t:"Mary Anning and Paleontology for Kids",a:"Stephanie Bearce",n:"Grades 4–6; includes activities"},
+    ],
+    nfAdditional:[
+      {t:"Jurassic Girl",a:"Michele C. Hollow"},
+      {t:"Who Was Roy Chapman Andrews?",a:"Who Was? series",n:"His story is essentially Indiana Jones as real hero's journey"},
+    ],
+    nfBridge:["Mary Anning was 12 when she made her first major discovery. Does her age change how you think about what it means to be a hero?","What was Mary Anning's 'call to adventure'? Did she choose it or did it choose her?","Scientists didn't give her credit because she was a woman. How does that change the meaning of her 'return'?","Compare a trial your fictional hero faced to a real obstacle Anning faced."],
+    seminarQ:"What does a hero — real or fictional — have to lose before they can truly transform?",
+    seminarF:"Does your hero choose their journey or have it thrust upon them? What does the real scientist's story add to your understanding of heroism? Would your hero call themselves a hero?",
+    seminar34:"What does your hero have to lose or leave behind before they can truly change?",
+    seminarK2:"What did the hero have to give up or get through to finish their journey?",
+    journal56:{
+      "Tracking the Lens":["Where is your hero right now in the journey?","Has your hero received a call to adventure? Did they resist it? Why?","Who is your hero's mentor figure? What have they given the hero?"],
+      "Thinking Beyond Plot":["Why did the author choose to start the story where they did?","Compare your fictional hero to Mary Anning. What do they have in common?"],
+      "Personal Connection":["Describe a moment where the hero had no good options. Have you ever felt that way?","If you were at this point in your hero's journey, what would you do differently?"]
+    },
+    journal34:["Where is your hero right now? Name the stage and give one piece of evidence.","Who is the mentor? What did they give the hero — literally or as a lesson?","Compare your hero to Mary Anning from our nonfiction text.","Draw a journey map. Label each stage."],
+    journalK2:{draw:["Draw your hero at the beginning. Draw them at the end. What changed?","Draw the hardest moment. Label what the hero was feeling."],oral:["Tell me one thing the hero had to do that was hard.","What did the hero bring back from their journey?"]},
+    films:[{t:"Moana",n:"Stages map almost perfectly; great for pausing and labeling"},{t:"The Lion King",n:"Rooted in ancient story; strong mentor discussion"},{t:"Mulan",n:"Reluctant hero driven by love"},{t:"How to Train Your Dragon",n:"Connects to book menu"},{t:"Hercules",n:"Literally mythology"}],
+    books56:{gn:["Amulet (series) — Kazu Kibuishi","Bone — Jeff Smith"],lo:["The Wild Robot — Peter Brown","Zita the Spacegirl — Ben Hatke","How to Train Your Dragon — Cressida Cowell"],mid:["Hatchet — Gary Paulsen","Gregor the Overlander — Suzanne Collins","Dragon Rider — Cornelia Funke","Wilderlore — Amanda Foody","Island of the Blue Dolphins — Scott O'Dell","Robin Hood — Howard Pyle (Classic)"],hi:["A Wrinkle in Time — Madeleine L'Engle","Esperanza Rising — Pam Muñoz Ryan","The Hobbit — J.R.R. Tolkien","Dragonslayer (Wings of Fire: Legends) — Tui T. Sutherland","The Odyssey — Gillian Cross retelling (Classic)"]},
+    books34:{pb:["Brave Irene — William Steig","The Adventures of Beekle — Dan Santat"],ch:["My Father's Dragon — Ruth Stiles Gannett","Flat Stanley — Jeff Brown","The Boxcar Children — Gertrude Chandler Warner"],nov:["Zita the Spacegirl — Ben Hatke (graphic novel)","The Wild Robot — Peter Brown","How to Train Your Dragon — Cressida Cowell"]},
+    booksK2:{primary:["Last Stop on Market Street — Matt de la Peña | Newbery Medal; quiet transformation hero","Brave Irene — William Steig | Crystal-clear call, trials, and return","The Empty Pot — Demi | A boy returns with integrity intact — what does a hero really return with?"],additional:["Jabari Jumps — Gaia Cornwall | Small-scale hero's journey with a great mentor","The Adventures of Beekle — Dan Santat | Caldecott; every stage visible ⭐","How to Catch a Star — Oliver Jeffers | Gentle; surprising return-with-the-elixir ending"],note:"The Adventures of Beekle is especially powerful for framework-building — every stage is visible. Use it first to map stages explicitly, then move to your primary anchor."},
+    vocab:["Hero — someone who accepts a challenge and is changed by it","Call — the moment the hero is pushed to begin their journey","Threshold — the point of no return","Trial — a challenge or obstacle the hero must face","Mentor — a guide who gives the hero what they need","Transform — to change into something new","Return — coming home with something you didn't have before"],
+    writing:{k:"Draw hero at beginning and end. Dictate: At the beginning ___ was ___. At the end they were ___.",g1:"2–3 sentences: My hero is ___. They had to ___. At the end they ___. Add a drawing.",g2:"Paragraph: introduce hero, describe one trial, explain how they changed.",g3:"Paragraph with claim: My hero is a true hero because ___. Two pieces of evidence.",g4:"Comparison paragraph: Compare your hero to Mary Anning. What do both stories say about heroism?"}
+  },
+  2: {
+    title:"Character & Transformation", color:"u2",
+    meta:["Oct 6 – Nov 21","7 Weeks","Paired: Native Peoples"],
+    why:"The Native Peoples unit asks deep questions about identity and what it means to hold onto who you are when outside forces try to change you. That maps directly onto character transformation — with a crucial distinction: students examine the difference between transformation that comes from within and transformation that is imposed from outside. Indigenous history gives that distinction weight and moral seriousness. Nonfiction texts here should center Indigenous voices.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Open with the central question: What has to happen to a person for them to truly change — and does it matter whether they chose it? Launch with a shared picture book read-aloud. Introduce the external pressure vs. internal change distinction."},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose texts. Reading journal tracks two columns: external pressure and internal change."},
+      {l:"Weeks 3–4 — Nonfiction Pairing",t:"Whole class reads shared nonfiction centering Indigenous resilience. Discussion bridge: The people in this book faced enormous pressure to change who they were. How did they respond?"},
+      {l:"Week 5 — Mid-Unit Discussion",t:"Has your character actually changed yet, or are they just reacting? That distinction is meaty enough for 20 minutes of genuine conversation."},
+      {l:"Week 6 — Socratic Seminar",t:"Can a character change without wanting to — and is that still transformation?"},
+      {l:"Week 7 — Culminating Writing",t:"5th: Character analysis paragraph. 6th: Comparative essay connecting fictional transformation to a real person from the nonfiction."},
+    ],
+    nfShared:[{t:"When We Were Alone",a:"David A. Robertson",n:"Picture book; quiet, powerful; all ages"},{t:"An Indigenous Peoples' History of the United States for Young People",a:"Dunbar-Ortiz, Mendoza & Reese",n:"Selected chapters; grades 5–6"},{t:"What the Eagle Sees",a:"Eldon Yellowhorn",n:"Grades 4+; Indigenous voices centered"}],
+    nfAdditional:[{t:"The Heartbeat of Wounded Knee (YA Adaptation)",a:"David Treuer",n:"Native culture thriving, not defeated"},{t:"Go Show the World",a:"Wab Kinew"},{t:"Fry Bread",a:"Kevin Noble Maillard",n:"Culture, belonging, resilience"}],
+    nfBridge:["The people in this nonfiction text faced enormous pressure to change who they were. Did they? How?","What is the difference between a character who chooses to change and one who is forced to?","How does the author feel about the people they're writing about? How can you tell?","What would your fictional character think about the people in this nonfiction book?"],
+    seminarQ:"Can a character change without wanting to — and is that still transformation? What do your texts say?",
+    seminarF:"What forces are pushing your character to change? Is there a character who refuses to change — what happens to them?",
+    seminar34:"Can a character change without wanting to — and is that still transformation?",
+    seminarK2:"Did this character want to change? What made them change? Was that fair?",
+    journal56:{"Tracking the Lens":["Draw a line: external pressure on one side, internal change on the other. What do you notice?","Has your character actually changed yet, or are they just reacting?","What does your character believe at the beginning that they'll need to let go of?"],"Thinking Beyond Plot":["What single event has had the biggest impact on who your character is becoming?","Compare your character's transformation to someone from the nonfiction text."],"Personal Connection":["Think of a time you changed because of something that happened to you. Was it something you would have chosen?","Is there something about yourself you've worked hard to hold onto?"]},
+    journal34:["T-chart: external pressure / internal change. Fill both sides with evidence.","Has your character actually changed yet? How can you tell?","What does your character believe at the beginning that they'll need to let go of?","Connect your character's experience to something from our nonfiction text."],
+    journalK2:{draw:["Draw the character at the beginning. Draw them at the end. What changed?","Draw something external that happened. Draw how it changed them inside."],oral:["What happened to this character? Did they choose it?","Has anything ever made YOU change? Did you want to?"]},
+    films:[{t:"Up",n:"First 10 minutes do more than most novels"},{t:"Encanto",n:"Quiet, internal transformation; family pressure as external force"},{t:"Ratatouille",n:"Remy changes and resists change simultaneously"},{t:"Matilda",n:"External pressure, internal strength"},{t:"Brave",n:"Transformation driven by relationship"}],
+    books56:{gn:["El Deafo — Cece Bell"],lo:["Shiloh — Phyllis Reynolds Naylor","Because of Winn-Dixie — Kate DiCamillo","The Jungle Book — Kipling (adapted, Classic)"],mid:["Wonder — R.J. Palacio","Holes — Louis Sachar","Inside Out and Back Again — Thanhha Lai (verse)","The Secret Garden — Burnett (Classic)"],hi:["Seedfolks — Paul Fleischman","Maniac Magee — Jerry Spinelli","Little Women — Louisa May Alcott (Classic)","Oliver Twist — Dickens (adapted, Classic)"]},
+    books34:{pb:["The Name Jar — Yangsook Choi","Each Kindness — Jacqueline Woodson"],ch:["Charlotte's Web — E.B. White","Because of Winn-Dixie — Kate DiCamillo","Shiloh — Phyllis Reynolds Naylor","Sarah, Plain and Tall — Patricia MacLachlan"],nov:["Wonder — R.J. Palacio","Holes — Louis Sachar","Inside Out and Back Again — Thanhha Lai (verse)"]},
+    booksK2:{primary:["The Name Jar — Yangsook Choi | Unhei reclaims her identity rather than abandoning it. Rich for chosen vs. imposed change.","Enemy Pie — Derek Munson | A boy's attitude transforms through connection. Clear and accessible.","Each Kindness — Jacqueline Woodson | The transformation is incomplete — powerful for discussing what doesn't change. ⭐"],additional:["Those Shoes — Maribeth Boelts | Quiet transformation under social pressure","Fry Bread — Kevin Noble Maillard | Transformation through cultural pride; connects to nonfiction pairing","When We Were Alone — David A. Robertson | For discussing imposed change"],note:"Each Kindness is especially powerful because the character does NOT fully transform — she misses her chance. Creates rich discussion: What would it have taken? Does choosing not to change have consequences?"},
+    vocab:["Transform — to change into something different","External — coming from the outside","Internal — happening on the inside","Pressure — a force that pushes on something","Resilience — the ability to hold on through hard things","Identity — who you are; what makes you, you","Reaction — what you do when something happens to you"],
+    writing:{k:"Draw character at beginning and end. Dictate: At the beginning ___ was ___. At the end they were ___.",g1:"2–3 sentences about what changed and why. Frame: ___ changed because ___.",g2:"Paragraph: character at beginning, one event, how they are different at the end.",g3:"Character analysis: My character changed when ___. Before they were ___. After, they became ___.",g4:"Comparison paragraph: your character vs. a person from nonfiction. Was one chosen, one imposed?"}
+  },
+  3: {
+    title:"Point of View & Narrator's Lens", color:"u3",
+    meta:["Jan 5 – Feb 20","7 Weeks","Paired: Poetry"],
+    why:"Point of view is the standard students most often think they already understand and don't. Pairing it with poetry is inspired because poetry compresses narrator's lens into the smallest possible space — every word choice is a point of view decision. Fractured fairy tales are the K–4 gateway because students already know the original story and immediately feel how perspective changes everything.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Hook with The True Story of the Three Little Pigs — same event, completely different narrator. Then pivot to poetry: read 2–3 short poems on the same subject from different speakers."},
+      {l:"Week 2 — Poetry Deep Dive",t:"Two weeks dedicated to poetry as the content unit. Read and discuss poems exploring speaker identity and limited perspective. Students write their own poems from a specific speaker's POV."},
+      {l:"Week 3 — Novel Book Choice & Launch",t:"Students choose their novel. Reading journal asks: What does my narrator know? What don't they know? What might they be hiding or missing?"},
+      {l:"Weeks 4–5 — Independent Reading + Nonfiction",t:"Mid-unit nonfiction on how authors choose narrators and why. Discussion bridge: Can you catch your narrator doing what the article describes?"},
+      {l:"Week 6 — Classic Excerpt",t:"Read two chapters from To Kill a Mockingbird together as a class (whole-class only, not independent read). Scout as limited child narrator — same concept as poetry."},
+      {l:"Week 7 — Seminar & Writing",t:"Seminar: Whose story isn't being told? 5th grade paragraph on POV in one key scene. 6th grade comparative analysis of a poem and novel passage."},
+    ],
+    nfShared:[{t:"I, Too, Am America",a:"Langston Hughes, illus. Bryan Collier",n:"Who gets to be the narrator of American history?"},{t:"Voice of Freedom: Fannie Lou Hamer",a:"Carole Boston Weatherford",n:"Narrative nonfiction in verse; bridges poetry to POV"},{t:"The Poet X",a:"Elizabeth Acevedo",n:"Verse novel; narrator's voice is the explicit subject; higher readers"}],
+    nfAdditional:[{t:"Short piece on how memoirists choose what to include and leave out",n:"RI.5.6 author's purpose"},{t:"Author interview on narrator choice",n:"Available on Scholastic and ReadingRockets"}],
+    nfBridge:["Fannie Lou Hamer told her own story in her own words. Why does that matter?","What does the speaker of this poem know that we don't? What do they choose to leave out?","Compare the speaker of a poem we read to the narrator of your novel.","Who is missing from this poem's perspective?"],
+    seminarQ:"Whose story isn't being told — in your novel or in the poems we read — and why does that matter?",
+    seminarF:"What would change if the narrator were someone else? Do you trust your narrator? Has their perspective limited your understanding?",
+    seminar34:"Whose story isn't being told in your book — and why does that matter?",
+    seminarK2:"If someone else told this story, what would be different? What would we miss?",
+    journal56:{"Tracking the Lens":["What does your narrator know that other characters don't? What do they NOT know?","Find a moment where you suspect your narrator isn't giving you the full picture.","If your narrator were a person sitting across from you, what would you want to ask them?"],"Thinking Beyond Plot":["Pick one scene. How would it read from another character's POV? What would we gain or lose?","Why did the author choose this narrator? What can they do that no other character could?","Compare your novel's narrator to the speaker of a poem we studied."],"Personal Connection":["Think of a time you only had one side of a story. How did getting more information change things?","Whose perspective is missing from your book? Does that feel intentional?"]},
+    journal34:["Who is your narrator? Write three things they know and one thing they might be missing.","Find a moment where your narrator seems to miss something important.","Compare the speaker of one of our poems to your narrator.","Whose story is NOT being told in your book? Why do you think the author left them out?"],
+    journalK2:{draw:["Draw what the wolf sees. Draw what the pigs see. What is different?","Draw your favorite scene from a different character's point of view."],oral:["Who is telling this story? What do they know? What don't they know?","If the other character told this story, what would they say?"]},
+    films:[{t:"Harriet the Spy",n:"Notebook as visible narrator's lens"},{t:"Megamind",n:"Villain's story from villain's POV — students immediately get why perspective changes everything"},{t:"The Princess Bride",n:"Framing narrator constantly shapes how we receive the story"}],
+    books56:{gn:["Hilo: The Boy Who Crashed to Earth — Judd Winick (lower)","Stitches — David Small (preview for content)"],lo:["My Father's Dragon — Ruth Stiles Gannett","Hilo — Judd Winick"],mid:["Counting by 7s — Holly Goldberg Sloan","The View from Saturday — E.L. Konigsburg","Coraline — Neil Gaiman","The Call of the Wild — Jack London (Classic)"],hi:["The True Confessions of Charlotte Doyle — Avi | narrator actively unreliable","Fever 1793 — Laurie Halse Anderson","Treasure Island — Robert Louis Stevenson (Classic)","To Kill a Mockingbird — Harper Lee | 2 chapters, whole class only"]},
+    books34:{pb:["Voices in the Park — Anthony Browne","The True Story of the Three Little Pigs — Jon Scieszka"],ch:["My Father's Dragon — Ruth Stiles Gannett | layered narrator","Nate the Great — Marjorie Weinman Sharmat | what does Nate miss?","Hilo: The Boy Who Crashed to Earth — Judd Winick (graphic novel)"],nov:["Coraline — Neil Gaiman","The View from Saturday — E.L. Konigsburg | multiple narrators","Counting by 7s — Holly Goldberg Sloan"]},
+    booksK2:{primary:["The True Story of the Three Little Pigs — Jon Scieszka | THE anchor text at every grade level. Use this first, always. ⭐","Voices in the Park — Anthony Browne | Four characters experience the same park visit. Extraordinary for showing how perspective changes everything.","Wolf! — Becky Bloom | The wolf's perspective and the animals' perspective are delightfully at odds."],additional:["Alfie — Thyra Heder | A girl and her turtle tell the same story from two perspectives","The Day You Begin — Jacqueline Woodson | About feeling like an outsider and finally sharing your story","Duck! Rabbit! — Amy Krouse Rosenthal | Two narrators see the same image completely differently. Perfect K–1 entry point."],note:"Read Voices in the Park slowly — one voice per day if possible. Have students predict what the other characters are seeing in the same scene before you turn the page."},
+    vocab:["Narrator — the person or voice telling the story","Point of view — whose eyes we see the story through","Perspective — the way someone sees the world based on who they are","Limited — when a narrator only knows part of what's happening","Reliable — a narrator you can trust","Speaker — the voice in a poem","Bias — when a narrator favors one side of a story"],
+    writing:{k:"Draw the story from a different character's eyes. Dictate: ___ would say ___ because ___.",g1:"2–3 sentences: In this story ___ is telling it. They see ___. They don't know ___.",g2:"Paragraph: who is telling the story, what they know, one thing they might be missing.",g3:"Paragraph: How does the narrator's POV shape one important scene? What would change?",g4:"Comparative paragraph: speaker of a poem vs. narrator of your book. What does each reveal? Leave out?"}
+  },
+  4: {
+    title:"Theme Across Texts & Genres", color:"u4",
+    meta:["Feb 23 – Apr 17","7 Weeks","Paired: Plants & Bugs · Theme: Belonging & Identity"],
+    why:"Metamorphosis is the scientific word for transformation, but also one of the oldest metaphors for becoming who you were meant to be. Plants push through concrete. Caterpillars dissolve entirely inside a chrysalis. Seeds travel hundreds of miles before finding the right soil. The Plants & Bugs content unit gives students a scientific lens that deepens the theme of belonging and identity in ways that feel surprising and real.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Launch with the thematic question: Where do you belong, and what happens when you don't know? Open with the first pages of New Kid or The Outsiders. Students do a quick write: a moment when they felt like they belonged, and a moment when they didn't."},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose texts. Reading journal tracks what the book argues about belonging: is it something you find, create, earn, or are born into?"},
+      {l:"Weeks 3–4 — Nonfiction Pairing",t:"Whole class reads nonfiction connecting metamorphosis to belonging. Discussion bridge: A caterpillar has to completely dissolve before it can become a butterfly. Does that remind you of any character in your book?"},
+      {l:"Week 5 — Two Mid-Unit Seminars",t:"Fantasy readers: how does belonging work in a built world? Realistic/historical fiction readers: how does time period shape who gets to belong? This split surfaces RL.6.9 organically."},
+      {l:"Week 6 — Full Socratic Seminar",t:"All students together: Does belonging require you to change, or to find people who accept who you already are?"},
+      {l:"Week 7 — Culminating Essay",t:"5th: Five-paragraph opinion essay. 6th: Comparative essay using two texts from seminar. This is the W.6.1 payoff — the most ambitious writing of the year."},
+    ],
+    nfShared:[{t:"What's Inside a Caterpillar Cocoon?",a:"Rachel Ignotofsky",n:"Stunning; grades 3–6"},{t:"A Beetle Is Shy",a:"Dianna Hutts Aston",n:"Lyrical narrative nonfiction; life cycles"},{t:"The Hidden Life of Trees (Young Readers Edition)",a:"Peter Wohlleben",n:"Trees communicate; belonging as biological reality"}],
+    nfAdditional:[{t:"Caterpillar and Bean",a:"Martin Jenkins",n:"Parallel life cycles; great for K–4"},{t:"Wangari's Trees of Peace",a:"Jeanette Winter",n:"Belonging to place and community"},{t:"National Geographic Kids: Insects",n:"Accessible text features"}],
+    nfBridge:["A caterpillar completely dissolves before it becomes a butterfly. Is that transformation or destruction? Does your character go through something similar?","Trees share nutrients even with different species. What does that suggest about what community can look like?","Plants grow toward light even when there are obstacles. What does your character grow toward?","What does the science of metamorphosis add to your understanding of what your character is going through?"],
+    seminarQ:"Does belonging require you to change who you are, or does it require finding people who accept who you already are? What does your book argue?",
+    seminarF:"Mid-unit (genre split): Fantasy readers — does belonging work the same in a world the author invented? Realistic/historical readers — how does your book's time period shape who gets to belong?",
+    seminar34:"Does belonging require you to change who you are, or does it require finding people who accept who you already are?",
+    seminarK2:"Does everyone belong somewhere? What helps you find your place?",
+    journal56:{"Tracking the Lens":["What does belonging look like in your book's world? Who has it and who doesn't?","What is your book arguing about belonging? Something you find, build, earn, or are born into?","Find a moment where a character feels like they don't belong. How does the author make you feel that?"],"Thinking Beyond Plot":["What does your book's genre let it do with belonging that a different genre couldn't?","Connect something from the nonfiction to your novel. Does the science show up in your character's story?","Compare how your book handles belonging to a book discussed in seminar."],"Personal Connection":["Write about a time you worked to belong somewhere. Looking back, was it worth it?","Is there a community where you feel most fully yourself?"]},
+    journal34:["What does belonging look like in your book's world? Who has it and who is still searching?","What is your book arguing about belonging?","Connect the Plants & Bugs nonfiction to your novel.","Write about a time you worked to belong somewhere."],
+    journalK2:{draw:["Draw a place where your character belongs. Draw a place where they don't. What is different?","Draw yourself somewhere you belong. Write or dictate why."],oral:["Where does this character belong? How do you know?","Is there a place where YOU feel like you belong?"]},
+    films:[{t:"Coco",n:"Belonging to family, culture, and dreams all in tension — perfect anchor"},{t:"Soul",n:"Deeper level; better for stronger thinkers"},{t:"Lilo and Stitch",n:"Both characters are explicit outsiders; argues family is something you build"},{t:"Bee Movie",n:"Bee who doesn't fit his role; connects to Plants & Bugs content"}],
+    books56:{gn:["New Kid — Jerry Craft | Newbery winner"],lo:["Each Little Bird That Sings — Deborah Wiles","The Cay — Theodore Taylor","The Velveteen Rabbit — Margery Williams (Classic)"],mid:["Front Desk — Kelly Yang","The Girl Who Drank the Moon — Kelly Barnhill","Anne of Green Gables — L.M. Montgomery (Classic)","The Outsiders — S.E. Hinton (Classic)"],hi:["The Giver — Lois Lowry","Refugee — Alan Gratz | preview first","When You Reach Me — Rebecca Stead","Roll of Thunder, Hear My Cry — Mildred Taylor | preview first","Johnny Tremain — Esther Forbes (Classic)"]},
+    books34:{pb:["Big Al — Andrew Clements","The Velveteen Rabbit — Margery Williams","The Day You Begin — Jacqueline Woodson"],ch:["Charlotte's Web — E.B. White","Because of Winn-Dixie — Kate DiCamillo","Each Little Bird That Sings — Deborah Wiles","The Cay — Theodore Taylor"],nov:["Front Desk — Kelly Yang","The Girl Who Drank the Moon — Kelly Barnhill","New Kid — Jerry Craft (graphic novel)"]},
+    booksK2:{primary:["The Velveteen Rabbit — Margery Williams | Becomes 'real' through love. The question of what makes you real mirrors the seminar question. Classic, rich, deeply layered. ⭐","Big Al — Andrew Clements | The ugliest fish can't find friends no matter how he tries to change. His breakthrough comes when he stops. Perfect for the seminar question.","Each Little Bird That Sings — Deborah Wiles | Belonging to a family and a place."],additional:["The Day You Begin — Jacqueline Woodson | Students who feel different discover the power of sharing their stories","Hair Love — Matthew A. Cherry | Belonging to family and cultural identity","We Are Water Protectors — Carole Lindstrom | Belonging to place and a people","The Smallest Girl in the Smallest Grade — Justin Roberts | A quiet, powerful belonging story"],note:"The Velveteen Rabbit is the richest anchor because becoming 'real' through love maps almost perfectly onto the seminar question. Read it slowly — the conversations it generates are extraordinary even with kindergarteners."},
+    vocab:["Belong — to feel like you are in the right place with the right people","Identity — who you are; what makes you, you","Community — a group of people or living things that are connected","Acceptance — being welcomed for who you are","Outsider — someone who feels like they don't fit in","Metamorphosis — a complete transformation into something new","Thrive — to grow and do well in the right conditions"],
+    writing:{k:"Draw yourself somewhere you belong. Dictate: I belong at/with ___ because ___.",g1:"2–3 sentences: ___ belongs with ___. I know because ___. Add a drawing.",g2:"Paragraph about where your character belongs and what helped them find their place.",g3:"Opinion paragraph: Does your character belong by the end? Two pieces of evidence.",g4:"Comparison paragraph: How does belonging in your book compare to metamorphosis of a caterpillar?"}
+  }
+};
+
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  if(el) el.classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='books') buildBooksPage('all');
+  return false;
+}
+
+function switchGrade(band, el) {
+  document.querySelectorAll('.grade-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.grade-band').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('band-'+band).classList.add('active');
+}
+
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+function openUnit(n) {
+  const u = UNITS[n];
+  document.getElementById('unit-list').style.display='none';
+  document.getElementById('unit-detail').style.display='block';
+  const hero = document.getElementById('ud-hero');
+  hero.className = 'unit-hero '+u.color;
+  document.getElementById('ud-title').textContent = 'Unit '+n+' — '+u.title;
+  document.getElementById('ud-meta').innerHTML = u.meta.map(m=>`<span>${m}</span>`).join('');
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===0));
+
+  // ARC
+  let h = `<div class="why-box"><strong>Why this pairing works:</strong><br>${u.why}</div>`;
+  u.arc.forEach(w=>{ h+=`<div class="week-block"><div class="week-label">${w.l}</div><div class="week-text">${w.t}</div></div>`; });
+  document.getElementById('panel-arc').innerHTML = h;
+
+  // NONFICTION
+  let nf = '<h3 class="sub">Whole-Class Shared Nonfiction</h3>';
+  u.nfShared.forEach(b=>{ nf+=`<div class="nfcard"><strong>${b.t}</strong>${b.a?' — '+b.a:''}<div class="nfnote">${b.n||''}</div></div>`; });
+  nf += '<h3 class="sub">Additional Nonfiction</h3>';
+  u.nfAdditional.forEach(b=>{ nf+=`<div class="nfcard"><strong>${b.t}</strong>${b.a?' — '+b.a:''}<div class="nfnote">${b.n||''}</div></div>`; });
+  nf += '<h3 class="sub">Discussion Bridge Questions</h3>';
+  u.nfBridge.forEach(q=>{ nf+=`<div class="prompt">${q}</div>`; });
+  document.getElementById('panel-nonfiction').innerHTML = nf;
+
+  // SEMINAR
+  let sm = `<h3 class="sub">5–6 Driving Question</h3>
+    <div class="seminar-q"><div class="sq-label">Socratic Seminar</div><p>${u.seminarQ}</p><div class="sq-follow">${u.seminarF}</div></div>
+    <h3 class="sub">3–4 Seminar Question</h3>
+    <div class="seminar-q" style="background:var(--moss)"><div class="sq-label">Grades 3–4</div><p>${u.seminar34}</p></div>
+    <h3 class="sub">K–2 Seminar Question</h3>
+    <div class="seminar-q" style="background:var(--bark)"><div class="sq-label">K–2</div><p>${u.seminarK2}</p></div>`;
+  document.getElementById('panel-seminar').innerHTML = sm;
+
+  // 5-6 BOOKS
+  let b56 = '<h3 class="sub">5–6 Solo Reading Menu</h3>';
+  [['gn','Graphic Novel','lvl-gn'],['lo','Lower 2nd–3rd','lvl-lo'],['mid','Mid 4th–5th','lvl-mid'],['hi','Higher 6th–7th','lvl-hi']].forEach(([k,lbl,cls])=>{
+    b56+=`<h4 class="sublabel">${lbl}</h4><ul class="book-list">`;
+    u.books56[k].forEach(b=>{ b56+=`<li><span class="lvl ${cls}">${lbl.split(' ')[0]}</span><span class="book-title">${b}</span></li>`; });
+    b56+='</ul>';
+  });
+  document.getElementById('panel-books56').innerHTML = b56;
+
+  // 3-4 BOOKS
+  let b34 = '<h3 class="sub">3–4 Partner Reading Menu</h3>';
+  [['pb','Picture Book','lvl-lo'],['ch','Early Chapter Book','lvl-mid'],['nov','Shorter Novel','lvl-hi']].forEach(([k,lbl,cls])=>{
+    b34+=`<h4 class="sublabel">${lbl}</h4><ul class="book-list">`;
+    u.books34[k].forEach(b=>{ b34+=`<li><span class="lvl ${cls}">3–4</span><span class="book-title">${b}</span></li>`; });
+    b34+='</ul>';
+  });
+  document.getElementById('panel-books34').innerHTML = b34;
+
+  // K-2 BOOKS
+  let bk2 = `<h3 class="sub">K–2 Picture Book Anchor Texts</h3>
+    <h4 class="sublabel">Primary anchor — best for whole-unit study</h4><ul class="book-list">`;
+  u.booksK2.primary.forEach(b=>{ bk2+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`; });
+  bk2+=`</ul><h4 class="sublabel">Additional read-alouds</h4><ul class="book-list">`;
+  u.booksK2.additional.forEach(b=>{ bk2+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`; });
+  bk2+=`</ul><div class="note-box">${u.booksK2.note}</div>`;
+  document.getElementById('panel-booksk2').innerHTML = bk2;
+
+  // VOCAB & WRITING
+  let vw = '<h3 class="sub">Vocabulary Anchor Words</h3><div class="vocab-grid">';
+  u.vocab.forEach(v=>{ const[w,...rest]=v.split(' — '); vw+=`<div class="vocab-item"><strong>${w}</strong> — ${rest.join(' — ')}</div>`; });
+  vw += '</div><h3 class="sub">Writing Expectations</h3>';
+  const wl = [{k:'k',l:'Kindergarten'},{k:'g1',l:'1st Grade'},{k:'g2',l:'2nd Grade'},{k:'g3',l:'3rd Grade'},{k:'g4',l:'4th Grade'}];
+  wl.forEach(({k,l})=>{ vw+=`<div class="writing-band"><div class="writing-band-label">${l}</div>${u.writing[k]}</div>`; });
+  vw += '<h3 class="sub">Reading Journal Prompts — Grades 5–6</h3>';
+  Object.entries(u.journal56).forEach(([cat,prompts])=>{ vw+=`<h4 class="sublabel">${cat}</h4>`; prompts.forEach(p=>{ vw+=`<div class="prompt">${p}</div>`; }); });
+  vw += '<h3 class="sub">Journal Prompts — Grades 3–4</h3>';
+  u.journal34.forEach(p=>{ vw+=`<div class="prompt">${p}</div>`; });
+  vw += '<h3 class="sub">Journal / Response Options — K–2</h3><h4 class="sublabel">Draw and label</h4>';
+  u.journalK2.draw.forEach(p=>{ vw+=`<div class="prompt">${p}</div>`; });
+  vw += '<h4 class="sublabel">Oral / dictated</h4>';
+  u.journalK2.oral.forEach(p=>{ vw+=`<div class="prompt">${p}</div>`; });
+  document.getElementById('panel-vocab').innerHTML = vw;
+
+  // FILMS
+  let fm = '<h3 class="sub">Film Anchor</h3><p style="color:var(--muted);margin-bottom:1rem;font-size:.88rem">A well-chosen 10–15 minute clip often does more work than a full viewing.</p><div class="film-grid">';
+  u.films.forEach(f=>{ fm+=`<div class="film-card"><strong>${f.t}</strong>${f.n}</div>`; });
+  fm += '</div>';
+  document.getElementById('panel-films').innerHTML = fm;
+
+  window.scrollTo(0,0);
+}
+
+function backToUnits() {
+  document.getElementById('unit-list').style.display='block';
+  document.getElementById('unit-detail').style.display='none';
+}
+
+function filterBooks(filter, el) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  buildBooksPage(filter);
+}
+
+function buildBooksPage(filter) {
+  const container = document.getElementById('books-content');
+  let html = '<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem">';
+  html += '<span class="lvl lvl-k2">K–2</span> Picture Book  ';
+  html += '<span class="lvl lvl-34" style="background:#D4E4F0;color:#1A4F7A;padding:.12rem .55rem;border-radius:2px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase">3–4</span> Partner Reading  ';
+  html += '<span class="lvl lvl-gn">GN</span> Graphic Novel  ';
+  html += '<span class="lvl lvl-lo">Low</span><span class="lvl lvl-mid">Mid</span><span class="lvl lvl-hi">High</span> Reading Level  ';
+  html += '<span class="lvl lvl-cl" style="background:#F0D4D4;color:#7A1A1A;padding:.12rem .55rem;border-radius:2px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Classic</span></div>';
+
+  const showUnit = (n, u) => {
+    const showK2 = ['all','k2','u'+n].includes(filter);
+    const show34 = ['all','g34','u'+n].includes(filter);
+    const show56 = ['all','g56','u'+n].includes(filter);
+    if (!showK2 && !show34 && !show56) return '';
+    let s = `<h3 class="sub">Unit ${n} — ${u.title}</h3>`;
+    if (showK2) {
+      s += '<h4 class="sublabel">K–2 Picture Books</h4><ul class="book-list">';
+      u.booksK2.primary.forEach(b=>{ s+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`; });
+      s += '</ul>';
+    }
+    if (show34) {
+      s += '<h4 class="sublabel">3–4 Partner Reading</h4><ul class="book-list">';
+      [...(u.books34.pb||[]),...(u.books34.ch||[]),...(u.books34.nov||[])].forEach(b=>{ s+=`<li><span class="lvl" style="background:#D4E4F0;color:#1A4F7A;padding:.12rem .55rem;border-radius:2px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase">3–4</span><span class="book-title">${b}</span></li>`; });
+      s += '</ul>';
+    }
+    if (show56) {
+      s += '<h4 class="sublabel">5–6 Solo Reading</h4><ul class="book-list">';
+      [['gn','GN','lvl-gn'],['lo','Low','lvl-lo'],['mid','Mid','lvl-mid'],['hi','High','lvl-hi']].forEach(([k,lbl,cls])=>{
+        (u.books56[k]||[]).forEach(b=>{ s+=`<li><span class="lvl ${cls}">${lbl}</span><span class="book-title">${b}</span></li>`; });
+      });
+      s += '</ul>';
+    }
+    return s;
+  };
+
+  html += showUnit(1, UNITS[1]) + showUnit(2, UNITS[2]) + showUnit(3, UNITS[3]) + showUnit(4, UNITS[4]);
+  container.innerHTML = html;
+}
+
+// init books page data
+document.addEventListener('DOMContentLoaded', ()=>{});
+</script>
+</body>
+</html>

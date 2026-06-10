@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Mastery Continuum K–6 · Curiosity Grove Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-dark:#085041;
+  --green-mid:#0F6E56;
+  --green-light:#E1F5EE;
+  --cream:#FAF8F4;
+  --sand:#F0EDE6;
+  --text:#1C1C1A;
+  --text-mid:#5A5955;
+  --text-light:#8A8880;
+  --border:#E2DFD8;
+  --e-color:#A32D2D;--e-bg:#FCEBEB;--e-text:#791F1F;
+  --d-color:#854F0B;--d-bg:#FAEEDA;--d-text:#633806;
+  --p-color:#0F6E56;--p-bg:#E1F5EE;--p-text:#085041;
+  --x-color:#185FA5;--x-bg:#E6F1FB;--x-text:#0C447C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+
+/* NAV */
+.site-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-leaf{width:28px;height:28px;background:var(--green-mid);border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center}
+.nav-leaf span{color:#fff;font-size:14px;font-weight:500;font-family:'DM Serif Display',serif;font-style:italic}
+.nav-name{font-size:14px;font-weight:500;color:var(--text)}
+.nav-sub{font-size:11px;color:var(--text-light)}
+
+/* HERO */
+.hero{padding:3rem 1.5rem 2rem;max-width:780px;margin:0 auto}
+.hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green-mid);font-weight:500;margin-bottom:0.75rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,42px);line-height:1.15;color:var(--text);margin-bottom:1rem;font-weight:400}
+.hero h1 em{font-style:italic;color:var(--green-mid)}
+.hero p{font-size:15px;color:var(--text-mid);line-height:1.7;max-width:560px;margin-bottom:2rem}
+
+/* BAND LEGEND */
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+.leg-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+
+/* FILTERS */
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.fbtn{font-size:12px;padding:5px 16px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--text-mid);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.fbtn:hover{border-color:var(--green-mid);color:var(--green-dark)}
+.fbtn.active{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+
+/* MAIN */
+.main{max-width:780px;margin:0 auto;padding:0 1.5rem 4rem}
+
+/* DOMAIN */
+.domain{margin-bottom:1rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.d-head{padding:0.85rem 1.1rem;display:flex;align-items:center;gap:10px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.d-title{font-size:13px;font-weight:500}
+.d-sub{font-size:12px;color:var(--text-light)}
+.grade-row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--border)}
+.g-label{display:flex;align-items:flex-start;justify-content:center;padding:0.85rem 0.25rem;font-size:11px;font-weight:500;color:var(--text-light);border-right:1px solid var(--border);letter-spacing:0.03em;padding-top:0.95rem}
+.stds{padding:0.6rem 0.85rem;display:flex;flex-direction:column;gap:4px}
+
+/* STANDARD */
+.std-item{border-radius:8px;overflow:hidden}
+.std-row{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;cursor:pointer;border-radius:8px;transition:background 0.12s}
+.std-row:hover{background:var(--sand)}
+.std-row.open{background:var(--sand);border-radius:8px 8px 0 0}
+.std-code{font-size:11px;color:var(--text-light);white-space:nowrap;padding-top:2px;min-width:70px;flex-shrink:0;font-family:monospace}
+.std-text{flex:1;font-size:13px;line-height:1.55;color:var(--text)}
+.deep{font-size:10px;padding:2px 7px;border-radius:10px;background:#FAEEDA;color:#633806;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.chevron{font-size:9px;color:var(--text-light);flex-shrink:0;margin-top:5px;transition:transform 0.15s}
+.chevron.open{transform:rotate(90deg)}
+
+/* CONTINUUM PANEL */
+.cont-panel{display:none;padding:12px 10px 14px;background:var(--sand);border-radius:0 0 8px 8px;margin:0 2px 4px}
+.cont-panel.visible{display:block}
+.track{display:flex;gap:3px;margin-bottom:10px;align-items:center}
+.track-seg{flex:1;height:5px;border-radius:3px;cursor:pointer;transition:opacity 0.15s}
+.track-seg:hover{opacity:0.75}
+.track-seg.selected{height:8px}
+.bands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(max-width:600px){.bands-grid{grid-template-columns:repeat(2,1fr)}}
+.band-card{border-radius:8px;padding:9px 10px;cursor:pointer;border:1.5px solid transparent;transition:border-color 0.15s,transform 0.1s}
+.band-card:hover{transform:translateY(-1px)}
+.band-card.selected{border-color:currentColor}
+.band-name{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.band-desc{font-size:12px;line-height:1.55;color:var(--text-mid)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+footer p{font-size:12px;color:var(--text-light)}
+footer a{color:var(--green-mid);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-brand">
+    <div class="nav-leaf"><span>CG</span></div>
+    <div>
+      <div class="nav-name">Curiosity Grove Academy</div>
+      <div class="nav-sub">Grand Junction, Colorado</div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Math · K–6</div>
+  <h1>Where is my child on the <em>math continuum?</em></h1>
+  <p>At CGA, every student moves through math at their own pace. This guide shows what learning looks like at each stage — tap any standard to see the full progression from just beginning to going deeper.</p>
+  <div class="legend-row">
+    <div class="leg-pill" style="background:var(--e-bg)"><div class="leg-dot" style="background:var(--e-color)"></div><span style="color:var(--e-text)">Emerging</span></div>
+    <div class="leg-pill" style="background:var(--d-bg)"><div class="leg-dot" style="background:var(--d-color)"></div><span style="color:var(--d-text)">Developing</span></div>
+    <div class="leg-pill" style="background:var(--p-bg)"><div class="leg-dot" style="background:var(--p-color)"></div><span style="color:var(--p-text)">Proficient</span></div>
+    <div class="leg-pill" style="background:var(--x-bg)"><div class="leg-dot" style="background:var(--x-color)"></div><span style="color:var(--x-text)">Extending</span></div>
+  </div>
+  <div class="filter-row" id="filters">
+    <button class="fbtn active" data-d="all">All domains</button>
+    <button class="fbtn" data-d="number">Number sense</button>
+    <button class="fbtn" data-d="operations">Operations</button>
+    <button class="fbtn" data-d="fractions">Fractions</button>
+    <button class="fbtn" data-d="measurement">Measurement</button>
+    <button class="fbtn" data-d="geometry">Geometry</button>
+    <button class="fbtn" data-d="algebraic">Algebraic thinking</button>
+  </div>
+</div>
+
+<main class="main" id="continuum"></main>
+
+<footer>
+  <p>Curiosity Grove Academy &nbsp;·&nbsp; <a href="https://curiositygroveacademy.com">curiositygroveacademy.com</a> &nbsp;·&nbsp; Grand Junction, CO</p>
+</footer>
+
+<script>
+const BANDS=[
+  {key:"emerging",label:"Emerging",color:"var(--e-color)",bg:"var(--e-bg)",text:"var(--e-text)"},
+  {key:"developing",label:"Developing",color:"var(--d-color)",bg:"var(--d-bg)",text:"var(--d-text)"},
+  {key:"proficient",label:"Proficient",color:"var(--p-color)",bg:"var(--p-bg)",text:"var(--p-text)"},
+  {key:"extending",label:"Extending",color:"var(--x-color)",bg:"var(--x-bg)",text:"var(--x-text)"}
+];
+
+const domains=[
+  {id:"number",color:"#185FA5",title:"Number sense & place value",sub:"How numbers work, how they're built, and how we read and write them",
+  grades:[
+    {g:"K",stds:[
+      {code:"K.CC.1-3",text:"Count to 100; count forward from any number; write numerals 0–20",bands:{emerging:"Beginning to count to 20 with some support; may skip numbers or lose track when starting from a number other than 1.",developing:"Counts to 50 reliably and can start counting from most numbers; writes numerals 0–10 with occasional reversals.",proficient:"Counts to 100 by 1s and 10s; starts counting from any given number; writes all numerals 0–20 correctly.",extending:"Uses counting strategies flexibly to solve real problems; explains patterns in the counting sequence."}},
+      {code:"K.CC.4-5",text:"Understand that the last number said tells how many; count to answer 'how many'",bands:{emerging:"Counts objects but may not connect the last number said to the total; recounts when asked how many.",developing:"Usually understands that the last number is the total, but sometimes recounts to be sure.",proficient:"Confidently states the total without recounting; understands one-to-one correspondence.",extending:"Can count on from a given number to find a total, and explains why the last number represents the whole group."}}
+    ]},
+    {g:"1",stds:[
+      {code:"1.NBT.1",text:"Count to 120; read and write numerals to 120",bands:{emerging:"Counts and reads/writes numbers to about 50; may hesitate with numbers in the 100s.",developing:"Counts and reads/writes numbers to about 100; occasional errors with numbers just above 100.",proficient:"Counts to 120 starting anywhere; reads and writes any numeral to 120 correctly.",extending:"Notices and explains patterns in the 100s, connecting them to patterns already known in smaller numbers."}},
+      {code:"1.NBT.2",text:"Understand two-digit numbers as tens and ones",deep:true,bands:{emerging:"Recognizes that two-digit numbers have two parts but cannot consistently identify tens and ones.",developing:"Can identify tens and ones with manipulatives but may struggle to explain without them.",proficient:"Builds any two-digit number with base-ten blocks and explains what each digit means.",extending:"Uses place value understanding to explain why 10 ones is the same as 1 ten, and connects this to mental math strategies."}}
+    ]},
+    {g:"2",stds:[
+      {code:"2.NBT.1",text:"Understand three-digit numbers as hundreds, tens, ones",deep:true,bands:{emerging:"Recognizes three-digit numbers but struggles to break them into hundreds, tens, and ones.",developing:"Can decompose three-digit numbers with blocks; may need support with expanded form.",proficient:"Writes any three-digit number in expanded form and explains each digit's value.",extending:"Explains why 10 tens makes a hundred and uses this to solve problems mentally."}},
+      {code:"2.NBT.2-4",text:"Skip-count by 5s, 10s, 100s; read/write to 1000; compare three-digit numbers",bands:{emerging:"Skip-counts by 10s reliably; working on 5s and 100s; compares numbers below 100.",developing:"Skip-counts by 5s, 10s, and 100s with some hesitation; reads and writes numbers to 500.",proficient:"Skip-counts fluently; reads/writes to 1000; compares three-digit numbers correctly.",extending:"Uses skip-counting to solve real-world problems and explains how counting by 100s connects to place value."}}
+    ]},
+    {g:"3",stds:[
+      {code:"3.NBT.1",text:"Round whole numbers to the nearest 10 or 100",bands:{emerging:"Beginning to understand rounding; may round to the nearest 10 but struggles with 100.",developing:"Rounds to the nearest 10 reliably; rounds to the nearest 100 with some errors.",proficient:"Rounds whole numbers to the nearest 10 or 100 accurately and explains the reasoning.",extending:"Uses rounding strategically to estimate answers and checks whether estimates make sense."}}
+    ]},
+    {g:"4",stds:[
+      {code:"4.NBT.1",text:"A digit in one place represents 10 times the digit to its right",deep:true,bands:{emerging:"Recognizes place value positions but cannot explain the 10x relationship between places.",developing:"Can show the 10x relationship with a chart or visual; struggles to explain without support.",proficient:"Compares two numbers where the same digit appears in different places and explains the 10x relationship.",extending:"Uses the 10x relationship to reason about multiplication and division by powers of 10."}},
+      {code:"4.NBT.2-3",text:"Read, write, compare multi-digit numbers; round to any place",bands:{emerging:"Reads and writes numbers to the thousands; rounding errors become more frequent at larger values.",developing:"Reads/writes numbers to the millions with occasional errors; rounds to the nearest thousand reliably.",proficient:"Reads, writes, and compares any multi-digit number; rounds to any place accurately.",extending:"Explains why the same number rounds differently depending on the target place, connecting to number line reasoning."}}
+    ]},
+    {g:"5",stds:[
+      {code:"5.NBT.1",text:"Each place is 10x the place to its right and 1/10 the place to its left",deep:true,bands:{emerging:"Understands whole-number place value; beginning to connect it to decimals.",developing:"Can explain the 10x relationship for whole numbers; starting to apply it to tenths and hundredths.",proficient:"Explains how a digit changes value moving left or right on a place value chart, including decimals.",extending:"Uses this relationship to explain multiplication and division by powers of 10, connecting to fractions."}},
+      {code:"5.NBT.3-4",text:"Read, write, compare decimals to thousandths; round decimals",bands:{emerging:"Reads and compares decimals to tenths; hundredths and thousandths are emerging.",developing:"Reads and compares decimals to hundredths; rounds to the nearest tenth reliably.",proficient:"Reads, writes, and compares decimals to thousandths; rounds decimals to any place.",extending:"Places decimals on a number line between benchmarks and explains why 0.3 is greater than 0.299."}}
+    ]},
+    {g:"6",stds:[
+      {code:"6.NS.5-6",text:"Understand positive and negative numbers; use number lines and coordinate planes",bands:{emerging:"Understands positive numbers; beginning to place negative numbers on a number line.",developing:"Places positive and negative integers on a number line; starting to work with rational numbers.",proficient:"Represents and compares positive and negative rational numbers on a number line and coordinate plane.",extending:"Uses positive and negative numbers to model real-world situations and explains what zero means in each context."}},
+      {code:"6.NS.7",text:"Order and interpret absolute value of rational numbers",bands:{emerging:"Can order positive rational numbers; beginning to understand absolute value as distance from zero.",developing:"Orders integers including negatives; describes absolute value with a visual.",proficient:"Orders rational numbers including negatives and explains absolute value in real-world contexts.",extending:"Interprets absolute value in complex situations and connects to distance on a number line."}}
+    ]}
+  ]},
+  {id:"operations",color:"#0F6E56",title:"Operations & computation",sub:"Addition, subtraction, multiplication, and division — with whole numbers and decimals",
+  grades:[
+    {g:"K",stds:[
+      {code:"K.OA.1-2",text:"Represent addition and subtraction with objects, fingers, drawings, and equations",bands:{emerging:"Uses physical objects to add and subtract small amounts; not yet connecting to number sentences.",developing:"Can represent simple addition and subtraction with drawings or fingers; beginning to write equations.",proficient:"Represents addition and subtraction in multiple ways for numbers within 10.",extending:"Chooses the most efficient strategy for a given problem and explains why; connects addition and subtraction as related operations."}},
+      {code:"K.OA.4",text:"For any number 1–9, find the number that makes 10",bands:{emerging:"Can find the partner to make 10 for a few familiar numbers but not consistently.",developing:"Finds partners to make 10 for most numbers with a ten-frame or visual support.",proficient:"Fluently names the partner to make 10 for any number 1–9.",extending:"Uses make-ten knowledge to explain strategies for adding larger numbers."}}
+    ]},
+    {g:"1",stds:[
+      {code:"1.OA.1-2",text:"Solve word problems with addition and subtraction within 20",bands:{emerging:"Solves simple joining and separating problems; struggles with comparison or missing-addend problems.",developing:"Solves most problem types within 10; working toward fluency within 20.",proficient:"Solves all addition and subtraction problem types within 20, choosing appropriate strategies.",extending:"Creates and solves multi-step problems; explains which strategy works best for different problem types."}},
+      {code:"1.OA.6",text:"Add and subtract within 20; know sums of two one-digit numbers",deep:true,bands:{emerging:"Adds and subtracts within 10 with strategies; still counting all for most facts within 20.",developing:"Uses count-on and make-ten strategies for most facts within 20; some facts are becoming automatic.",proficient:"Adds and subtracts within 20 using efficient strategies; single-digit addition facts are automatic.",extending:"Applies fact fluency to mental math challenges and explains the strategy behind any fact."}}
+    ]},
+    {g:"2",stds:[
+      {code:"2.NBT.5-7",text:"Add and subtract within 1000 using strategies and algorithms",bands:{emerging:"Adds and subtracts within 100 using manipulatives or drawings; regrouping is emerging.",developing:"Adds and subtracts within 100 reliably; beginning to apply strategies to three-digit numbers.",proficient:"Adds and subtracts within 1000 using strategies and explaining the reasoning; handles regrouping.",extending:"Chooses the most efficient method for a given problem and justifies the choice."}}
+    ]},
+    {g:"3",stds:[
+      {code:"3.OA.1-4",text:"Understand multiplication and division; relate the two operations",deep:true,bands:{emerging:"Understands multiplication as equal groups with visual support; just beginning to connect to division.",developing:"Represents multiplication and division with drawings or arrays; beginning to use fact strategies.",proficient:"Explains multiplication and division as related operations; solves problems using multiple representations.",extending:"Uses multiplication and division relationships to solve unknown-factor problems and explain fact families."}},
+      {code:"3.OA.7",text:"Fluently multiply and divide within 100",deep:true,bands:{emerging:"Knows facts for 2s, 5s, and 10s; other facts require counting or skip-counting.",developing:"Knows most facts within 50; uses strategies (doubling, near-fact) for the rest.",proficient:"Fluently multiplies and divides within 100; most single-digit facts are automatic.",extending:"Applies fact fluency to multi-step problems and mental math; explains the relationship between related facts."}}
+    ]},
+    {g:"4",stds:[
+      {code:"4.NBT.4-6",text:"Fluently add and subtract multi-digit numbers; multiply and divide up to 4-digit by 1-digit",bands:{emerging:"Uses the standard algorithm for addition and subtraction with some errors; multiplication strategies are emerging.",developing:"Adds and subtracts multi-digit numbers accurately; multiplies 2-digit by 1-digit numbers.",proficient:"Fluently adds, subtracts, multiplies, and divides multi-digit numbers using efficient strategies.",extending:"Selects and justifies the best strategy for a given problem; checks reasonableness of answers."}}
+    ]},
+    {g:"5",stds:[
+      {code:"5.NBT.5-7",text:"Multiply multi-digit numbers; divide with 2-digit divisors; add/subtract/multiply decimals",bands:{emerging:"Multiplies 2-digit by 2-digit with partial support; decimal operations are just beginning.",developing:"Multiplies multi-digit numbers accurately; divides with single-digit divisors; adds decimals.",proficient:"Fluently multiplies multi-digit numbers; divides with 2-digit divisors; performs all decimal operations.",extending:"Estimates and checks decimal computation for reasonableness; connects decimal operations to whole-number understanding."}}
+    ]},
+    {g:"6",stds:[
+      {code:"6.NS.1-4",text:"Divide fractions; multiply and divide multi-digit decimals; find GCF and LCM",bands:{emerging:"Divides unit fractions by whole numbers with a visual; multi-digit decimal operations are emerging.",developing:"Divides fractions with support; multiplies and divides decimals with some errors.",proficient:"Divides fractions by fractions; fluently multiplies and divides multi-digit decimals; finds GCF and LCM.",extending:"Explains why dividing by a fraction is the same as multiplying by its reciprocal; uses GCF/LCM to solve real-world problems."}}
+    ]}
+  ]},
+  {id:"fractions",color:"#993C1D",title:"Fractions",sub:"Understanding, comparing, and computing with parts of a whole",
+  grades:[
+    {g:"1",stds:[{code:"1.G.3",text:"Partition shapes into halves and quarters; use the words",bands:{emerging:"Recognizes that shapes can be split; may not split into equal parts.",developing:"Partitions shapes into halves and fourths with some trial and error.",proficient:"Partitions shapes into halves and fourths and uses the words 'half of' and 'fourth of' correctly.",extending:"Explains why both parts must be equal to be called 'halves' and applies this to different shapes."}}]},
+    {g:"2",stds:[{code:"2.G.3",text:"Partition circles and rectangles into halves, thirds, and fourths",bands:{emerging:"Can make halves reliably; thirds are emerging.",developing:"Partitions into halves and fourths confidently; thirds are developing.",proficient:"Partitions circles and rectangles into 2, 3, or 4 equal shares and names each part.",extending:"Explains that the more equal parts a whole is divided into, the smaller each part is."}}]},
+    {g:"3",stds:[
+      {code:"3.NF.1-2",text:"Understand fractions as equal parts; place fractions on a number line",deep:true,bands:{emerging:"Identifies unit fractions with a visual; beginning to place fractions on a number line.",developing:"Represents fractions as parts of a whole; places unit fractions on a number line with support.",proficient:"Explains fractions as equal parts and places any fraction on a number line accurately.",extending:"Explains why fractions greater than 1 make sense and places them on a number line."}},
+      {code:"3.NF.3",text:"Recognize equivalent fractions; compare fractions with the same numerator or denominator",deep:true,bands:{emerging:"Recognizes that 2/4 and 1/2 look the same with a visual; comparing fractions is emerging.",developing:"Identifies equivalent fractions with a model; compares fractions with the same denominator.",proficient:"Generates equivalent fractions; compares fractions with the same numerator or denominator and explains reasoning.",extending:"Creates equivalent fractions without visual support and explains why multiplying top and bottom by the same number works."}}
+    ]},
+    {g:"4",stds:[
+      {code:"4.NF.1-2",text:"Explain equivalent fractions; compare fractions using common denominators",deep:true,bands:{emerging:"Uses visual models to find equivalent fractions; comparing unlike fractions requires support.",developing:"Creates equivalent fractions using multiplication; compares fractions with some errors on unlike denominators.",proficient:"Explains why equivalent fractions are equal; compares any two fractions using benchmarks or common denominators.",extending:"Explains the equivalence relationship and uses it to solve real-world comparison problems."}},
+      {code:"4.NF.3-4",text:"Add and subtract fractions with like denominators; multiply a fraction by a whole number",bands:{emerging:"Adds unit fractions with the same denominator using visuals; multiplication of fractions is emerging.",developing:"Adds and subtracts fractions with like denominators; multiplies a fraction by a whole number with a model.",proficient:"Fluently adds, subtracts, and multiplies fractions with like denominators in real-world contexts.",extending:"Explains why the denominator stays the same when adding fractions and connects fraction multiplication to repeated addition."}}
+    ]},
+    {g:"5",stds:[
+      {code:"5.NF.1-2",text:"Add and subtract fractions with unlike denominators",deep:true,bands:{emerging:"Adds fractions with like denominators; beginning to find common denominators for unlike fractions.",developing:"Finds common denominators with support; adds and subtracts fractions with unlike denominators with some errors.",proficient:"Fluently adds and subtracts fractions with unlike denominators; estimates reasonableness of answers.",extending:"Explains why common denominators are needed and chooses the most efficient common denominator."}},
+      {code:"5.NF.3-7",text:"Multiply and divide fractions; interpret multiplication as scaling",bands:{emerging:"Multiplies a fraction by a whole number; fraction division is just beginning.",developing:"Multiplies fractions by fractions with a visual; divides unit fractions by whole numbers.",proficient:"Multiplies and divides fractions fluently; interprets multiplication as scaling.",extending:"Explains why multiplying by a fraction less than 1 makes a number smaller and dividing by a fraction makes it larger."}}
+    ]},
+    {g:"6",stds:[{code:"6.NS.1",text:"Divide fractions by fractions",bands:{emerging:"Divides a whole number by a unit fraction with a visual model.",developing:"Divides a unit fraction by a whole number and a whole number by a unit fraction.",proficient:"Divides any fraction by any fraction and solves related real-world problems.",extending:"Explains the 'multiply by the reciprocal' rule conceptually using visual models or story contexts."}}]}
+  ]},
+  {id:"measurement",color:"#854F0B",title:"Measurement & data",sub:"Measuring, collecting data, and making sense of it",
+  grades:[
+    {g:"K",stds:[{code:"K.MD.1-3",text:"Describe and compare measurable attributes; classify objects and count by category",bands:{emerging:"Identifies that objects can be measured; may not yet compare using precise language.",developing:"Compares two objects using measurable attributes; sorts objects by one attribute.",proficient:"Compares objects using multiple attributes; sorts and counts objects into categories and asks/answers questions about the data.",extending:"Explains how the same object can be described using different attributes and why comparing requires the same attribute."}}]},
+    {g:"1",stds:[{code:"1.MD.1-2",text:"Order three objects by length; measure with non-standard units",bands:{emerging:"Compares two objects by length; non-standard measurement is emerging.",developing:"Orders three objects by length; measures objects by laying units end-to-end with support.",proficient:"Orders objects by length and measures using non-standard units with no gaps or overlaps.",extending:"Explains why measuring units must be equal and why gaps/overlaps give inaccurate measurements."}}]},
+    {g:"2",stds:[{code:"2.MD.1-4",text:"Measure in standard units; estimate lengths; compare lengths",bands:{emerging:"Measures objects with a ruler with some misalignment; estimation is just developing.",developing:"Measures accurately in both inches and centimeters; estimates lengths of familiar objects.",proficient:"Measures, estimates, and compares lengths in both standard units; explains the difference between systems.",extending:"Uses measurement to solve real-world problems and explains why we need both a starting point and an endpoint."}}]},
+    {g:"3",stds:[{code:"3.MD.1-2",text:"Tell and write time; measure and estimate liquid volume and mass",bands:{emerging:"Tells time to the half hour; beginning to measure volume and mass with tools.",developing:"Tells time to the nearest 5 minutes; measures volume and mass with minor errors.",proficient:"Tells time to the nearest minute; accurately estimates and measures liquid volume and mass.",extending:"Solves real-world problems involving elapsed time and explains measurement choices."}}]},
+    {g:"4",stds:[{code:"4.MD.1-2",text:"Know relative sizes of measurement units; convert within a system",bands:{emerging:"Knows measurement units within a system; conversion between units is emerging.",developing:"Converts between common units with a reference.",proficient:"Converts within a measurement system fluently and solves multi-step measurement problems.",extending:"Explains the relationship between units in a system and chooses the most appropriate unit for a given measurement."}}]},
+    {g:"5",stds:[{code:"5.MD.1",text:"Convert measurement units; solve multi-step real-world problems",bands:{emerging:"Converts simple units; multi-step problems require support.",developing:"Converts within measurement systems; solves two-step measurement problems.",proficient:"Converts measurement units fluently and uses conversions to solve multi-step real-world problems.",extending:"Explains conversions as multiplication or division and creates their own multi-step problems."}}]},
+    {g:"6",stds:[{code:"6.SP.1-5",text:"Understand statistical variability; summarize and describe distributions",bands:{emerging:"Collects data and creates basic displays; understanding of center and spread is emerging.",developing:"Identifies mean, median, and range; describes data distributions with support.",proficient:"Calculates measures of center and variability; summarizes and interprets data distributions in context.",extending:"Explains why different measures of center are appropriate for different data sets and uses data to support an argument."}}]}
+  ]},
+  {id:"geometry",color:"#533AB7",title:"Geometry",sub:"Shapes, space, and spatial reasoning",
+  grades:[
+    {g:"K",stds:[{code:"K.G.1-3",text:"Describe positions of objects; name shapes in different sizes and orientations",bands:{emerging:"Names basic shapes; position words are emerging.",developing:"Names all required shapes in typical orientations; uses position words accurately.",proficient:"Names shapes in any size or orientation and uses position words accurately.",extending:"Explains what makes a triangle a triangle regardless of how it looks, using defining attributes."}}]},
+    {g:"1",stds:[{code:"1.G.1-2",text:"Distinguish and build shapes; compose new shapes from shapes",bands:{emerging:"Identifies defining attributes of shapes; composing shapes is emerging.",developing:"Identifies both defining and non-defining attributes; puts two shapes together to make a new one.",proficient:"Uses attributes to define shapes and composes new shapes, explaining what was combined.",extending:"Predicts what shapes can be made by combining given shapes and decomposes complex shapes into simpler ones."}}]},
+    {g:"2",stds:[{code:"2.G.1",text:"Recognize and draw shapes with specified attributes",bands:{emerging:"Recognizes shapes with specified attributes; drawing shapes from a description is emerging.",developing:"Draws triangles and quadrilaterals with specified attributes with some support.",proficient:"Recognizes and draws shapes with specified attributes.",extending:"Creates shapes that satisfy multiple attribute requirements and explains why some combinations are impossible."}}]},
+    {g:"3",stds:[{code:"3.G.1-2",text:"Classify quadrilaterals; partition shapes and express parts as fractions",bands:{emerging:"Identifies rectangles and squares separately; partitioning into equal parts is developing.",developing:"Recognizes that squares are a type of rectangle; partitions shapes into equal parts.",proficient:"Classifies quadrilaterals; partitions shapes and expresses each part as a unit fraction.",extending:"Explains the relationship between quadrilateral categories and connects to fraction understanding."}}]},
+    {g:"4",stds:[{code:"4.G.1-3",text:"Draw and identify geometric elements; classify 2D figures; find lines of symmetry",bands:{emerging:"Identifies lines, angles, and basic shape classifications; symmetry is emerging.",developing:"Draws and labels geometric elements; classifies shapes by one or two attributes.",proficient:"Draws and identifies all required geometric elements; classifies shapes and finds lines of symmetry.",extending:"Explains why a classification system works and creates their own attribute-based sorting rule."}}]},
+    {g:"5",stds:[{code:"5.G.1-4",text:"Use coordinate system; classify 2D figures into hierarchical categories",deep:true,bands:{emerging:"Plots points in one quadrant; beginning to understand shape hierarchies.",developing:"Plots and identifies points on a coordinate plane; understands that squares are rectangles.",proficient:"Uses the coordinate plane to represent and solve problems; explains shape hierarchies with examples.",extending:"Creates and solves their own coordinate problems; explains the full quadrilateral hierarchy."}}]},
+    {g:"6",stds:[{code:"6.G.1-4",text:"Find area of polygons; find volume; draw in coordinate plane",deep:true,bands:{emerging:"Finds area of rectangles and triangles; volume and composite area are emerging.",developing:"Finds area of triangles and simple polygons; finds volume of rectangular prisms.",proficient:"Finds area of any polygon by decomposing; finds volume with fractional edge lengths; draws polygons on coordinate plane.",extending:"Solves complex real-world area and volume problems, explaining the decomposition strategy used."}}]}
+  ]},
+  {id:"algebraic",color:"#993556",title:"Algebraic thinking & patterns",sub:"Patterns, properties, expressions, equations, and proportional reasoning",
+  grades:[
+    {g:"K",stds:[{code:"K.OA.3",text:"Decompose numbers in multiple ways to build number flexibility",bands:{emerging:"Finds one or two ways to decompose a number; flexibility is emerging.",developing:"Finds several ways to decompose numbers within 5; working toward 10.",proficient:"Shows many ways to decompose any number within 10 using objects, drawings, or equations.",extending:"Uses decomposition flexibly as a mental math strategy and explains why knowing parts helps with addition."}}]},
+    {g:"1",stds:[
+      {code:"1.OA.3-4",text:"Apply commutative and associative properties; subtraction as unknown-addend",bands:{emerging:"Uses commutativity informally; subtraction as unknown-addend is emerging.",developing:"Applies commutativity and associativity with examples; uses addition to check subtraction.",proficient:"Uses properties as strategies and explains subtraction as a missing-addend problem.",extending:"Creates their own examples of properties and explains how knowing one fact gives you related facts for free."}},
+      {code:"1.OA.7-8",text:"Understand the equal sign; find unknowns in equations",bands:{emerging:"Sees the equal sign as 'the answer goes here'; may not recognize equations like 5=3+2.",developing:"Begins to understand the equal sign as balance; solves simple missing-number equations.",proficient:"Understands the equal sign as meaning 'the same as'; determines if equations are true or false.",extending:"Uses the balance concept to create equivalent equations and explain why both sides must be equal."}}
+    ]},
+    {g:"2",stds:[{code:"2.OA.3-4",text:"Odd and even numbers; use addition for arrays",bands:{emerging:"Identifies odd and even numbers to about 10; arrays are emerging.",developing:"Identifies odd and even numbers to 20; writes addition equations for small arrays.",proficient:"Determines odd/even for any number; writes and uses addition equations for arrays.",extending:"Explains why even numbers can be split into equal groups and connects arrays to early multiplication."}}]},
+    {g:"3",stds:[
+      {code:"3.OA.5",text:"Apply properties of multiplication; distributive property",deep:true,bands:{emerging:"Recognizes the commutative property; distributive property is emerging.",developing:"Applies commutativity and associativity; uses the distributive property with a visual model.",proficient:"Uses all three properties as strategies and explains how they make harder facts easier.",extending:"Creates their own examples of each property and explains why the distributive property is the most powerful for mental math."}},
+      {code:"3.OA.8-9",text:"Solve two-step problems; identify arithmetic patterns",bands:{emerging:"Solves one-step problems reliably; two-step problems require support.",developing:"Solves two-step problems with one operation type; identifies simple patterns.",proficient:"Solves two-step problems using multiple operations; identifies and explains arithmetic patterns.",extending:"Creates two-step problems for others to solve and predicts what will happen to a pattern beyond what's shown."}}
+    ]},
+    {g:"4",stds:[
+      {code:"4.OA.1-3",text:"Multiplication as comparison; multi-step word problems",bands:{emerging:"Interprets multiplication as equal groups; comparison problems are emerging.",developing:"Interprets multiplication as comparison with a visual; solves two-step problems.",proficient:"Writes comparison equations and solves multi-step word problems, showing each step.",extending:"Creates comparison problems and explains the difference between additive and multiplicative relationships."}},
+      {code:"4.OA.4-5",text:"Factor pairs; prime and composite numbers; generate and analyze patterns",bands:{emerging:"Finds some factor pairs; prime and composite distinction is developing.",developing:"Finds most factor pairs systematically; identifies prime/composite with support; extends simple patterns.",proficient:"Finds all factor pairs; classifies numbers as prime or composite with justification; generates and analyzes patterns.",extending:"Explains why 1 is neither prime nor composite; notices unexpected features in patterns beyond what the rule states."}}
+    ]},
+    {g:"5",stds:[{code:"5.OA.1-3",text:"Write and evaluate numerical expressions; analyze two patterns",bands:{emerging:"Evaluates simple expressions; order of operations is developing.",developing:"Uses parentheses in expressions; evaluates with order of operations; extends one pattern.",proficient:"Writes and evaluates expressions with parentheses; generates and compares two patterns; graphs ordered pairs.",extending:"Explains why parentheses change an answer and describes the relationship between two patterns algebraically."}}]},
+    {g:"6",stds:[
+      {code:"6.EE.1-4",text:"Expressions with exponents; apply properties",deep:true,bands:{emerging:"Evaluates simple expressions with variables; exponents are emerging.",developing:"Evaluates expressions with exponents and variables; applies some properties.",proficient:"Writes, reads, and evaluates expressions with exponents and variables; generates equivalent expressions.",extending:"Explains what it means for two expressions to be equivalent and creates their own equivalent expression pairs."}},
+      {code:"6.EE.5-8",text:"Solve equations and inequalities; use variables",bands:{emerging:"Understands that a variable represents an unknown; solving equations is emerging.",developing:"Solves one-step equations; beginning to work with inequalities.",proficient:"Writes and solves equations and inequalities; explains what the solution means in context.",extending:"Writes equations for complex situations and explains why there can be multiple solutions to an inequality."}},
+      {code:"6.RP.1-3",text:"Ratio concepts; unit rates; percentages",bands:{emerging:"Understands ratio as a comparison; unit rates and percentages are developing.",developing:"Writes ratios and finds unit rates with support; solves simple percentage problems.",proficient:"Uses ratio and rate reasoning to solve real-world problems, including percentages.",extending:"Explains when ratios are equivalent and uses multiple representations to show proportional relationships."}}
+    ]}
+  ]}
+];
+
+let openId=null;
+let uid=0;
+domains.forEach(d=>d.grades.forEach(g=>g.stds.forEach(s=>s._id='s'+(uid++))));
+
+function bandCard(s,b){
+  return `<div class="band-card" id="bc-${s._id}-${b.key}" style="background:${b.bg}" onclick="selectBand('${s._id}','${b.key}','${b.color}')">
+    <div class="band-name" style="color:${b.text}">${b.label}</div>
+    <div class="band-desc">${s.bands[b.key]}</div>
+  </div>`;
+}
+
+function stdHTML(s,color){
+  const trackSegs=BANDS.map(b=>`<div class="track-seg" id="ts-${s._id}-${b.key}" style="background:${b.color}" onclick="selectBand('${s._id}','${b.key}','${b.color}')" title="${b.label}"></div>`).join('');
+  const cards=BANDS.map(b=>bandCard(s,b)).join('');
+  return `<div class="std-item">
+    <div class="std-row" id="sr-${s._id}" onclick="toggle('${s._id}')">
+      <span class="std-code">${s.code}</span>
+      <span class="std-text">${s.text}${s.deep?'<span class="deep">go deep</span>':''}</span>
+      <span class="chevron" id="chev-${s._id}">▶</span>
+    </div>
+    <div class="cont-panel" id="cp-${s._id}">
+      <div class="track">${trackSegs}</div>
+      <div class="bands-grid">${cards}</div>
+    </div>
+  </div>`;
+}
+
+function selectBand(id,key,color){
+  BANDS.forEach(b=>{
+    const card=document.getElementById(`bc-${id}-${b.key}`);
+    const seg=document.getElementById(`ts-${id}-${b.key}`);
+    if(card){card.classList.toggle('selected',b.key===key);card.style.borderColor=b.key===key?b.color:'transparent';}
+    if(seg){seg.classList.toggle('selected',b.key===key);}
+  });
+}
+
+function toggle(id){
+  const panel=document.getElementById('cp-'+id);
+  const chev=document.getElementById('chev-'+id);
+  const row=document.getElementById('sr-'+id);
+  const isOpen=panel.classList.contains('visible');
+  if(openId&&openId!==id){
+    document.getElementById('cp-'+openId)?.classList.remove('visible');
+    document.getElementById('chev-'+openId)?.classList.remove('open');
+    document.getElementById('sr-'+openId)?.classList.remove('open');
+  }
+  panel.classList.toggle('visible',!isOpen);
+  chev.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+  openId=isOpen?null:id;
+}
+
+function render(filter){
+  const cont=document.getElementById('continuum');
+  cont.innerHTML='';
+  const list=filter==='all'?domains:domains.filter(d=>d.id===filter);
+  list.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='domain';
+    el.innerHTML=`<div class="d-head" style="background:${d.color}12">
+      <div class="dot" style="background:${d.color}"></div>
+      <div><div class="d-title" style="color:${d.color}">${d.title}</div><div class="d-sub">${d.sub}</div></div>
+    </div>`+d.grades.map(g=>`<div class="grade-row">
+      <div class="g-label">Gr ${g.g}</div>
+      <div class="stds">${g.stds.map(s=>stdHTML(s,d.color)).join('')}</div>
+    </div>`).join('');
+    cont.appendChild(el);
+  });
+}
+
+document.getElementById('filters').addEventListener('click',e=>{
+  const btn=e.target.closest('.fbtn');
+  if(!btn)return;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openId=null;
+  render(btn.dataset.d);
+});
+
+render('all');
+</script>
+</body>
+</html>
