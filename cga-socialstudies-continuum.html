@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Studies Mastery Continuum K–6 · Curiosity Grove Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-dark:#085041;--green-mid:#0F6E56;--green-light:#E1F5EE;
+  --cream:#FAF8F4;--sand:#F0EDE6;--text:#1C1C1A;--text-mid:#5A5955;--text-light:#8A8880;--border:#E2DFD8;
+  --e-color:#A32D2D;--e-bg:#FCEBEB;--e-text:#791F1F;
+  --d-color:#854F0B;--d-bg:#FAEEDA;--d-text:#633806;
+  --p-color:#0F6E56;--p-bg:#E1F5EE;--p-text:#085041;
+  --x-color:#185FA5;--x-bg:#E6F1FB;--x-text:#0C447C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+.site-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;position:sticky;top:0;z-index:100}
+.nav-leaf{width:28px;height:28px;background:var(--green-mid);border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;margin-right:10px}
+.nav-leaf span{color:#fff;font-size:14px;font-weight:500;font-family:'DM Serif Display',serif;font-style:italic}
+.nav-name{font-size:14px;font-weight:500}
+.nav-sub{font-size:11px;color:var(--text-light)}
+.hero{padding:3rem 1.5rem 2rem;max-width:780px;margin:0 auto}
+.hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green-mid);font-weight:500;margin-bottom:0.75rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,42px);line-height:1.15;color:var(--text);margin-bottom:1rem;font-weight:400}
+.hero h1 em{font-style:italic;color:var(--green-mid)}
+.hero p{font-size:15px;color:var(--text-mid);line-height:1.7;max-width:560px;margin-bottom:2rem}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+.leg-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.fbtn{font-size:12px;padding:5px 16px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--text-mid);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.fbtn:hover{border-color:var(--green-mid);color:var(--green-dark)}
+.fbtn.active{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+.main{max-width:780px;margin:0 auto;padding:0 1.5rem 4rem}
+.domain{margin-bottom:1rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.d-head{padding:0.85rem 1.1rem;display:flex;align-items:center;gap:10px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.d-title{font-size:13px;font-weight:500}
+.d-sub{font-size:12px;color:var(--text-light)}
+.grade-row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--border)}
+.g-label{display:flex;align-items:flex-start;justify-content:center;padding:0.85rem 0.25rem;padding-top:0.95rem;font-size:11px;font-weight:500;color:var(--text-light);border-right:1px solid var(--border);letter-spacing:0.03em}
+.stds{padding:0.6rem 0.85rem;display:flex;flex-direction:column;gap:4px}
+.std-item{border-radius:8px;overflow:hidden}
+.std-row{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;cursor:pointer;border-radius:8px;transition:background 0.12s}
+.std-row:hover{background:var(--sand)}
+.std-row.open{background:var(--sand);border-radius:8px 8px 0 0}
+.std-code{font-size:11px;color:var(--text-light);white-space:nowrap;padding-top:2px;min-width:76px;flex-shrink:0;font-family:monospace}
+.std-text{flex:1;font-size:13px;line-height:1.55;color:var(--text)}
+.deep{font-size:10px;padding:2px 7px;border-radius:10px;background:#FAEEDA;color:#633806;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.cga-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:#E6F1FB;color:#0C447C;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.chevron{font-size:9px;color:var(--text-light);flex-shrink:0;margin-top:5px;transition:transform 0.15s}
+.chevron.open{transform:rotate(90deg)}
+.cont-panel{display:none;padding:12px 10px 14px;background:var(--sand);border-radius:0 0 8px 8px;margin:0 2px 4px}
+.cont-panel.visible{display:block}
+.track{display:flex;gap:3px;margin-bottom:10px;align-items:center}
+.track-seg{flex:1;height:5px;border-radius:3px;cursor:pointer;transition:opacity 0.15s}
+.track-seg:hover{opacity:0.75}
+.track-seg.selected{height:8px}
+.bands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(max-width:600px){.bands-grid{grid-template-columns:repeat(2,1fr)}}
+.band-card{border-radius:8px;padding:9px 10px;cursor:pointer;border:1.5px solid transparent;transition:border-color 0.15s,transform 0.1s}
+.band-card:hover{transform:translateY(-1px)}
+.band-card.selected{border-color:currentColor}
+.band-name{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.band-desc{font-size:12px;line-height:1.55;color:var(--text-mid)}
+.seesaw-note{font-size:11px;color:var(--green-dark);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-style:italic}
+.seesaw-note strong{font-style:normal;font-weight:500}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+footer p{font-size:12px;color:var(--text-light)}
+footer a{color:var(--green-mid);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-leaf"><span>CG</span></div>
+  <div>
+    <div class="nav-name">Curiosity Grove Academy</div>
+    <div class="nav-sub">Grand Junction, Colorado</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Social Studies · K–6 · C3 Framework</div>
+  <h1>How does my child grow <em>as a thinker about the world?</em></h1>
+  <p>Social studies at CGA connects history, geography, civics, and economics to the real questions students are already asking. This continuum is organized around our content units and the C3 Framework — the national standards for social studies inquiry. Tap any standard to see the full progression.</p>
+  <div class="legend-row">
+    <div class="leg-pill" style="background:var(--e-bg)"><div class="leg-dot" style="background:var(--e-color)"></div><span style="color:var(--e-text)">Emerging</span></div>
+    <div class="leg-pill" style="background:var(--d-bg)"><div class="leg-dot" style="background:var(--d-color)"></div><span style="color:var(--d-text)">Developing</span></div>
+    <div class="leg-pill" style="background:var(--p-bg)"><div class="leg-dot" style="background:var(--p-color)"></div><span style="color:var(--p-text)">Proficient</span></div>
+    <div class="leg-pill" style="background:var(--x-bg)"><div class="leg-dot" style="background:var(--x-color)"></div><span style="color:var(--x-text)">Extending</span></div>
+  </div>
+  <div class="filter-row" id="filters">
+    <button class="fbtn active" data-d="all">All strands</button>
+    <button class="fbtn" data-d="inquiry">Inquiry practices</button>
+    <button class="fbtn" data-d="history">History & native peoples</button>
+    <button class="fbtn" data-d="geography">Geography</button>
+    <button class="fbtn" data-d="civics">Civics & government</button>
+    <button class="fbtn" data-d="economics">Economics</button>
+  </div>
+</div>
+
+<main class="main" id="continuum"></main>
+
+<footer>
+  <p>Curiosity Grove Academy &nbsp;·&nbsp; <a href="https://curiositygroveacademy.com">curiositygroveacademy.com</a> &nbsp;·&nbsp; Grand Junction, CO &nbsp;·&nbsp; Standards: C3 Framework</p>
+</footer>
+
+<script>
+const BANDS=[
+  {key:"emerging",label:"Emerging",color:"var(--e-color)",bg:"var(--e-bg)",text:"var(--e-text)"},
+  {key:"developing",label:"Developing",color:"var(--d-color)",bg:"var(--d-bg)",text:"var(--d-text)"},
+  {key:"proficient",label:"Proficient",color:"var(--p-color)",bg:"var(--p-bg)",text:"var(--p-text)"},
+  {key:"extending",label:"Extending",color:"var(--x-color)",bg:"var(--x-bg)",text:"var(--x-text)"}
+];
+
+const domains=[
+  {
+    id:"inquiry",color:"#2D6B7F",
+    title:"Social studies inquiry practices",
+    sub:"Asking compelling questions, gathering evidence, and taking informed action — the heart of C3",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"C3.D1.1",text:"Explain why compelling questions are important to understanding the world",cga:true,
+         seesaw:"Video of student explaining why their research question matters",
+         bands:{emerging:"Asks questions about topics; understanding why questions matter is just developing.",developing:"Generates questions about a topic; beginning to explain why some questions are more important.",proficient:"Explains why compelling questions about society and history are worth investigating.",extending:"Generates original compelling questions; evaluates questions for depth and importance."}},
+        {code:"C3.D1.4",text:"Explain how supporting questions help answer a compelling question",cga:true,
+         seesaw:"Student's question web showing a compelling question and supporting questions",
+         bands:{emerging:"Asks questions; the relationship between big and small questions requires support.",developing:"Generates supporting questions with prompting; connection to the compelling question is partial.",proficient:"Explains how supporting questions help investigate a compelling question.",extending:"Independently develops a question framework; revises questions based on what they learn."}},
+        {code:"C3.D2.1",text:"Gather information from multiple sources including maps, photographs, and texts",cga:true,
+         seesaw:"Student's research notes showing information from at least two different source types",
+         bands:{emerging:"Uses one source to find information; multiple source types require support.",developing:"Uses two source types with guidance; notes are beginning.",proficient:"Gathers relevant information from multiple sources including maps, photographs, and written texts.",extending:"Evaluates sources for reliability; synthesizes information from multiple sources into a coherent picture."}},
+        {code:"C3.D4.1",text:"Use evidence to construct an explanation or argument about a social studies topic",cga:true,
+         seesaw:"Student's written or recorded explanation using evidence from sources",
+         bands:{emerging:"Shares opinions about topics; using evidence to support them requires support.",developing:"Uses one piece of evidence to support an explanation; argument structure is developing.",proficient:"Constructs an explanation or argument about a social studies topic using evidence from sources.",extending:"Builds multi-evidence arguments; distinguishes between stronger and weaker evidence; addresses counterarguments."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"C3.D1.1",text:"Construct compelling questions that reflect enduring issues and genuine uncertainty",deep:true,cga:true,
+         seesaw:"Student's compelling question with explanation of why it reflects a genuine issue",
+         bands:{emerging:"Asks questions about topics; compelling vs. factual distinction is developing.",developing:"Generates questions with some depth; connection to enduring issues is partial.",proficient:"Constructs compelling questions that reflect enduring issues or are open to multiple perspectives.",extending:"Generates questions that reveal sophisticated historical or civic thinking; revises based on new understanding."}},
+        {code:"C3.D2.6",text:"Evaluate the credibility, accuracy, and relevance of sources",deep:true,cga:true,
+         seesaw:"Student's source evaluation notes explaining why they accepted or rejected a source",
+         bands:{emerging:"Uses sources; evaluating credibility requires significant support.",developing:"Identifies obvious credibility issues; relevance evaluation is developing.",proficient:"Evaluates sources for credibility, accuracy, and relevance to the question being investigated.",extending:"Applies multiple criteria to evaluate sources; explains how source quality affects the strength of conclusions."}},
+        {code:"C3.D3.1",text:"Gather relevant information from multiple sources and cite them",deep:true,cga:true,
+         seesaw:"Student's research notes with sources cited and information organized by question",
+         bands:{emerging:"Gathers information; relevance judgment and citation require support.",developing:"Gathers information from two or more sources; cites sources with prompting.",proficient:"Gathers relevant information from multiple sources; cites sources accurately.",extending:"Synthesizes information across sources; evaluates conflicting information; citation is precise and consistent."}},
+        {code:"C3.D4.2",text:"Construct arguments using precise and knowledgeable claims supported by evidence",deep:true,cga:true,
+         seesaw:"Student's written argument with claim, evidence, and reasoning clearly distinguished",
+         bands:{emerging:"States opinions; constructing evidence-based arguments requires support.",developing:"Supports claims with some evidence; argument structure is partially developed.",proficient:"Constructs arguments with precise claims supported by evidence from multiple sources.",extending:"Builds sophisticated arguments; addresses counterarguments; conclusion extends beyond restating the claim."}}
+      ]}
+    ]
+  },
+  {
+    id:"history",color:"#8B4513",
+    title:"History — Native peoples & American story",
+    sub:"Understanding the past, Indigenous history, change over time, and historical perspective",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"C3.H.1",text:"Create a chronological sequence of multiple events and explain their relationship",cga:true,
+         seesaw:"Student's timeline with events placed in sequence and explanation of connections",
+         bands:{emerging:"Orders two events; chronological sequence and relationships require support.",developing:"Places three or more events in sequence; relationships between them are beginning.",proficient:"Creates a chronological sequence of multiple events; explains how earlier events relate to later ones.",extending:"Analyzes cause and effect across multiple events; identifies turning points."}},
+        {code:"C3.H.2",text:"Compare life in the past to life today using evidence from sources",cga:true,
+         seesaw:"Student's comparison drawing or writing with specific evidence from sources",
+         bands:{emerging:"Talks about the past; comparison to the present requires support.",developing:"Identifies one similarity and one difference between past and present.",proficient:"Compares life in the past to life today using specific evidence from primary and secondary sources.",extending:"Analyzes what caused changes over time; considers multiple perspectives on past life."}},
+        {code:"C3.H.3",text:"Generate questions about individuals and groups who have shaped history",cga:true,
+         seesaw:"Student's questions about a historical figure or group with explanation of what they want to understand",
+         bands:{emerging:"Knows the names of historical figures; generating questions about them requires support.",developing:"Asks factual questions about historical figures or groups.",proficient:"Generates questions about individuals and groups who have shaped significant events or places.",extending:"Asks interpretive questions about historical figures; considers their motivations and legacies."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"C3.H.1",text:"Explain how and why perspectives of people have changed over time",deep:true,cga:true,
+         seesaw:"Student's written explanation of how and why a perspective changed, with historical evidence",
+         bands:{emerging:"Identifies that people in the past thought differently; explaining why requires support.",developing:"Explains one way perspectives changed; evidence is partially developed.",proficient:"Explains how and why the perspectives of people have changed in response to historical events.",extending:"Analyzes multiple factors that changed perspectives; considers how current perspectives are also shaped by history."}},
+        {code:"C3.H.2",text:"Use primary and secondary sources to understand multiple perspectives on historical events",deep:true,cga:true,
+         seesaw:"Student's source analysis comparing two perspectives on the same historical event",
+         bands:{emerging:"Uses sources to find information; perspective analysis requires support.",developing:"Identifies two perspectives on an event with support; source analysis is developing.",proficient:"Uses primary and secondary sources to identify and explain multiple perspectives on the same historical event.",extending:"Analyzes why perspectives differ; evaluates which sources provide the most reliable perspective."}},
+        {code:"C3.H.3",text:"Explain the causes and effects of historical events and evaluate their significance",deep:true,cga:true,
+         seesaw:"Student's cause-effect analysis of a historical event with explanation of its lasting significance",
+         bands:{emerging:"Describes historical events; causes, effects, and significance require support.",developing:"Identifies one cause and one effect; significance is partially explained.",proficient:"Explains multiple causes and effects of a historical event; evaluates its significance for people then and now.",extending:"Analyzes chains of causation; distinguishes immediate from long-term causes; evaluates competing interpretations of significance."}},
+        {code:"C3.H.4",text:"Analyze the roles and contributions of Indigenous peoples in American history",deep:true,cga:true,
+         seesaw:"Student's research presentation or written piece centering Indigenous voices and contributions",
+         bands:{emerging:"Knows Indigenous peoples are part of American history; analysis and centering their voices requires support.",developing:"Describes contributions of one Indigenous group or figure; perspective-centering is developing.",proficient:"Analyzes the roles and contributions of Indigenous peoples in American history using sources that center Indigenous voices.",extending:"Evaluates how mainstream historical narratives have included or excluded Indigenous perspectives; identifies the importance of correcting the record."}},
+        {code:"C3.H.5",text:"Explain the continuing influence of historical decisions on the present",deep:true,cga:true,
+         seesaw:"Student's written connection between a historical decision and a present-day reality",
+         bands:{emerging:"Knows the past affects the present; specific connections require support.",developing:"Connects one historical decision to a present-day reality with prompting.",proficient:"Explains how historical decisions — including policies, treaties, and laws — continue to influence the present.",extending:"Traces the long arc of a historical decision to current conditions; considers what could be different."}}
+      ]}
+    ]
+  },
+  {
+    id:"geography",color:"#2D7D46",
+    title:"Geography — place, environment & human connection",
+    sub:"Maps, physical features, regions, how places shape people and people shape places",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"C3.G.1",text:"Use maps, globes, and other geographic tools to identify features of places",cga:true,
+         seesaw:"Photo of student using a map to locate and label geographic features",
+         bands:{emerging:"Recognizes maps as representations of places; using geographic tools requires support.",developing:"Locates major features on a map; beginning to use map features like compass rose and legend.",proficient:"Uses maps, globes, and other tools to identify and describe features of places.",extending:"Compares different map types for the same area; explains what each shows and why it matters."}},
+        {code:"C3.G.2",text:"Identify how people modify and adapt to their physical environment",cga:true,
+         seesaw:"Student's drawing or writing showing how people in a studied region adapted to or changed their environment",
+         bands:{emerging:"Knows people live in different environments; adaptation and modification require support.",developing:"Identifies one way people adapt to or modify an environment.",proficient:"Identifies and explains how people modify their physical environment and how they adapt to it.",extending:"Compares how different communities respond to the same type of environment; evaluates the impacts of modification."}},
+        {code:"C3.G.3",text:"Describe how geography influences the way people live and work",cga:true,
+         seesaw:"Student's research notes connecting a region's geography to how people there live and work",
+         bands:{emerging:"Knows geography affects people; specific connections require support.",developing:"Makes one connection between geography and daily life in a studied region.",proficient:"Describes how geographic features influence the way people live, work, and interact.",extending:"Compares how similar geographic features affect different communities differently; analyzes historical and contemporary examples."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"C3.G.1",text:"Use and construct maps to represent and explain geographic patterns",deep:true,cga:true,
+         seesaw:"Student's annotated map showing a geographic pattern with written explanation",
+         bands:{emerging:"Reads information from maps; constructing maps and explaining patterns requires support.",developing:"Constructs simple maps; identifies one geographic pattern.",proficient:"Uses and constructs maps to represent geographic information and explain patterns in human and physical geography.",extending:"Analyzes how geographic patterns have changed over time; evaluates what different map projections emphasize."}},
+        {code:"C3.G.2",text:"Explain how cultural and environmental characteristics distinguish places and regions",deep:true,cga:true,
+         seesaw:"Student's regional comparison showing cultural and environmental characteristics of two places",
+         bands:{emerging:"Describes one characteristic of a place; distinguishing regions requires support.",developing:"Identifies cultural and environmental characteristics of one region.",proficient:"Explains how cultural and environmental characteristics distinguish places and regions from one another.",extending:"Analyzes how regions are defined differently depending on perspective; evaluates the relationship between environment and culture."}},
+        {code:"C3.G.3",text:"Analyze how humans and environments interact and how each changes the other",deep:true,cga:true,
+         seesaw:"Student's analysis of a specific human-environment interaction with evidence of change in both directions",
+         bands:{emerging:"Identifies that humans affect the environment; bidirectional change requires support.",developing:"Explains one way humans change the environment and one way the environment shapes human decisions.",proficient:"Analyzes how humans and environments interact and how each changes the other over time.",extending:"Traces long-term patterns of human-environment interaction; evaluates the sustainability of different approaches."}},
+        {code:"C3.G.4",text:"Explain how geographic factors have influenced historical events and decisions",cga:true,
+         seesaw:"Student's written explanation connecting a geographic feature to a historical decision or event",
+         bands:{emerging:"Knows geography affects history; specific connections require support.",developing:"Connects one geographic factor to a historical event with prompting.",proficient:"Explains how geographic factors such as landforms, waterways, and resources have influenced historical events.",extending:"Analyzes multiple geographic factors at play in a single event; considers how different geography might have changed history."}}
+      ]}
+    ]
+  },
+  {
+    id:"civics",color:"#7B3FA0",
+    title:"Civics & government",
+    sub:"Rules, rights, responsibilities, democratic participation, and how government works",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"C3.C.1",text:"Describe roles and responsibilities of people in authority",cga:true,
+         seesaw:"Student's drawing or writing explaining a community leader's role and responsibilities",
+         bands:{emerging:"Knows some people are in authority; roles and responsibilities require support.",developing:"Names one or two authority figures and describes their role.",proficient:"Describes the roles and responsibilities of people in authority in school, community, and government.",extending:"Compares roles of authority at different levels; explains why authority roles exist."}},
+        {code:"C3.C.2",text:"Explain the need for and purpose of rules and laws in a community",cga:true,
+         seesaw:"Student's written or recorded explanation of why a specific rule or law exists",
+         bands:{emerging:"Knows communities have rules; explaining their purpose requires support.",developing:"Explains why one rule or law exists; connection to community needs is developing.",proficient:"Explains the need for rules and laws and how they protect rights and responsibilities.",extending:"Analyzes what would happen without specific rules; evaluates whether rules are fair and effective."}},
+        {code:"C3.C.3",text:"Identify ways citizens can participate in civic life",cga:true,
+         seesaw:"Student's plan for participating in a community issue they care about",
+         bands:{emerging:"Knows people can participate in community life; specific ways require support.",developing:"Identifies one or two ways citizens participate; connection to civic responsibility is developing.",proficient:"Identifies multiple ways citizens can participate in civic life and explains why participation matters.",extending:"Designs a plan for civic participation on an issue they care about; evaluates the effectiveness of different forms of participation."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"C3.C.1",text:"Distinguish the powers and responsibilities of different levels of government",deep:true,cga:true,
+         seesaw:"Student's diagram or written explanation of local, state, and federal government roles",
+         bands:{emerging:"Knows there are different levels of government; distinguishing their powers requires support.",developing:"Names the levels of government; describes one power of each with support.",proficient:"Distinguishes the powers and responsibilities of local, state, and federal government.",extending:"Analyzes how the three levels interact; evaluates examples of overlap or conflict between levels."}},
+        {code:"C3.C.2",text:"Explain the principles of democracy including majority rule, minority rights, and due process",deep:true,cga:true,
+         seesaw:"Student's written explanation of a democratic principle with a real example",
+         bands:{emerging:"Knows democracy involves voting; principles like minority rights and due process require support.",developing:"Explains majority rule; minority rights and due process are developing.",proficient:"Explains principles of democracy including majority rule, minority rights, due process, and equal protection.",extending:"Analyzes tensions between democratic principles; evaluates whether current laws and practices reflect these principles."}},
+        {code:"C3.C.3",text:"Analyze the role of citizens in a democratic society and evaluate civic responsibilities",deep:true,cga:true,
+         seesaw:"Student's analysis of a civic responsibility with their argument for why it matters",
+         bands:{emerging:"Knows citizens have responsibilities; analysis and evaluation require support.",developing:"Describes civic responsibilities; beginning to explain why they matter.",proficient:"Analyzes the role of citizens in a democracy and evaluates the importance of specific civic responsibilities.",extending:"Evaluates tensions between rights and responsibilities; argues for a specific view of what citizenship requires."}},
+        {code:"C3.C.4",text:"Analyze how the Constitution and Bill of Rights protect individual rights and limit government power",deep:true,cga:true,
+         seesaw:"Student's written analysis connecting a constitutional right to a real example",
+         bands:{emerging:"Knows the Constitution is an important document; analysis of rights and limits requires support.",developing:"Identifies one constitutional right or limit on government power.",proficient:"Analyzes how the Constitution and Bill of Rights protect rights and limit government power with specific examples.",extending:"Evaluates constitutional debates; analyzes how rights have been expanded or restricted over time; considers contemporary applications."}}
+      ]}
+    ]
+  },
+  {
+    id:"economics",color:"#1B5E9A",
+    title:"Economics — resources, choices & systems",
+    sub:"Scarcity, trade, producers and consumers, economic systems and decisions",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"C3.E.1",text:"Describe wants and needs and explain why people make choices",cga:true,
+         seesaw:"Student's drawing or writing distinguishing a want from a need with explanation",
+         bands:{emerging:"Knows about wants and needs; explaining choices requires support.",developing:"Distinguishes wants from needs; explains one reason people make choices.",proficient:"Describes wants and needs; explains why people have to make choices because resources are limited.",extending:"Analyzes trade-offs in choices; connects to the concept of scarcity."}},
+        {code:"C3.E.2",text:"Describe how people earn income and exchange goods and services",cga:true,
+         seesaw:"Student's explanation of how a community member earns income and what they exchange",
+         bands:{emerging:"Knows people work for money; exchange and goods vs. services require support.",developing:"Describes one way people earn income; distinguishes goods from services.",proficient:"Describes how people earn income through work; explains exchange of goods and services.",extending:"Compares different ways people earn income; analyzes how specialization and trade benefit communities."}},
+        {code:"C3.E.3",text:"Explain what producers and consumers do and how they depend on each other",cga:true,
+         seesaw:"Student's diagram showing producer-consumer relationships in their community",
+         bands:{emerging:"Knows people buy and sell things; producer-consumer distinction requires support.",developing:"Identifies producers and consumers in examples; interdependence is developing.",proficient:"Explains what producers and consumers do and how they depend on each other.",extending:"Traces a product from production to consumption; analyzes how price signals affect producer and consumer decisions."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"C3.E.1",text:"Explain how economic decisions affect the well-being of individuals, businesses, and societies",deep:true,cga:true,
+         seesaw:"Student's written analysis of how a specific economic decision affected multiple groups differently",
+         bands:{emerging:"Knows economic decisions have consequences; analyzing effects on multiple groups requires support.",developing:"Explains one effect of an economic decision on individuals or businesses.",proficient:"Explains how economic decisions affect the well-being of individuals, businesses, and society.",extending:"Analyzes trade-offs and unintended consequences; evaluates whose well-being is prioritized in economic decisions."}},
+        {code:"C3.E.2",text:"Describe the role of specialization, trade, and interdependence in economic systems",deep:true,cga:true,
+         seesaw:"Student's explanation of how specialization and trade benefit a specific community or region",
+         bands:{emerging:"Knows people specialize and trade; connecting to interdependence requires support.",developing:"Explains specialization and trade with one example; interdependence is developing.",proficient:"Describes how specialization, trade, and interdependence benefit individuals, communities, and nations.",extending:"Analyzes the costs and benefits of interdependence; evaluates what happens when trade relationships break down."}},
+        {code:"C3.E.3",text:"Explain how supply, demand, and price interact in markets",cga:true,
+         seesaw:"Student's explanation of a real supply-demand situation with analysis of price effects",
+         bands:{emerging:"Knows prices change; supply and demand as a mechanism requires support.",developing:"Explains supply and demand separately; their interaction is developing.",proficient:"Explains how supply, demand, and price interact; describes what happens when supply or demand changes.",extending:"Analyzes real market situations using supply and demand; evaluates how factors beyond supply and demand affect price."}},
+        {code:"C3.E.4",text:"Analyze the costs and benefits of individual and collective economic decisions",deep:true,cga:true,
+         seesaw:"Student's cost-benefit analysis of a community economic decision with recommendation",
+         bands:{emerging:"Identifies costs and benefits; systematic analysis requires support.",developing:"Lists costs and benefits of a decision; analysis is partially developed.",proficient:"Analyzes costs and benefits of economic decisions at the individual and collective level.",extending:"Evaluates whose costs and benefits are counted; argues for a decision based on a complete cost-benefit analysis."}}
+      ]}
+    ]
+  }
+];
+
+let openId=null;
+let uid=0;
+domains.forEach(d=>d.grades.forEach(g=>g.stds.forEach(s=>s._id='ss'+(uid++))));
+
+function bandCard(s,b){
+  return `<div class="band-card" id="bc-${s._id}-${b.key}" style="background:${b.bg}" onclick="selectBand('${s._id}','${b.key}')">
+    <div class="band-name" style="color:${b.text}">${b.label}</div>
+    <div class="band-desc">${s.bands[b.key]}</div>
+  </div>`;
+}
+
+function stdHTML(s){
+  const segs=BANDS.map(b=>`<div class="track-seg" id="ts-${s._id}-${b.key}" style="background:${b.color}" onclick="selectBand('${s._id}','${b.key}')" title="${b.label}"></div>`).join('');
+  const cards=BANDS.map(b=>bandCard(s,b)).join('');
+  return `<div class="std-item">
+    <div class="std-row" id="sr-${s._id}" onclick="toggle('${s._id}')">
+      <span class="std-code">${s.code}</span>
+      <span class="std-text">${s.text}${s.deep?'<span class="deep">go deep</span>':''}${s.cga?'<span class="cga-tag">CGA unit</span>':''}</span>
+      <span class="chevron" id="chev-${s._id}">▶</span>
+    </div>
+    <div class="cont-panel" id="cp-${s._id}">
+      <div class="track">${segs}</div>
+      <div class="bands-grid">${cards}</div>
+      ${s.seesaw?`<div class="seesaw-note"><strong>Seesaw evidence:</strong> ${s.seesaw}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function selectBand(id,key){
+  BANDS.forEach(b=>{
+    const card=document.getElementById(`bc-${id}-${b.key}`);
+    const seg=document.getElementById(`ts-${id}-${b.key}`);
+    if(card){card.classList.toggle('selected',b.key===key);card.style.borderColor=b.key===key?b.color:'transparent';}
+    if(seg){seg.classList.toggle('selected',b.key===key);}
+  });
+}
+
+function toggle(id){
+  const panel=document.getElementById('cp-'+id);
+  const chev=document.getElementById('chev-'+id);
+  const row=document.getElementById('sr-'+id);
+  const isOpen=panel.classList.contains('visible');
+  if(openId&&openId!==id){
+    document.getElementById('cp-'+openId)?.classList.remove('visible');
+    document.getElementById('chev-'+openId)?.classList.remove('open');
+    document.getElementById('sr-'+openId)?.classList.remove('open');
+  }
+  panel.classList.toggle('visible',!isOpen);
+  chev.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+  openId=isOpen?null:id;
+}
+
+function render(filter){
+  const cont=document.getElementById('continuum');
+  cont.innerHTML='';
+  const list=filter==='all'?domains:domains.filter(d=>d.id===filter);
+  list.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='domain';
+    el.innerHTML=`<div class="d-head" style="background:${d.color}12">
+      <div class="dot" style="background:${d.color}"></div>
+      <div><div class="d-title" style="color:${d.color}">${d.title}</div><div class="d-sub">${d.sub}</div></div>
+    </div>`+d.grades.map(g=>`<div class="grade-row">
+      <div class="g-label">Gr ${g.g}</div>
+      <div class="stds">${g.stds.map(s=>stdHTML(s)).join('')}</div>
+    </div>`).join('');
+    cont.appendChild(el);
+  });
+}
+
+document.getElementById('filters').addEventListener('click',e=>{
+  const btn=e.target.closest('.fbtn');
+  if(!btn)return;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openId=null;
+  render(btn.dataset.d);
+});
+
+render('all');
+</script>
+</body>
+</html>

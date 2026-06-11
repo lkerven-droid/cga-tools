@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Science Mastery Continuum K–6 · Curiosity Grove Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-dark:#085041;--green-mid:#0F6E56;--green-light:#E1F5EE;
+  --cream:#FAF8F4;--sand:#F0EDE6;--text:#1C1C1A;--text-mid:#5A5955;--text-light:#8A8880;--border:#E2DFD8;
+  --e-color:#A32D2D;--e-bg:#FCEBEB;--e-text:#791F1F;
+  --d-color:#854F0B;--d-bg:#FAEEDA;--d-text:#633806;
+  --p-color:#0F6E56;--p-bg:#E1F5EE;--p-text:#085041;
+  --x-color:#185FA5;--x-bg:#E6F1FB;--x-text:#0C447C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+.site-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;position:sticky;top:0;z-index:100}
+.nav-leaf{width:28px;height:28px;background:var(--green-mid);border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;margin-right:10px}
+.nav-leaf span{color:#fff;font-size:14px;font-weight:500;font-family:'DM Serif Display',serif;font-style:italic}
+.nav-name{font-size:14px;font-weight:500}
+.nav-sub{font-size:11px;color:var(--text-light)}
+.hero{padding:3rem 1.5rem 2rem;max-width:780px;margin:0 auto}
+.hero-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--green-mid);font-weight:500;margin-bottom:0.75rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(28px,4vw,42px);line-height:1.15;color:var(--text);margin-bottom:1rem;font-weight:400}
+.hero h1 em{font-style:italic;color:var(--green-mid)}
+.hero p{font-size:15px;color:var(--text-mid);line-height:1.7;max-width:560px;margin-bottom:2rem}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2.5rem}
+.leg-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.fbtn{font-size:12px;padding:5px 16px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--text-mid);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.fbtn:hover{border-color:var(--green-mid);color:var(--green-dark)}
+.fbtn.active{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+.main{max-width:780px;margin:0 auto;padding:0 1.5rem 4rem}
+.domain{margin-bottom:1rem;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff}
+.d-head{padding:0.85rem 1.1rem;display:flex;align-items:center;gap:10px}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.d-title{font-size:13px;font-weight:500}
+.d-sub{font-size:12px;color:var(--text-light)}
+.grade-row{display:grid;grid-template-columns:52px 1fr;border-top:1px solid var(--border)}
+.g-label{display:flex;align-items:flex-start;justify-content:center;padding:0.85rem 0.25rem;padding-top:0.95rem;font-size:11px;font-weight:500;color:var(--text-light);border-right:1px solid var(--border);letter-spacing:0.03em}
+.stds{padding:0.6rem 0.85rem;display:flex;flex-direction:column;gap:4px}
+.std-item{border-radius:8px;overflow:hidden}
+.std-row{display:flex;gap:8px;align-items:flex-start;padding:7px 8px;cursor:pointer;border-radius:8px;transition:background 0.12s}
+.std-row:hover{background:var(--sand)}
+.std-row.open{background:var(--sand);border-radius:8px 8px 0 0}
+.std-code{font-size:11px;color:var(--text-light);white-space:nowrap;padding-top:2px;min-width:76px;flex-shrink:0;font-family:monospace}
+.std-text{flex:1;font-size:13px;line-height:1.55;color:var(--text)}
+.deep{font-size:10px;padding:2px 7px;border-radius:10px;background:#FAEEDA;color:#633806;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.cga-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:#E6F1FB;color:#0C447C;margin-left:5px;white-space:nowrap;vertical-align:middle;font-weight:500}
+.chevron{font-size:9px;color:var(--text-light);flex-shrink:0;margin-top:5px;transition:transform 0.15s}
+.chevron.open{transform:rotate(90deg)}
+.cont-panel{display:none;padding:12px 10px 14px;background:var(--sand);border-radius:0 0 8px 8px;margin:0 2px 4px}
+.cont-panel.visible{display:block}
+.track{display:flex;gap:3px;margin-bottom:10px;align-items:center}
+.track-seg{flex:1;height:5px;border-radius:3px;cursor:pointer;transition:opacity 0.15s}
+.track-seg:hover{opacity:0.75}
+.track-seg.selected{height:8px}
+.bands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+@media(max-width:600px){.bands-grid{grid-template-columns:repeat(2,1fr)}}
+.band-card{border-radius:8px;padding:9px 10px;cursor:pointer;border:1.5px solid transparent;transition:border-color 0.15s,transform 0.1s}
+.band-card:hover{transform:translateY(-1px)}
+.band-card.selected{border-color:currentColor}
+.band-name{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.band-desc{font-size:12px;line-height:1.55;color:var(--text-mid)}
+.seesaw-note{font-size:11px;color:var(--green-dark);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);font-style:italic}
+.seesaw-note strong{font-style:normal;font-weight:500}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+footer p{font-size:12px;color:var(--text-light)}
+footer a{color:var(--green-mid);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-leaf"><span>CG</span></div>
+  <div>
+    <div class="nav-name">Curiosity Grove Academy</div>
+    <div class="nav-sub">Grand Junction, Colorado</div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Science · K–6 · NGSS</div>
+  <h1>How does my child grow <em>as a scientist?</em></h1>
+  <p>Science at CGA is hands-on, inquiry-driven, and organized around real phenomena. This continuum maps NGSS standards to our content units — Dinosaurs & Rocks, Plants & Bugs, Weather, and Earth Systems — plus the science practices that run through all of our work. Tap any standard to see the full progression.</p>
+  <div class="legend-row">
+    <div class="leg-pill" style="background:var(--e-bg)"><div class="leg-dot" style="background:var(--e-color)"></div><span style="color:var(--e-text)">Emerging</span></div>
+    <div class="leg-pill" style="background:var(--d-bg)"><div class="leg-dot" style="background:var(--d-color)"></div><span style="color:var(--d-text)">Developing</span></div>
+    <div class="leg-pill" style="background:var(--p-bg)"><div class="leg-dot" style="background:var(--p-color)"></div><span style="color:var(--p-text)">Proficient</span></div>
+    <div class="leg-pill" style="background:var(--x-bg)"><div class="leg-dot" style="background:var(--x-color)"></div><span style="color:var(--x-text)">Extending</span></div>
+  </div>
+  <div class="filter-row" id="filters">
+    <button class="fbtn active" data-d="all">All units</button>
+    <button class="fbtn" data-d="practices">Science practices</button>
+    <button class="fbtn" data-d="dinos">Dinosaurs & rocks</button>
+    <button class="fbtn" data-d="plants">Plants & bugs</button>
+    <button class="fbtn" data-d="weather">Weather</button>
+    <button class="fbtn" data-d="earth">Earth systems</button>
+    <button class="fbtn" data-d="matter">Matter & energy</button>
+  </div>
+</div>
+
+<main class="main" id="continuum"></main>
+
+<footer>
+  <p>Curiosity Grove Academy &nbsp;·&nbsp; <a href="https://curiositygroveacademy.com">curiositygroveacademy.com</a> &nbsp;·&nbsp; Grand Junction, CO &nbsp;·&nbsp; Standards: NGSS</p>
+</footer>
+
+<script>
+const BANDS=[
+  {key:"emerging",label:"Emerging",color:"var(--e-color)",bg:"var(--e-bg)",text:"var(--e-text)"},
+  {key:"developing",label:"Developing",color:"var(--d-color)",bg:"var(--d-bg)",text:"var(--d-text)"},
+  {key:"proficient",label:"Proficient",color:"var(--p-color)",bg:"var(--p-bg)",text:"var(--p-text)"},
+  {key:"extending",label:"Extending",color:"var(--x-color)",bg:"var(--x-bg)",text:"var(--x-text)"}
+];
+
+const domains=[
+  {
+    id:"practices",color:"#2D6B7F",
+    title:"Science & engineering practices",
+    sub:"The thinking and doing of science — these run through every CGA unit all year",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"SEP.1",text:"Asking questions and defining problems",cga:true,
+         seesaw:"Video of student asking a testable question about something they observed",
+         bands:{emerging:"Wonders about the world; questions are not yet testable or scientifically framed.",developing:"Asks questions about observations; beginning to distinguish questions science can answer.",proficient:"Asks questions based on observations; identifies what we need to find out; defines simple problems.",extending:"Generates multiple testable questions; refines questions based on what is already known."}},
+        {code:"SEP.2",text:"Developing and using models",cga:true,
+         seesaw:"Photo of student's drawing or physical model with labels explaining what it represents",
+         bands:{emerging:"Draws pictures of observations; the idea of a model as a representation is just developing.",developing:"Creates simple models to show what something looks like; labels are developing.",proficient:"Develops and uses models to represent objects, phenomena, or processes; explains what the model shows.",extending:"Evaluates models for accuracy; revises models based on new observations or information."}},
+        {code:"SEP.3",text:"Planning and carrying out investigations",cga:true,
+         seesaw:"Photo of student's investigation setup with their recorded observations",
+         bands:{emerging:"Participates in investigations; planning and recording require significant support.",developing:"Carries out investigations with a partner; records observations with support.",proficient:"Plans and conducts simple investigations; identifies what to observe and how to record findings.",extending:"Designs investigations to answer specific questions; considers what to control and what to change."}},
+        {code:"SEP.4",text:"Analyzing and interpreting data",cga:true,
+         seesaw:"Photo of student's data table or graph with their written interpretation",
+         bands:{emerging:"Records observations; finding patterns in data requires support.",developing:"Organizes data in a table or graph with prompting; identifies one pattern.",proficient:"Analyzes data to identify patterns and relationships; draws conclusions from data.",extending:"Compares data across groups or trials; identifies anomalies; explains what the data does and doesn't show."}},
+        {code:"SEP.6",text:"Constructing explanations and designing solutions",cga:true,
+         seesaw:"Written or recorded explanation connecting evidence to a scientific claim",
+         bands:{emerging:"Describes what happened; connecting to evidence or cause requires support.",developing:"Gives an explanation with one piece of evidence; the connection is sometimes loose.",proficient:"Constructs explanations using evidence from investigations or texts; identifies cause and effect.",extending:"Builds multi-evidence explanations; distinguishes between strong and weak evidence; considers alternative explanations."}},
+        {code:"SEP.8",text:"Obtaining, evaluating, and communicating information",cga:true,
+         seesaw:"Student's science journal entry or presentation communicating findings",
+         bands:{emerging:"Shares observations verbally; written scientific communication is just emerging.",developing:"Communicates findings with drawings and simple text; uses some science vocabulary.",proficient:"Communicates scientific findings using appropriate vocabulary, diagrams, and text; uses multiple sources.",extending:"Evaluates the quality of information sources; synthesizes information from multiple sources into a coherent explanation."}}
+      ]},
+      {g:"3–6",stds:[
+        {code:"SEP.1",text:"Asking questions — testable, precise, connected to prior knowledge",cga:true,
+         seesaw:"Student's written research question with explanation of why it is testable",
+         bands:{emerging:"Asks questions about phenomena; testability and precision are developing.",developing:"Asks testable questions; beginning to connect to prior knowledge or existing explanations.",proficient:"Asks precise testable questions; identifies variables; connects to prior knowledge and current understanding.",extending:"Generates questions that challenge existing explanations; designs investigations to answer them."}},
+        {code:"SEP.4",text:"Analyzing data — tables, graphs, patterns, statistical thinking",cga:true,
+         seesaw:"Student's graph or data analysis with written interpretation including claim and evidence",
+         bands:{emerging:"Records data; analysis and pattern-finding require significant support.",developing:"Creates graphs with support; identifies obvious patterns; interpretation is developing.",proficient:"Analyzes data using tables and graphs; identifies patterns; uses data to support or refute a claim.",extending:"Uses statistical thinking to evaluate data; considers error and uncertainty; compares across data sets."}},
+        {code:"SEP.6",text:"Constructing evidence-based explanations connecting phenomena to mechanisms",cga:true,
+         seesaw:"Student's written scientific explanation with claim, evidence, and reasoning clearly distinguished",
+         bands:{emerging:"Describes phenomena; connecting to underlying mechanisms requires support.",developing:"Constructs explanations with evidence; the reasoning connecting them is partially developed.",proficient:"Constructs explanations that connect phenomena to mechanisms using evidence from multiple sources.",extending:"Evaluates explanations for completeness and accuracy; revises explanations in light of new evidence."}},
+        {code:"SEP.7",text:"Engaging in argument from evidence",cga:true,
+         seesaw:"Video or transcript of student defending a scientific claim using evidence in discussion",
+         bands:{emerging:"States a claim; defending it with evidence requires support.",developing:"Supports a claim with some evidence; responds to counterarguments with help.",proficient:"Constructs an argument supported by evidence; respectfully critiques others' arguments; responds to counterevidence.",extending:"Evaluates the strength of evidence; identifies logical flaws in arguments; builds on others' reasoning."}}
+      ]}
+    ]
+  },
+  {
+    id:"dinos",color:"#8B4513",
+    title:"Dinosaurs & rocks — Earth's history",
+    sub:"Fossils, rock layers, geologic time, and what the past tells us about the present",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"K-ESS2-2",text:"Map land and water on Earth's surface using observations",cga:true,
+         seesaw:"Student's labeled map or drawing of land and water features they observed or researched",
+         bands:{emerging:"Identifies land and water in pictures; mapping own observations is just developing.",developing:"Creates a simple map of land and water with support; labels major features.",proficient:"Uses observations and media to map the locations of land and water on Earth's surface.",extending:"Compares maps of different areas; identifies patterns in where land and water are found."}},
+        {code:"2-ESS1-1",text:"Use information from rocks and fossils to understand Earth's history",cga:true,
+         seesaw:"Photo of student examining a rock or fossil with their observations recorded",
+         bands:{emerging:"Observes rocks and fossils; connecting them to Earth's history requires support.",developing:"Describes what fossils look like; beginning to connect them to organisms that lived long ago.",proficient:"Uses rocks and fossils as evidence to explain aspects of Earth's past environments and organisms.",extending:"Compares fossils to living organisms; makes inferences about past environments based on fossil evidence."}}
+      ]},
+      {g:"3–5",stds:[
+        {code:"3-LS4-1",text:"Analyze and interpret fossil data to describe organisms and ancient environments",deep:true,cga:true,
+         seesaw:"Student's written analysis connecting fossil evidence to claims about ancient life",
+         bands:{emerging:"Describes fossils; using them as evidence about ancient environments requires support.",developing:"Makes simple inferences from fossils about ancient organisms; environment connections are developing.",proficient:"Analyzes fossil evidence to describe the characteristics of organisms and environments that existed long ago.",extending:"Compares multiple fossil types to build a picture of an ecosystem; evaluates the strength of fossil evidence."}},
+        {code:"4-ESS1-1",text:"Identify evidence from patterns in rock formations and fossils about changes over time",deep:true,cga:true,
+         seesaw:"Student's diagram or written explanation connecting rock layers to evidence of change over time",
+         bands:{emerging:"Observes rock layers; connecting to change over time requires significant support.",developing:"Identifies that rock layers record history; makes one or two connections to time and change.",proficient:"Identifies evidence from patterns in rock formations and fossils to support an explanation of changes in a landscape over time.",extending:"Traces multiple lines of evidence across rock types and fossil records to build a comprehensive picture of Earth's history."}},
+        {code:"5-ESS1-1",text:"Support an argument that differences in apparent brightness of stars is due to distance",
+         seesaw:"Student's written argument connecting brightness to distance with supporting evidence",
+         bands:{emerging:"Observes that stars have different brightnesses; distance as a cause requires support.",developing:"Connects star brightness to distance with prompting; argument structure is developing.",proficient:"Supports an argument using evidence that the apparent brightness of stars is related to their distance from Earth.",extending:"Uses multiple lines of evidence; distinguishes between apparent and actual brightness; considers other variables."}}
+      ]},
+      {g:"6",stds:[
+        {code:"MS-ESS1-4",text:"Construct an explanation based on evidence for how geoscience processes have changed Earth",deep:true,cga:true,
+         seesaw:"Student's written scientific explanation connecting geoscience processes to observable features",
+         bands:{emerging:"Describes surface features; connecting them to processes requires support.",developing:"Connects surface features to one or two processes; explanation lacks full development.",proficient:"Constructs an explanation using evidence for how geoscience processes have changed Earth's surface over time.",extending:"Integrates multiple processes (erosion, plate tectonics, weathering) into a coherent explanation of Earth's current features."}}
+      ]}
+    ]
+  },
+  {
+    id:"plants",color:"#2D7D46",
+    title:"Plants & bugs — life science",
+    sub:"Life cycles, ecosystems, adaptation, and how living things interact and change",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"K-LS1-1",text:"Use observations to describe patterns of what plants and animals need to survive",cga:true,
+         seesaw:"Student's observation journal showing patterns in what plants or animals need",
+         bands:{emerging:"Observes plants and animals; describing survival needs requires support.",developing:"Lists one or two things plants or animals need; pattern recognition is developing.",proficient:"Uses observations to describe patterns in what plants and animals need to survive.",extending:"Compares needs across multiple organisms; identifies what is universal vs. specific to certain organisms."}},
+        {code:"1-LS1-1",text:"Use materials to design a solution to a human problem by mimicking plant or animal structures",cga:true,
+         seesaw:"Photo of student's design with explanation of which plant or animal structure it mimics",
+         bands:{emerging:"Observes plant and animal structures; connecting to design solutions requires support.",developing:"Identifies one plant or animal structure that solves a problem; design is beginning.",proficient:"Uses knowledge of plant or animal structures to design a solution to a human problem.",extending:"Tests and revises their design; explains why the biological structure is effective and how their design mimics it."}},
+        {code:"2-LS2-1",text:"Plan and conduct investigations to determine what plants need to grow",cga:true,
+         seesaw:"Photo of student's plant investigation setup with their recorded data and conclusion",
+         bands:{emerging:"Observes plants growing; planning an investigation requires significant support.",developing:"Participates in plant investigations; records observations with support; conclusions are developing.",proficient:"Plans and conducts an investigation to determine what plants need to grow; records and interprets data.",extending:"Designs a controlled investigation; compares results across conditions; explains what the data shows about plant needs."}},
+        {code:"2-LS4-1",text:"Make observations of plants and animals to compare diversity of life in different habitats",cga:true,
+         seesaw:"Student's habitat observation journal comparing life in two different environments",
+         bands:{emerging:"Observes organisms; comparing diversity across habitats requires support.",developing:"Names organisms in one habitat; beginning to compare two habitats.",proficient:"Makes observations to compare the diversity of life found in different habitats.",extending:"Analyzes why different habitats support different organisms; connects organism features to habitat characteristics."}}
+      ]},
+      {g:"3–5",stds:[
+        {code:"3-LS1-1",text:"Develop models to describe that organisms have unique life cycles but share common features",deep:true,cga:true,
+         seesaw:"Student's life cycle model or diagram with explanation of shared and unique features",
+         bands:{emerging:"Describes one life cycle; comparing across organisms requires support.",developing:"Creates a life cycle model for one organism; beginning to compare to another.",proficient:"Develops models to describe that organisms have unique life cycles that share common features.",extending:"Compares multiple life cycles; analyzes what the shared features reveal about all living things."}},
+        {code:"3-LS2-1",text:"Construct an argument that animals form groups that help members survive",cga:true,
+         seesaw:"Student's written argument with evidence from research or observation about animal groups",
+         bands:{emerging:"Observes animals in groups; survival benefits require support to identify.",developing:"Identifies one survival benefit of group living with prompting.",proficient:"Constructs an argument supported by evidence that group living helps members survive.",extending:"Evaluates the tradeoffs of group vs. solitary living; compares strategies across species."}},
+        {code:"3-LS3-1",text:"Analyze and interpret data to provide evidence that traits are inherited",deep:true,cga:true,
+         seesaw:"Student's data analysis showing patterns of inherited traits across generations",
+         bands:{emerging:"Observes that offspring resemble parents; inheritance as a mechanism requires support.",developing:"Identifies inherited traits in organisms; data interpretation is developing.",proficient:"Analyzes and interprets data to provide evidence that plants and animals have traits inherited from parents.",extending:"Distinguishes between inherited and environmentally influenced traits; analyzes patterns across multiple generations."}},
+        {code:"4-LS1-1",text:"Construct an argument that plants and animals have internal and external structures for survival",deep:true,cga:true,
+         seesaw:"Student's labeled diagram with written argument connecting structures to survival functions",
+         bands:{emerging:"Identifies body parts; connecting them to survival functions requires support.",developing:"Connects one or two structures to survival functions; argument structure is developing.",proficient:"Constructs an argument with evidence that plants and animals have structures that function in survival, growth, behavior, and reproduction.",extending:"Compares structures across organisms; analyzes how different structures solve similar survival problems."}},
+        {code:"5-LS1-1",text:"Support an argument that plants get the materials they need for growth from air and water",deep:true,cga:true,
+         seesaw:"Student's written argument connecting photosynthesis evidence to plant growth",
+         bands:{emerging:"Knows plants need water and light; argument construction requires support.",developing:"States that plants get materials from air and water; evidence is partially developed.",proficient:"Supports an argument with evidence that plants get the materials they need for growth chiefly from air and water.",extending:"Explains the mechanism of photosynthesis; connects to energy flow in ecosystems; addresses common misconceptions."}},
+        {code:"5-LS2-1",text:"Develop a model to describe the movement of matter among organisms in an ecosystem",deep:true,cga:true,
+         seesaw:"Student's food web or ecosystem model with explanation of how matter moves through it",
+         bands:{emerging:"Identifies producers and consumers; matter movement in ecosystems requires support.",developing:"Creates a simple food chain; food web connections are developing.",proficient:"Develops a model describing movement of matter among plants, animals, decomposers, and the environment.",extending:"Models energy flow alongside matter; analyzes what happens when a species is removed from the ecosystem."}}
+      ]},
+      {g:"6",stds:[
+        {code:"MS-LS1-5",text:"Construct a scientific explanation based on evidence for how environmental and genetic factors influence organism growth",deep:true,cga:true,
+         seesaw:"Student's written explanation distinguishing genetic from environmental influences on growth",
+         bands:{emerging:"Knows organisms grow; distinguishing genetic vs. environmental factors requires support.",developing:"Identifies one genetic and one environmental factor; explanation is partially developed.",proficient:"Constructs a scientific explanation using evidence for how both genetic and environmental factors influence organism growth.",extending:"Analyzes the relative contribution of genetic vs. environmental factors; designs an investigation to test one factor."}},
+        {code:"MS-LS2-2",text:"Construct an explanation for how resource availability affects organisms and populations",deep:true,cga:true,
+         seesaw:"Student's explanation connecting resource availability to population changes with evidence",
+         bands:{emerging:"Knows organisms need resources; population effects require support.",developing:"Explains one way resource availability affects organisms; population-level thinking is developing.",proficient:"Constructs an explanation for how changes in resource availability affect organisms and populations in an ecosystem.",extending:"Analyzes cascading effects of resource changes across trophic levels; connects to real ecosystem examples."}}
+      ]}
+    ]
+  },
+  {
+    id:"weather",color:"#1B5E9A",
+    title:"Weather & climate",
+    sub:"Weather patterns, climate, severe weather, and how humans respond to weather",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"K-ESS2-1",text:"Use and share observations of local weather to describe patterns over time",cga:true,
+         seesaw:"Student's weather journal showing observations recorded over multiple days",
+         bands:{emerging:"Notices the weather; recording and finding patterns requires support.",developing:"Records daily weather observations; beginning to identify patterns over a week.",proficient:"Uses and shares observations of local weather; describes patterns in temperature, wind, and precipitation.",extending:"Compares weather patterns across seasons; uses data to make predictions about future weather."}},
+        {code:"K-ESS3-2",text:"Ask questions to obtain information about how weather affects the actions of people",cga:true,
+         seesaw:"Student's research questions and findings about how weather shapes human decisions",
+         bands:{emerging:"Knows weather affects people; generating questions about it requires support.",developing:"Asks one or two questions about weather and human activity; finding information is developing.",proficient:"Asks questions and obtains information about how severe weather affects human activity and safety.",extending:"Researches how different communities prepare for weather; compares strategies across climates."}},
+        {code:"2-ESS2-1",text:"Compare solutions designed to slow or prevent wind or water from changing the shape of land",cga:true,
+         seesaw:"Photo of student's erosion experiment with data comparing solutions",
+         bands:{emerging:"Observes erosion; comparing solutions requires support.",developing:"Tests one erosion-prevention solution; comparison across solutions is developing.",proficient:"Compares multiple solutions designed to prevent wind or water from changing the shape of the land.",extending:"Evaluates solutions using evidence from investigations; proposes improvements based on data."}}
+      ]},
+      {g:"3–5",stds:[
+        {code:"3-ESS2-1",text:"Represent data in tables and graphical displays to describe typical weather and climate",deep:true,cga:true,
+         seesaw:"Student's weather data graph with written analysis identifying patterns",
+         bands:{emerging:"Records weather data; representing it graphically requires support.",developing:"Creates graphs of weather data with support; identifies one or two patterns.",proficient:"Represents weather data in tables and graphs; describes typical weather conditions and climate patterns.",extending:"Compares climate data across regions; uses statistical thinking to distinguish weather from climate."}},
+        {code:"3-ESS2-2",text:"Obtain and combine information to describe climates in different regions",cga:true,
+         seesaw:"Student's climate comparison research with information from multiple sources",
+         bands:{emerging:"Describes the local climate; comparing regions requires support.",developing:"Describes climate in two regions using one source; comparison is partial.",proficient:"Obtains and combines information from multiple sources to describe climates in different regions.",extending:"Analyzes what causes climate differences; connects climate to plant and animal adaptations in each region."}},
+        {code:"3-ESS3-1",text:"Make a claim about the merit of a solution designed to reduce the impact of weather",deep:true,cga:true,
+         seesaw:"Student's written claim about a weather-preparedness solution with supporting evidence",
+         bands:{emerging:"Knows people prepare for severe weather; evaluating solutions requires support.",developing:"Identifies one weather-preparedness solution; claim about its merit is partially supported.",proficient:"Makes a claim about the merit of a solution to reduce the impact of a weather-related hazard.",extending:"Compares multiple solutions; evaluates tradeoffs; proposes an improved solution with supporting reasoning."}},
+        {code:"4-ESS2-2",text:"Analyze and interpret data from maps to describe patterns of Earth's features",cga:true,
+         seesaw:"Student's map analysis identifying patterns in Earth's surface features",
+         bands:{emerging:"Reads information from simple maps; pattern analysis requires support.",developing:"Identifies one or two patterns in map data; interpretation is developing.",proficient:"Analyzes and interprets data from maps to describe patterns in the location of Earth's features.",extending:"Compares multiple map types; explains what causes the patterns and how they connect to other Earth systems."}}
+      ]},
+      {g:"6",stds:[
+        {code:"MS-ESS2-5",text:"Collect data to provide evidence for how the motions and complex interactions of air masses result in changes in weather conditions",deep:true,cga:true,
+         seesaw:"Student's weather data collection with explanation connecting air mass movement to weather changes",
+         bands:{emerging:"Describes weather changes; connecting to air mass movement requires support.",developing:"Connects weather changes to fronts or air masses with prompting; data collection is developing.",proficient:"Collects and analyzes data to explain how the motion and interaction of air masses cause weather changes.",extending:"Models how multiple air masses interact; predicts weather changes based on data; connects to global patterns."}},
+        {code:"MS-ESS3-5",text:"Ask questions to clarify evidence of the factors that have caused the rise in global temperatures over the past century",deep:true,cga:true,
+         seesaw:"Student's research questions and evidence summary about factors in global temperature rise",
+         bands:{emerging:"Knows global temperatures have risen; evidence and factors require significant support.",developing:"Identifies one factor contributing to temperature rise; evidence evaluation is developing.",proficient:"Asks questions to clarify evidence of the factors — human and natural — that have caused global temperature rise.",extending:"Evaluates the relative contribution of different factors; distinguishes between correlation and causation in climate data."}}
+      ]}
+    ]
+  },
+  {
+    id:"earth",color:"#5B3FA0",
+    title:"Earth systems & human impact",
+    sub:"How Earth's systems interact and how humans depend on and affect the natural world",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"K-ESS3-1",text:"Use a model to represent the relationship between living things and their environment",cga:true,
+         seesaw:"Student's model or drawing showing connections between an organism and its environment",
+         bands:{emerging:"Identifies living things in an environment; relationships between them require support.",developing:"Shows one relationship between an organism and its environment.",proficient:"Uses a model to represent the relationship between living things and their environment.",extending:"Models multiple relationships; analyzes what would happen if one part of the system changed."}},
+        {code:"2-ESS2-2",text:"Develop a model to represent the shapes and kinds of land and bodies of water",cga:true,
+         seesaw:"Photo of student's landform model with labels",
+         bands:{emerging:"Names landforms and bodies of water; modeling them requires support.",developing:"Creates a simple model with two or three labeled landforms.",proficient:"Develops a model to represent the shapes and kinds of land and bodies of water in an area.",extending:"Compares models of different regions; explains how landforms are created and changed over time."}},
+        {code:"K-ESS3-3",text:"Communicate solutions that will reduce human impact on the land, water, air, or other living things",cga:true,
+         seesaw:"Student's solution poster or presentation for reducing a specific human impact",
+         bands:{emerging:"Knows humans affect the environment; solutions require significant support.",developing:"Identifies one human impact and one possible solution.",proficient:"Communicates a solution that would reduce the impact of humans on land, water, air, or living things.",extending:"Evaluates multiple solutions; compares tradeoffs; creates a persuasive communication for a specific audience."}}
+      ]},
+      {g:"3–5",stds:[
+        {code:"4-ESS3-1",text:"Obtain and combine information to describe energy and fuels derived from natural resources",cga:true,
+         seesaw:"Student's research summary comparing renewable and nonrenewable energy sources",
+         bands:{emerging:"Names one or two natural resources; energy connections require support.",developing:"Describes how one natural resource provides energy or fuel; comparisons are developing.",proficient:"Obtains and combines information to describe that energy and fuels are derived from natural resources with tradeoffs.",extending:"Analyzes the full lifecycle of different energy sources; evaluates environmental and social tradeoffs."}},
+        {code:"4-ESS3-2",text:"Generate and compare solutions to reduce human impact on natural resources",deep:true,cga:true,
+         seesaw:"Student's solution comparison with evidence-based recommendation",
+         bands:{emerging:"Identifies a human impact on natural resources; generating solutions requires support.",developing:"Proposes one solution with partial evaluation.",proficient:"Generates and compares multiple solutions that reduce the impact of humans on the environment.",extending:"Evaluates solutions using multiple criteria; considers short- and long-term impacts; proposes an original solution."}},
+        {code:"5-ESS3-1",text:"Obtain and combine information about ways communities protect Earth's resources",cga:true,
+         seesaw:"Student's research on a specific community conservation effort with analysis of its effectiveness",
+         bands:{emerging:"Knows communities protect resources; specific examples require support.",developing:"Describes one community effort to protect resources; information from one source.",proficient:"Obtains and combines information from multiple sources about ways communities protect Earth's resources.",extending:"Evaluates the effectiveness of different approaches; proposes how CGA's own community could contribute."}}
+      ]},
+      {g:"6",stds:[
+        {code:"MS-ESS3-3",text:"Apply scientific principles to design a method for monitoring and minimizing human impact",deep:true,cga:true,
+         seesaw:"Student's designed monitoring or mitigation plan with scientific principles explained",
+         bands:{emerging:"Identifies human impacts on the environment; designing solutions requires support.",developing:"Describes one monitoring or mitigation method; scientific principles connection is partial.",proficient:"Applies scientific principles to design a method for monitoring and minimizing a specific human impact on the environment.",extending:"Designs a multi-part system for monitoring and mitigation; evaluates using scientific criteria; addresses potential unintended consequences."}}
+      ]}
+    ]
+  },
+  {
+    id:"matter",color:"#6B1F4E",
+    title:"Matter, energy & forces",
+    sub:"Properties of matter, energy transfer, forces, and motion",
+    grades:[
+      {g:"K–2",stds:[
+        {code:"K-PS2-1",text:"Plan and conduct investigations to compare effects of different strengths of pushes and pulls",cga:true,
+         seesaw:"Photo of student's force investigation with recorded observations",
+         bands:{emerging:"Pushes and pulls objects; comparing effects requires support.",developing:"Tests pushes and pulls; records one observation about strength.",proficient:"Plans and conducts investigations comparing effects of different strengths of pushes and pulls on objects.",extending:"Designs a test with a variable; compares results across multiple trials; explains patterns in the data."}},
+        {code:"2-PS1-1",text:"Plan and conduct investigations to describe and classify materials by observable properties",cga:true,
+         seesaw:"Student's materials classification chart with observations recorded",
+         bands:{emerging:"Observes materials; classification by properties requires support.",developing:"Describes two or three properties of materials; beginning to classify.",proficient:"Plans and conducts investigations to describe and classify materials by observable properties.",extending:"Creates a classification system with multiple properties; tests how properties can be changed."}}
+      ]},
+      {g:"3–5",stds:[
+        {code:"3-PS2-1",text:"Plan and conduct investigations of the effects of balanced and unbalanced forces",deep:true,cga:true,
+         seesaw:"Photo of student's force investigation with data showing balanced vs. unbalanced forces",
+         bands:{emerging:"Observes objects moving; balanced and unbalanced forces require support.",developing:"Identifies that forces affect motion; investigation planning is developing.",proficient:"Plans and conducts investigations to provide evidence of the effects of balanced and unbalanced forces.",extending:"Designs investigations to isolate variables; explains how net force determines motion."}},
+        {code:"4-PS3-1",text:"Use evidence to construct an explanation relating the speed of an object to the energy of that object",cga:true,
+         seesaw:"Student's written explanation connecting speed and energy with evidence from an investigation",
+         bands:{emerging:"Knows moving objects have energy; speed-energy relationship requires support.",developing:"Connects speed to energy with prompting; explanation uses limited evidence.",proficient:"Uses evidence from investigations to explain the relationship between the speed of an object and its energy.",extending:"Quantifies the relationship; applies to predict outcomes; compares energy across different scenarios."}},
+        {code:"5-PS1-1",text:"Develop a model to describe that matter is made of particles too small to be seen",deep:true,cga:true,
+         seesaw:"Student's particle model drawing with explanation of what it represents",
+         bands:{emerging:"Knows matter is made of small parts; particle model is just emerging.",developing:"Draws a simple particle model; explanation of what it represents is developing.",proficient:"Develops a model to describe that matter is made of particles too small to be seen; uses model to explain observable phenomena.",extending:"Uses the particle model to explain changes of state, dissolving, and other phenomena; evaluates the model's limitations."}},
+        {code:"5-PS3-1",text:"Use models to describe that energy in animals' food was once energy from the sun",cga:true,
+         seesaw:"Student's energy flow model showing sun to plant to animal",
+         bands:{emerging:"Knows plants use sunlight; tracing energy through organisms requires support.",developing:"Shows a simple energy flow from sun to plant to animal; explanation is partial.",proficient:"Uses models to describe that energy in animals' food was once energy from the sun.",extending:"Traces energy flow through multiple levels of a food chain; connects to photosynthesis and cellular respiration."}}
+      ]},
+      {g:"6",stds:[
+        {code:"MS-PS1-1",text:"Develop models to describe the atomic composition of simple molecules",deep:true,cga:true,
+         seesaw:"Student's molecule model with explanation of atomic composition",
+         bands:{emerging:"Knows matter is made of atoms; molecular models require support.",developing:"Creates a simple molecule model; atomic composition explanation is partial.",proficient:"Develops models to describe the atomic composition of simple molecules and extended structures.",extending:"Uses models to explain properties of substances; connects atomic structure to observable properties."}},
+        {code:"MS-PS3-1",text:"Construct and interpret graphical displays of data to describe relationships of kinetic energy",cga:true,
+         seesaw:"Student's graph of kinetic energy data with written interpretation",
+         bands:{emerging:"Records data about moving objects; graphing and interpretation require support.",developing:"Creates a graph of kinetic energy data with support; identifies one relationship.",proficient:"Constructs and interprets graphs to describe the relationship between kinetic energy and mass or speed.",extending:"Analyzes graphs to identify proportional relationships; applies to predict kinetic energy in new scenarios."}}
+      ]}
+    ]
+  }
+];
+
+let openId=null;
+let uid=0;
+domains.forEach(d=>d.grades.forEach(g=>g.stds.forEach(s=>s._id='sc'+(uid++))));
+
+function bandCard(s,b){
+  return `<div class="band-card" id="bc-${s._id}-${b.key}" style="background:${b.bg}" onclick="selectBand('${s._id}','${b.key}')">
+    <div class="band-name" style="color:${b.text}">${b.label}</div>
+    <div class="band-desc">${s.bands[b.key]}</div>
+  </div>`;
+}
+
+function stdHTML(s){
+  const segs=BANDS.map(b=>`<div class="track-seg" id="ts-${s._id}-${b.key}" style="background:${b.color}" onclick="selectBand('${s._id}','${b.key}')" title="${b.label}"></div>`).join('');
+  const cards=BANDS.map(b=>bandCard(s,b)).join('');
+  return `<div class="std-item">
+    <div class="std-row" id="sr-${s._id}" onclick="toggle('${s._id}')">
+      <span class="std-code">${s.code}</span>
+      <span class="std-text">${s.text}${s.deep?'<span class="deep">go deep</span>':''}${s.cga?'<span class="cga-tag">CGA unit</span>':''}</span>
+      <span class="chevron" id="chev-${s._id}">▶</span>
+    </div>
+    <div class="cont-panel" id="cp-${s._id}">
+      <div class="track">${segs}</div>
+      <div class="bands-grid">${cards}</div>
+      ${s.seesaw?`<div class="seesaw-note"><strong>Seesaw evidence:</strong> ${s.seesaw}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function selectBand(id,key){
+  BANDS.forEach(b=>{
+    const card=document.getElementById(`bc-${id}-${b.key}`);
+    const seg=document.getElementById(`ts-${id}-${b.key}`);
+    if(card){card.classList.toggle('selected',b.key===key);card.style.borderColor=b.key===key?b.color:'transparent';}
+    if(seg){seg.classList.toggle('selected',b.key===key);}
+  });
+}
+
+function toggle(id){
+  const panel=document.getElementById('cp-'+id);
+  const chev=document.getElementById('chev-'+id);
+  const row=document.getElementById('sr-'+id);
+  const isOpen=panel.classList.contains('visible');
+  if(openId&&openId!==id){
+    document.getElementById('cp-'+openId)?.classList.remove('visible');
+    document.getElementById('chev-'+openId)?.classList.remove('open');
+    document.getElementById('sr-'+openId)?.classList.remove('open');
+  }
+  panel.classList.toggle('visible',!isOpen);
+  chev.classList.toggle('open',!isOpen);
+  row.classList.toggle('open',!isOpen);
+  openId=isOpen?null:id;
+}
+
+function render(filter){
+  const cont=document.getElementById('continuum');
+  cont.innerHTML='';
+  const list=filter==='all'?domains:domains.filter(d=>d.id===filter);
+  list.forEach(d=>{
+    const el=document.createElement('div');
+    el.className='domain';
+    el.innerHTML=`<div class="d-head" style="background:${d.color}12">
+      <div class="dot" style="background:${d.color}"></div>
+      <div><div class="d-title" style="color:${d.color}">${d.title}</div><div class="d-sub">${d.sub}</div></div>
+    </div>`+d.grades.map(g=>`<div class="grade-row">
+      <div class="g-label">Gr ${g.g}</div>
+      <div class="stds">${g.stds.map(s=>stdHTML(s)).join('')}</div>
+    </div>`).join('');
+    cont.appendChild(el);
+  });
+}
+
+document.getElementById('filters').addEventListener('click',e=>{
+  const btn=e.target.closest('.fbtn');
+  if(!btn)return;
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openId=null;
+  render(btn.dataset.d);
+});
+
+render('all');
+</script>
+</body>
+</html>
