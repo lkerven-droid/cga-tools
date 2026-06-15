@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGA Literacy Framework — Rotation A Teacher Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:#2C4A2E;--moss:#4A7C59;--sage:#8BAF8E;--bark:#6B4226;
+  --cream:#F7F3EE;--paper:#FDFAF6;--ink:#1A1A1A;--muted:#6B6B6B;
+  --gold:#C4943A;--green:#375623;
+  --u1:#3B6E8C;--u2:#7A4B8C;--u3:#8C5C3B;--u4:#3B7A5C;--u5:#6B3B8C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--forest);display:flex;align-items:center;gap:0;padding:0 2rem;height:56px;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.nav-logo{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;font-weight:700;margin-right:auto;letter-spacing:.02em}
+.nav-logo span{color:var(--sage)}
+nav a{color:var(--sage);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:0 .9rem;height:56px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+nav a:hover,nav a.active{color:var(--cream);border-bottom-color:var(--gold)}
+.page{display:none;padding:70px 0 60px;min-height:100vh}
+.page.active{display:block}
+.container{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{background:var(--forest);color:var(--cream);padding:4rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234A7C59' fill-opacity='0.12'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");opacity:.5}
+.hero-badge{display:inline-block;background:var(--gold);color:var(--forest);font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem 1rem;border-radius:2px;margin-bottom:1.5rem;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:1rem;position:relative}
+.hero h1 em{color:var(--sage);font-style:normal}
+.hero p{font-size:1.05rem;color:rgba(247,243,238,.8);max-width:600px;margin:0 auto 2rem;position:relative}
+.hero-meta{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;position:relative}
+.hero-meta-item .val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);display:block}
+.hero-meta-item .lbl{font-size:.75rem;color:var(--sage);text-transform:uppercase;letter-spacing:.1em}
+.grade-switcher{display:flex;background:white;border-bottom:2px solid #E5E0D8;position:sticky;top:56px;z-index:50;overflow-x:auto}
+.grade-tab{padding:.75rem 1.4rem;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-2px}
+.grade-tab:hover{color:var(--forest)}.grade-tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+.grade-band{display:none;padding:2rem 0}.grade-band.active{display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--forest);margin:2.5rem 0 1.25rem;padding-bottom:.5rem;border-bottom:3px solid var(--sage)}
+.section-title span{color:var(--gold)}
+.calendar{display:grid;gap:.7rem;margin:1.5rem 0}
+.cal-row{display:grid;grid-template-columns:155px 1fr;gap:1rem;align-items:center}
+.cal-date{font-size:.75rem;font-weight:600;color:var(--muted);text-align:right}
+.cal-bar{height:42px;border-radius:4px;display:flex;align-items:center;padding:0 1rem;font-weight:600;font-size:.88rem;color:white;cursor:pointer;transition:filter .2s}
+.cal-bar:hover{filter:brightness(1.1)}
+.cal-bar.u1{background:var(--u1)}.cal-bar.u2{background:var(--u2)}.cal-bar.u3{background:var(--u3)}.cal-bar.u4{background:var(--u4)}.cal-bar.u5{background:var(--u5)}
+.cal-bar.ginger{background:var(--gold);color:var(--forest)}.cal-bar.flex{background:#999}
+.cal-tag{margin-left:auto;font-size:.68rem;background:rgba(255,255,255,.25);padding:.12rem .5rem;border-radius:2px}
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1.5rem 0}
+@media(max-width:640px){.unit-grid{grid-template-columns:1fr}}
+.unit-card{border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s,box-shadow .2s;background:var(--paper)}
+.unit-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.uc-head{padding:1.1rem 1.4rem;color:white}
+.uc-head.u1{background:var(--u1)}.uc-head.u2{background:var(--u2)}.uc-head.u3{background:var(--u3)}.uc-head.u4{background:var(--u4)}.uc-head.u5{background:var(--u5)}
+.uc-num{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-bottom:.2rem}
+.uc-head h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;line-height:1.2}
+.uc-body{padding:1.1rem 1.4rem}
+.uc-pairing{font-size:.78rem;color:var(--bark);font-weight:600;background:var(--cream);padding:.35rem .7rem;border-radius:3px;margin-bottom:.7rem}
+.uc-q{font-size:.85rem;color:var(--muted);font-style:italic;line-height:1.4}
+.uc-arrow{text-align:right;margin-top:.75rem;font-size:.75rem;font-weight:600;color:var(--forest);text-transform:uppercase;letter-spacing:.05em}
+.unit-hero{padding:3rem 2rem 2rem;color:white}
+.unit-hero.u1{background:var(--u1)}.unit-hero.u2{background:var(--u2)}.unit-hero.u3{background:var(--u3)}.unit-hero.u4{background:var(--u4)}.unit-hero.u5{background:var(--u5)}
+.unit-back{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7;cursor:pointer;margin-bottom:.75rem;display:inline-flex;align-items:center;gap:.4rem}
+.unit-back:hover{opacity:1}
+.unit-hero h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;line-height:1.1;margin-bottom:.5rem}
+.unit-meta{display:flex;gap:2rem;flex-wrap:wrap;font-size:.83rem;opacity:.85;margin-top:.75rem}
+.unit-meta span::before{content:'⬤ ';font-size:.55em}
+.tabs{display:flex;background:white;border-bottom:2px solid #E5E0D8;position:sticky;top:56px;z-index:50;overflow-x:auto}
+.tab{padding:.85rem 1.2rem;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-2px}
+.tab:hover{color:var(--forest)}.tab.active{color:var(--forest);border-bottom-color:var(--forest)}
+.panel{display:none;padding:2rem}.panel.active{display:block}
+.why-box{background:var(--paper);border-left:4px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.25rem 0;font-size:.93rem;line-height:1.7}
+.week-block{margin:.85rem 0}
+.week-label{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem}
+.week-text{background:var(--paper);padding:.85rem 1.1rem;border-radius:6px;font-size:.9rem;line-height:1.65}
+.seminar-q{background:var(--forest);color:var(--cream);padding:1.25rem 1.75rem;border-radius:8px;margin:1.25rem 0}
+.sq-label{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem}
+.seminar-q p{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;line-height:1.5}
+.sq-follow{margin-top:.6rem;font-size:.83rem;color:rgba(247,243,238,.7);line-height:1.6}
+h3.sub{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--forest);margin:1.75rem 0 .65rem}
+h4.sublabel{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:1.1rem 0 .4rem}
+.prompt{background:var(--paper);border-radius:6px;padding:.85rem 1.1rem;margin:.4rem 0;font-size:.88rem;line-height:1.6;border-left:3px solid var(--sage)}
+.nfcard{background:var(--paper);border-radius:6px;padding:.85rem 1.1rem;margin:.4rem 0;border-left:3px solid var(--gold);font-size:.88rem}
+.nfcard strong{color:var(--bark)}
+.nfnote{font-size:.78rem;color:var(--muted);margin-top:.15rem}
+.film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.65rem;margin:.75rem 0}
+.film-card{background:var(--paper);border:1px solid #E5E0D8;border-radius:6px;padding:.65rem .9rem;font-size:.83rem}
+.film-card strong{display:block;color:var(--forest);margin-bottom:.15rem}
+.book-list{list-style:none}
+.book-list li{padding:.45rem 0;border-bottom:1px solid #EDE8E0;font-size:.9rem;display:flex;align-items:baseline;gap:.65rem;flex-wrap:wrap}
+.book-list li:last-child{border-bottom:none}
+.book-title{font-weight:600}.book-author{color:var(--muted);font-size:.85rem}
+.book-note{font-size:.73rem;background:#EDE8E0;padding:.08rem .45rem;border-radius:2px;color:var(--bark);font-weight:600;white-space:nowrap}
+.lvl{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.12rem .55rem;border-radius:2px;margin-right:.4rem}
+.lvl-k2{background:#D4EDD8;color:#2C6B35}.lvl-34{background:#D4E4F0;color:#1A4F7A}.lvl-56{background:#EDD4F0;color:#5A1A7A}
+.lvl-gn{background:#F0E4D4;color:#7A4A1A}.lvl-lo{background:#D4EDD8;color:#2C6B35}.lvl-mid{background:#D4E4F0;color:#1A4F7A}.lvl-hi{background:#EDD4F0;color:#5A1A7A}.lvl-cl{background:#F0D4D4;color:#7A1A1A}
+.note-box{background:#FFF8E8;border:1px solid #E8D8A0;border-radius:6px;padding:.85rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#7A5A10}
+.note-box::before{content:'⚠ ';font-weight:700}
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+@media(max-width:540px){.vocab-grid{grid-template-columns:1fr}}
+.vocab-item{background:var(--paper);border-radius:6px;padding:.65rem .9rem;font-size:.85rem;border-left:3px solid var(--moss)}
+.vocab-item strong{color:var(--forest)}
+.writing-band{background:var(--paper);border-radius:8px;padding:1rem 1.25rem;margin:.5rem 0;border-left:4px solid var(--moss)}
+.writing-band-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--moss);margin-bottom:.3rem}
+.std-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+@media(max-width:640px){.std-grid{grid-template-columns:1fr}}
+.std-card{background:var(--paper);border-radius:8px;padding:1.1rem;border:1px solid #E5E0D8}
+.std-card h4{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem}
+.std-row{display:flex;gap:.65rem;padding:.35rem 0;border-bottom:1px solid #EDE8E0;font-size:.83rem}
+.std-row:last-child{border-bottom:none}
+.std-code{font-weight:700;color:var(--forest);min-width:115px}
+.std-desc{color:var(--muted)}
+.books-filter{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}
+.filter-btn{padding:.3rem .85rem;border-radius:100px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid #C8C0B4;background:var(--paper);color:var(--ink);transition:all .15s}
+.filter-btn.active{background:var(--forest);color:white;border-color:var(--forest)}
+footer{text-align:center;padding:2.5rem;font-size:.8rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">Curiosity Grove <span>Academy</span></div>
+  <a href="#" class="active" onclick="showPage('home',this)">Overview</a>
+  <a href="#" onclick="showPage('units',this)">Units</a>
+  <a href="#" onclick="showPage('standards',this)">Standards</a>
+  <a href="#" onclick="showPage('books',this)">Books</a>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-badge">Teacher Edition · Rotation A</div>
+    <h1>CGA Literacy &amp; Content <em>Framework</em></h1>
+    <p>Five literary lenses. Cross-curricular nonfiction pairings. Real argument. Student choice across K–6.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="val">5</span><span class="lbl">Literary Units</span></div>
+      <div class="hero-meta-item"><span class="val">K–6</span><span class="lbl">All Grades</span></div>
+      <div class="hero-meta-item"><span class="val">36</span><span class="lbl">School Weeks</span></div>
+      <div class="hero-meta-item"><span class="val">3</span><span class="lbl">Grade Tiers</span></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="grade-switcher">
+      <button class="grade-tab active" onclick="switchGrade('all',this)">All Grades</button>
+      <button class="grade-tab" onclick="switchGrade('k2',this)">K–2 Read-Aloud</button>
+      <button class="grade-tab" onclick="switchGrade('g34',this)">Grades 3–4 Partner</button>
+      <button class="grade-tab" onclick="switchGrade('g56',this)">Grades 5–6 Solo</button>
+    </div>
+    <div id="band-all" class="grade-band active">
+      <h2 class="section-title">Year at a <span>Glance</span></h2>
+      <div class="calendar">
+        <div class="cal-row"><div class="cal-date">Sept–Oct</div><div class="cal-bar u1" onclick="openUnit(1)">Unit 1 — Reading Between the Lines <span class="cal-tag">Geography & Community</span></div></div>
+        <div class="cal-row"><div class="cal-date">Oct–Nov</div><div class="cal-bar u2" onclick="openUnit(2)">Unit 2 — Forces at Work <span class="cal-tag">Physical Science</span></div></div>
+        <div class="cal-row"><div class="cal-date">Dec 1–19</div><div class="cal-bar ginger">Gingerbread Man & Winter Stories — Folklore Preview</div></div>
+        <div class="cal-row"><div class="cal-date">~Dec 22</div><div class="cal-bar flex">Flex Week</div></div>
+        <div class="cal-row"><div class="cal-date">Jan–Feb</div><div class="cal-bar u3" onclick="openUnit(3)">Unit 3 — Who Has Power? Whose Voice Matters? <span class="cal-tag">History & Civics</span></div></div>
+        <div class="cal-row"><div class="cal-date">Feb–Mar</div><div class="cal-bar u4" onclick="openUnit(4)">Unit 4 — Survival & the Natural World <span class="cal-tag">Animals & Ecosystems</span></div></div>
+        <div class="cal-row"><div class="cal-date">Apr–May</div><div class="cal-bar u5" onclick="openUnit(5)">Unit 5 — Folklore, Fables & Myths <span class="cal-tag">Earth Science</span></div></div>
+        <div class="cal-row"><div class="cal-date">Late May</div><div class="cal-bar flex">Flex Week</div></div>
+      </div>
+      <h2 class="section-title">Three-Tier <span>Structure</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:2rem">
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #3B7A5C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3B7A5C;margin-bottom:.4rem">K–2</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Picture Book Read-Aloud</strong>
+          <span style="font-size:.85rem;color:var(--muted)">One shared picture book per unit read aloud by the teacher. All discussion, comprehension, and vocabulary work through that shared text. Oral and drawn responses for K–1.</span>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #3B6E8C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3B6E8C;margin-bottom:.4rem">Grades 3–4</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Partner Reading</strong>
+          <span style="font-size:.85rem;color:var(--muted)">Tiered menu: picture books for developing readers, early chapter books for mid-level, shorter novels for strong readers. Partners read together, discuss, then join whole-class seminar.</span>
+        </div>
+        <div style="background:var(--paper);border-radius:8px;padding:1.25rem;border-top:4px solid #7A4B8C">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7A4B8C;margin-bottom:.4rem">Grades 5–6</div>
+          <strong style="display:block;color:var(--forest);margin-bottom:.3rem">Solo Independent Reading</strong>
+          <span style="font-size:.85rem;color:var(--muted)">Full book menu, individual reading journals, full Socratic seminar. Same literary lens and driving question as K–4 with more analytical writing expectations.</span>
+        </div>
+      </div>
+      <h2 class="section-title">Seminar Questions at a <span>Glance</span></h2>
+      <div style="display:grid;gap:.65rem;margin-bottom:2rem">
+        <div style="background:var(--u1);color:white;padding:.85rem 1.25rem;border-radius:6px;font-size:.9rem"><strong>Unit 1</strong> — What does the author want you to feel or believe that they never actually say out loud?</div>
+        <div style="background:var(--u2);color:white;padding:.85rem 1.25rem;border-radius:6px;font-size:.9rem"><strong>Unit 2</strong> — What makes someone keep going when they don't know if they're right?</div>
+        <div style="background:var(--u3);color:white;padding:.85rem 1.25rem;border-radius:6px;font-size:.9rem"><strong>Unit 3</strong> — When someone uses their voice against an unfair system, what are they risking — and what makes it worth it?</div>
+        <div style="background:var(--u4);color:white;padding:.85rem 1.25rem;border-radius:6px;font-size:.9rem"><strong>Unit 4</strong> — When two animals compete for survival, what actually determines who wins — strength, adaptations, or something else?</div>
+        <div style="background:var(--u5);color:white;padding:.85rem 1.25rem;border-radius:6px;font-size:.9rem"><strong>Unit 5</strong> — What does the story a culture chooses to keep and retell tell us about what that culture believes?</div>
+      </div>
+      <h2 class="section-title">How Rotation A & B <span>Work Together</span></h2>
+      <div style="background:var(--paper);border-radius:8px;padding:1.25rem 1.5rem;border-left:4px solid var(--gold);margin-bottom:2rem;font-size:.93rem;line-height:1.7">
+        Rotation B (Hero's Journey, Character Transformation, Point of View, Theme/Belonging) centers on fiction and literary analysis. Rotation A pulls harder on nonfiction, argument, biography, and real-world texts. A student who completes both rotations has read across every major genre, practiced every major CCSS reading and writing standard, and built a complete toolkit for thinking about texts.
+      </div>
+    </div>
+    <div id="band-k2" class="grade-band">
+      <h2 class="section-title">K–2 <span>Overview</span></h2>
+      <div style="background:var(--paper);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:.93rem;line-height:1.7">K–2 students work through the same literary lenses and driving questions as the rest of the class, using shared picture book read-alouds as their primary text. Journal responses are oral, drawn, or dictated for K–1; short written responses for 2nd grade. Socratic seminar is replaced by a structured class share with the same questions in simplified form.</div>
+      <div class="calendar">
+        <div class="cal-row"><div class="cal-date">Unit 1</div><div class="cal-bar u1">Inference — Voices in the Park, The Mysteries of Harris Burdick, Home (Carson Ellis)</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 2</div><div class="cal-bar u2">Scientific Inquiry — Zoey & Sassafrass, Rosie Revere Engineer, Ada Lovelace picture book</div></div>
+        <div class="cal-row"><div class="cal-date">Dec</div><div class="cal-bar ginger">Gingerbread Man variants · Gingerbread Baby · Run Turkey Run</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 3</div><div class="cal-bar u3">Power & Fairness — Rosa, Martin's Big Words, Brave Girl, Malala's Magic Pencil</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 4</div><div class="cal-bar u4">Comparison — Who Would Win? (read aloud) · Actual Size · What Do You Do With a Tail Like This?</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 5</div><div class="cal-bar u5">Folklore — Why Mosquitoes Buzz · Anansi stories · pourquoi tales across cultures</div></div>
+      </div>
+    </div>
+    <div id="band-g34" class="grade-band">
+      <h2 class="section-title">Grades 3–4 <span>Overview</span></h2>
+      <div style="background:var(--paper);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:.93rem;line-height:1.7">Grades 3–4 use partner reading with a tiered menu per unit. Journal prompts are the same as grades 5–6 but responses are shorter and more scaffolded. Culminating writing is one paragraph with a claim and evidence. Partners read together, discuss, then join the whole-class Socratic seminar with the same driving question as grades 5–6.</div>
+      <div class="calendar">
+        <div class="cal-row"><div class="cal-date">Unit 1</div><div class="cal-bar u1">Charlotte's Web · Clementine · The One and Only Ivan · Bud Not Buddy (strong readers)</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 2</div><div class="cal-bar u2">Zoey & Sassafrass · Who Was? Scientists · Invention of Hugo Cabret (strong readers)</div></div>
+        <div class="cal-row"><div class="cal-date">Dec</div><div class="cal-bar ginger">Gingerbread variants · written story with setting and twist</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 3</div><div class="cal-bar u3">Who Was? series · Ruth and the Green Book · Number the Stars (strong readers)</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 4</div><div class="cal-bar u4">Who Would Win? titles · Charlotte's Web · My Side of the Mountain (strong readers)</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 5</div><div class="cal-bar u5">D'Aulaires' Greek Myths · folklore collections · The Lightning Thief (strong readers)</div></div>
+      </div>
+    </div>
+    <div id="band-g56" class="grade-band">
+      <h2 class="section-title">Grades 5–6 <span>Overview</span></h2>
+      <div style="background:var(--paper);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:.93rem;line-height:1.7">Grades 5–6 read solo from the full book menu, maintain independent reading journals, and participate in the full Socratic seminar. Culminating writing escalates across the year: paragraph (Unit 1) → short essay (Unit 2) → performance task (Unit 3) → comparative argument essay (Unit 4) → comparative myth essay (Unit 5).</div>
+      <div class="calendar">
+        <div class="cal-row"><div class="cal-date">Unit 1</div><div class="cal-bar u1">The Giver · A Long Walk to Water · The House on Mango Street · Hatchet · Bud Not Buddy</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 2</div><div class="cal-bar u2">Hidden Figures · The Wright Brothers · Ender's Game · Counting by 7s</div></div>
+        <div class="cal-row"><div class="cal-date">Dec</div><div class="cal-bar ginger">Gingerbread variants · conscious rule-breaking story using Stinky Cheese Man model</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 3</div><div class="cal-bar u3">Chains · Uprising · Roll of Thunder Hear My Cry · I Am Malala · Number the Stars</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 4</div><div class="cal-bar u4">Never Cry Wolf · The Wild Robot · Call of the Wild · Island of the Blue Dolphins</div></div>
+        <div class="cal-row"><div class="cal-date">Unit 5</div><div class="cal-bar u5">The Lightning Thief · Anansi Boys · The Epic of Gilgamesh · The Girl Who Drank the Moon</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UNITS LIST / DETAIL -->
+<div id="page-units" class="page">
+  <div id="unit-list">
+    <div class="container" style="padding-top:2rem">
+      <h2 class="section-title">Unit <span>Details</span></h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:.93rem">Click any unit to open the full detail view with arc, nonfiction pairings, seminar, book menus, prompts, and films.</p>
+      <div class="unit-grid">
+        <div class="unit-card" onclick="openUnit(1)"><div class="uc-head u1"><div class="uc-num">Unit 1 · Sept–Oct</div><h3>Reading Between the Lines</h3></div><div class="uc-body"><div class="uc-pairing">Geography & Community</div><div class="uc-q">"What does the author want you to feel or believe that they never actually say out loud?"</div><div class="uc-arrow">Open unit →</div></div></div>
+        <div class="unit-card" onclick="openUnit(2)"><div class="uc-head u2"><div class="uc-num">Unit 2 · Oct–Nov</div><h3>Forces at Work</h3></div><div class="uc-body"><div class="uc-pairing">Physical Science & Scientists</div><div class="uc-q">"What makes someone keep going when they don't know if they're right?"</div><div class="uc-arrow">Open unit →</div></div></div>
+        <div class="unit-card" onclick="openUnit(3)"><div class="uc-head u3"><div class="uc-num">Unit 3 · Jan–Feb</div><h3>Who Has Power? Whose Voice Matters?</h3></div><div class="uc-body"><div class="uc-pairing">History & Civics</div><div class="uc-q">"When someone uses their voice against an unfair system, what are they risking — and what makes it worth it?"</div><div class="uc-arrow">Open unit →</div></div></div>
+        <div class="unit-card" onclick="openUnit(4)"><div class="uc-head u4"><div class="uc-num">Unit 4 · Feb–Mar</div><h3>Survival & the Natural World</h3></div><div class="uc-body"><div class="uc-pairing">Animals & Ecosystems</div><div class="uc-q">"When two animals compete for survival, what actually determines who wins?"</div><div class="uc-arrow">Open unit →</div></div></div>
+        <div class="unit-card" onclick="openUnit(5)"><div class="uc-head u5"><div class="uc-num">Unit 5 · Apr–May</div><h3>Folklore, Fables & Myths</h3></div><div class="uc-body"><div class="uc-pairing">Earth Science</div><div class="uc-q">"What does the story a culture chooses to keep and retell tell us about what that culture believes?"</div><div class="uc-arrow">Open unit →</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div id="unit-detail" style="display:none">
+    <div id="ud-hero" class="unit-hero u1">
+      <div class="container">
+        <div class="unit-back" onclick="backToUnits()">← All Units</div>
+        <h2 id="ud-title">Unit</h2>
+        <div class="unit-meta" id="ud-meta"></div>
+      </div>
+    </div>
+    <div class="tabs" id="ud-tabs">
+      <button class="tab active" onclick="showTab('arc',this)">Unit Arc</button>
+      <button class="tab" onclick="showTab('nonfiction',this)">Nonfiction</button>
+      <button class="tab" onclick="showTab('seminar',this)">Seminar</button>
+      <button class="tab" onclick="showTab('books56',this)">5–6 Books</button>
+      <button class="tab" onclick="showTab('books34',this)">3–4 Books</button>
+      <button class="tab" onclick="showTab('booksk2',this)">K–2 Books</button>
+      <button class="tab" onclick="showTab('vocab',this)">Prompts & Writing</button>
+      <button class="tab" onclick="showTab('films',this)">Films</button>
+    </div>
+    <div class="container">
+      <div id="panel-arc" class="panel active"></div>
+      <div id="panel-nonfiction" class="panel"></div>
+      <div id="panel-seminar" class="panel"></div>
+      <div id="panel-books56" class="panel"></div>
+      <div id="panel-books34" class="panel"></div>
+      <div id="panel-booksk2" class="panel"></div>
+      <div id="panel-vocab" class="panel"></div>
+      <div id="panel-films" class="panel"></div>
+    </div>
+  </div>
+</div>
+
+<!-- STANDARDS -->
+<div id="page-standards" class="page">
+  <div class="container">
+    <h2 class="section-title" style="margin-top:2rem">CCSS <span>Alignment</span></h2>
+    <p style="color:var(--muted);margin-bottom:2rem">Rotation A carries the nonfiction and argument standards that Rotation B touches more lightly. RI.5.6/RI.6.6 and RI.5.8/RI.6.8 do the heaviest lifting across Units 1–3. The comparison standards anchor Units 4 and 5.</p>
+    <div class="std-grid">
+      <div class="std-card"><h4>Literary Reading (RL)</h4>
+        <div class="std-row"><span class="std-code">RL.5.1 / RL.6.1</span><span class="std-desc">Citing textual evidence — Unit 1, 3</span></div>
+        <div class="std-row"><span class="std-code">RL.5.6 / RL.6.6</span><span class="std-desc">Point of view and purpose — Unit 1</span></div>
+        <div class="std-row"><span class="std-code">RL.5.9 / RL.6.9</span><span class="std-desc">Cross-text comparison — Units 4, 5 ⭐</span></div>
+      </div>
+      <div class="std-card"><h4>Informational Reading (RI)</h4>
+        <div class="std-row"><span class="std-code">RI.5.3 / RI.6.3</span><span class="std-desc">Relationships between concepts — Units 2, 3</span></div>
+        <div class="std-row"><span class="std-code">RI.5.6 / RI.6.6</span><span class="std-desc">Author's purpose in nonfiction — Units 1, 2, 3 ⭐</span></div>
+        <div class="std-row"><span class="std-code">RI.5.8 / RI.6.8</span><span class="std-desc">Evaluating arguments and claims — Unit 4</span></div>
+        <div class="std-row"><span class="std-code">RI.5.9 / RI.6.9</span><span class="std-desc">Integrating multiple sources — Units 4, 5</span></div>
+      </div>
+      <div class="std-card"><h4>Writing (W)</h4>
+        <div class="std-row"><span class="std-code">W.5.1 / W.6.1</span><span class="std-desc">Opinion writing — Units 1, 3, 4</span></div>
+        <div class="std-row"><span class="std-code">W.5.2 / W.6.2</span><span class="std-desc">Informational writing — Unit 2, Gingerbread</span></div>
+        <div class="std-row"><span class="std-code">W.5.3 / W.6.3</span><span class="std-desc">Narrative writing — Unit 5 (original fable/myth)</span></div>
+      </div>
+      <div class="std-card"><h4>Writing by Grade Band</h4>
+        <div class="std-row"><span class="std-code">K–1</span><span class="std-desc">Drawing, dictated sentences, oral response</span></div>
+        <div class="std-row"><span class="std-code">2nd</span><span class="std-desc">3–5 sentence paragraph</span></div>
+        <div class="std-row"><span class="std-code">3rd</span><span class="std-desc">Paragraph with claim + 2 evidence pieces</span></div>
+        <div class="std-row"><span class="std-code">4th</span><span class="std-desc">Multi-paragraph comparative response</span></div>
+        <div class="std-row"><span class="std-code">5th</span><span class="std-desc">5-paragraph opinion or argument essay</span></div>
+        <div class="std-row"><span class="std-code">6th</span><span class="std-desc">Comparative analytical essay (2+ texts)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKS -->
+<div id="page-books" class="page">
+  <div class="container">
+    <h2 class="section-title" style="margin-top:2rem">Complete Book <span>Menus</span></h2>
+    <div class="books-filter">
+      <button class="filter-btn active" onclick="filterBooks('all',this)">All</button>
+      <button class="filter-btn" onclick="filterBooks('k2',this)">K–2 Picture Books</button>
+      <button class="filter-btn" onclick="filterBooks('g34',this)">3–4 Partner</button>
+      <button class="filter-btn" onclick="filterBooks('g56',this)">5–6 Solo</button>
+      <button class="filter-btn" onclick="filterBooks('u1',this)">Unit 1</button>
+      <button class="filter-btn" onclick="filterBooks('u2',this)">Unit 2</button>
+      <button class="filter-btn" onclick="filterBooks('u3',this)">Unit 3</button>
+      <button class="filter-btn" onclick="filterBooks('u4',this)">Unit 4</button>
+      <button class="filter-btn" onclick="filterBooks('u5',this)">Unit 5</button>
+    </div>
+    <div id="books-content"></div>
+    <div style="height:3rem"></div>
+  </div>
+</div>
+
+<footer>Curiosity Grove Academy · Literacy & Content Framework · Rotation A · Teacher Edition</footer>
+
+<script>
+const UNITS = {
+  1:{
+    title:"Reading Between the Lines",color:"u1",
+    meta:["Sept–Oct","7 Weeks","Paired: Geography & Community"],
+    why:"Good readers don't just track what happens — they read what's underneath. This is the foundational reading skill that makes every other unit richer, and it pairs naturally with geography and community because places carry meaning beneath their surface too. A map doesn't show you what it's like to live somewhere. A photograph of a community doesn't tell you who was left out of the frame.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Hook with Voices in the Park (four narrators; same event; wildly different stories) or The Mysteries of Harris Burdick (images that demand inference with no text to rescue you). Build a class anchor chart: What did the author tell us directly? What did we have to figure out? What did they never say at all?"},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose their novels. Introduce the reading journal. Begin conferences. Students are identifying moments where they had to infer something — not analyzing deeply yet, just noticing."},
+      {l:"Weeks 3–4 — Nonfiction Pairing",t:"Mid-unit pivot. The whole class reads a shared nonfiction text about how places and communities shape people — and what photographs, maps, and stories leave out. Discussion bridge: What does this text tell you directly? What do you have to infer? What did the author choose not to include, and why?"},
+      {l:"Week 5 — Mid-Unit Discussion",t:"Small groups sharing inference moments from their novels. 'I thought I knew what was happening, but then I realized the author was actually telling me something different.' The multiage structure is an asset here."},
+      {l:"Week 6 — Socratic Seminar",t:"Driving question: What does the author want you to feel or believe that they never actually say out loud? Students bring novels, journals, and the nonfiction text."},
+      {l:"Week 7 — Culminating Writing",t:"Grades 5–6: Opinion paragraph arguing what an author is really saying beneath the surface of one key scene. Grades 3–4: Shorter paragraph identifying one implied thing with evidence. K–2: Illustrated response showing something the book never said directly but they figured out."},
+    ],
+    nfShared:[
+      {t:"The Skies Above My Eyes",a:"Charlotte Guillain",n:"Perspective and place; what you see depends on where you stand"},
+      {t:"Home",a:"Carson Ellis",n:"Wordless picture book; what home means in different communities; demands inference; all ages"},
+      {t:"Newsela / ReadWorks articles",a:"Various",n:"Short leveled articles on how geography shapes communities — great for RI.5.6 author's purpose"},
+    ],
+    nfAdditional:[
+      {t:"What Do You Do With a Problem?",a:"Kobi Yamada",n:"Subtext-rich picture book; what's beneath the surface is the whole point"},
+      {t:"National Geographic Kids: Communities Around the World",a:"Various",n:"Strong photograph-to-text inference opportunities"},
+    ],
+    nfBridge:["What does this text tell you directly? What did you have to figure out on your own?","What did the author or photographer choose not to show or say? Why might that be?","How does where a community is located shape how people live? What does the text imply that it never states?","Compare an inference you made in your novel to one you had to make from this nonfiction text. Which felt harder? Why?"],
+    seminar56:"What does the author want you to feel or believe that they never actually say out loud?",
+    seminar34:"What is one thing the author implied but never said? How did you figure it out?",
+    seminarK2:"What did the author leave out of this story? How did you know it was true even though nobody said it?",
+    seminarFollow:"How do you know the author intended that? Is it possible to read something into a text that the author didn't mean? Does it matter? What would be lost if the author had just said it directly?",
+    books56:{gn:["Smile — Raina Telgemeier | What Raina doesn't say about how she's really feeling drives the whole story","Hilo: The Boy Who Crashed to Earth — Judd Winick | Narrator limited by not understanding what Hilo is"],lo:["Charlotte's Web — E.B. White | Classic; rich subtext about mortality and friendship","The One and Only Ivan — Katherine Applegate | Ivan's narration implies far more than he states directly","Clementine — Sara Pennypacker | Unreliable narrator; what Clementine doesn't understand about her own story is the point"],mid:["The War That Saved My Life — Kimberly Brubaker Bradley | Ada's narration withholds what she understands about her situation; powerful","When You Reach Me — Rebecca Stead | Everything rewards inference; slow-burn payoff","Bud, Not Buddy — Christopher Paul Curtis | Bud's rules carry enormous subtext","From the Mixed-Up Files of Mrs. Basil E. Frankweiler — E.L. Konigsburg | Narrator knows things she's withholding"],hi:["The Giver — Lois Lowry | Everything beneath the surface of the Sameness is the point","A Long Walk to Water — Linda Sue Park | Spare prose demands inference; enormous emotional subtext","Hatchet — Gary Paulsen | Brian's internal processing is subtext-rich even in a survival story","The House on Mango Street — Sandra Cisneros | Vignette structure; what Esperanza doesn't say is the whole book"]},
+    books34:{pb:["Voices in the Park — Anthony Browne | Four narrators; same park visit; perfect anchor","The Mysteries of Harris Burdick — Chris Van Allsburg | Images demanding inference; no text to rescue you"],ch:["Clementine — Sara Pennypacker | Unreliable narrator; great for 3rd–4th","Charlotte's Web — E.B. White | Classic subtext about mortality; accessible"],nov:["The One and Only Ivan — Katherine Applegate | Ivan's understated narration","Bud, Not Buddy — Christopher Paul Curtis | Strong readers; rich subtext"]},
+    booksK2:{primary:["Voices in the Park — Anthony Browne","Home — Carson Ellis","The Mysteries of Harris Burdick — Chris Van Allsburg"],additional:["What Do You Do With a Problem? — Kobi Yamada","Enemy Pie — Derek Munson | What the narrator assumes vs. what's true"],note:"K–2 response is oral or illustrated: 'The author never said ___, but I could tell because ___.'"},
+    journal56:{"Tracking the Lens":["Find a moment where you had to figure something out that the author never told you directly. What clues did you use?","What does your narrator seem to feel about something they never say out loud? How can you tell?","Is there something happening in your book that characters don't seem to notice but you do? What is it?"],"Thinking Beyond Plot":["Why do you think the author left that unsaid? What effect does it have on you as a reader?","Find a sentence that sounds simple on the surface but means something more. What does it really mean?","Compare an inference you made to one made by a classmate. How did you each get there differently?"],"Personal Connection":["Think of a time when someone meant something they didn't say directly. How did you figure it out?","Is there a place you know well that would look different to someone who'd never been there? What would they miss?"]},
+    journal34:["What did the author tell you? What did you have to figure out? How?","Find a moment where you weren't sure what was really happening. What clues helped you?","What do you think the author is really trying to say with this book?"],
+    journalK2:{draw:["Draw something the book never said directly but you figured out. How did you know?","Draw the 'real' feeling of a character even though the book didn't tell you directly."],oral:["What did the author leave out? How do you know?","What do you think the character is really feeling even though they didn't say it?"]},
+    vocab:["Inference — figuring out something the author didn't say directly","Subtext — what's underneath the surface of what's being said","Imply — to hint at something without saying it directly","Unreliable narrator — a narrator who might be missing information or not telling the whole truth","Perspective — the point of view from which a story is told"],
+    writing:{k:"Illustrated response: 'The author never said ___, but I could tell because ___.'" ,g1:"Same as K; begin writing the sentence independently with support",g2:"1–2 written sentences: 'The author didn't say ___ but I know because ___.'" ,g3:"Short paragraph: identify one implied meaning, explain what clues you used, say why the author might have left it unsaid",g4:"Paragraph with claim + two pieces of text evidence + explanation of why the author implied rather than stated"},
+    films:[{t:"Inside Out",n:"Emotions as subtext made visible; what's really happening beneath what characters say"},{t:"Zootopia",n:"Rich subtext about bias and community; what the film implies vs. what it states"},{t:"Knives Out",n:"Every scene rewards inference; the whole plot depends on reading beneath what characters say"},{t:"The Incredibles",n:"What each character says vs. what they actually mean; strong for older students"}],
+  },
+  2:{
+    title:"Forces at Work",color:"u2",
+    meta:["Oct–Nov","7 Weeks","Paired: Physical Science & Scientists"],
+    why:"Scientists and inventors read the world the way good readers read books — they notice what doesn't fit, ask why, form a hypothesis, and test it. Pairing physical science content with books about scientists and inventors makes the thinking process the subject rather than just the facts. Zoey & Sassafrass makes this explicit: the scientific method is the narrative structure. The literary lens is curiosity and inquiry as a way of reading — what questions does this text make you want to ask?",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Launch with a shared read-aloud of the first Zoey & Sassafrass book. Introduce the inquiry lens: scientists ask questions, notice problems, gather evidence, revise their thinking. Good readers do the same. Build a class anchor chart: What questions did Zoey ask? What evidence did she use? What did she have to revise?"},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose their books — a mix of narrative nonfiction scientist biographies and fiction about inventors and curious kids. Reading journal tracks: What question is driving this book? What evidence is being gathered? What does the character or subject have to revise or unlearn?"},
+      {l:"Weeks 3–4 — Nonfiction Pairing",t:"Mid-unit pivot. Whole class reads and discusses a shared nonfiction text about a real scientist or inventor — focusing on their process, not just their discoveries. The wrong turns, the revisions, the moments of genuine not-knowing."},
+      {l:"Week 5 — Mid-Unit Discussion",t:"Small groups: What's the biggest question driving your book? Has it been answered yet? Students compare across books — fiction and nonfiction, scientists and inventors — finding the common thread of inquiry."},
+      {l:"Week 6 — Socratic Seminar",t:"Driving question: What makes someone keep going when they don't know if they're right?"},
+      {l:"Week 7 — Culminating Writing",t:"Grades 5–6: Informational essay explaining a scientific concept and connecting it to how a character or real scientist in their book approached a question. Grades 3–4: Paragraph explaining what question drove their book and what evidence was used to answer it. K–2: Illustrated science journal page showing one question and how it was answered."},
+    ],
+    nfShared:[
+      {t:"Rosie Revere, Engineer",a:"Andrea Beaty",n:"Picture book; failure as part of the process; great for all ages"},
+      {t:"Hidden Figures Young Readers Edition",a:"Margot Lee Shetterly",n:"Narrative nonfiction; mathematicians whose work was invisible; grades 4–6"},
+      {t:"Women in Science",a:"Rachel Ignotofsky",n:"Illustrated profiles; accessible across grade levels; great for browsing and comparing"},
+    ],
+    nfAdditional:[
+      {t:"Ada Lovelace, Poet of Science",a:"Diane Stanley",n:"Picture book biography; grades 3–5"},
+      {t:"Who Was? series — scientists",a:"Various",n:"Marie Curie, Albert Einstein, Jane Goodall etc.; mid-level; highly accessible"},
+      {t:"National Geographic Kids: How Things Work",a:"National Geographic",n:"Accessible nonfiction with strong text features"},
+    ],
+    nfBridge:["What question was this scientist trying to answer? Did they start with the right question, or did they have to revise it?","What happened when they were wrong? Did being wrong help them? How?","Who supported this scientist's work? Who didn't? How did that shape what they could discover?","Compare the process your book's character used to solve a problem to the process this real scientist used. What's the same?"],
+    seminar56:"What makes someone keep going when they don't know if they're right?",
+    seminar34:"What did your character or scientist do when they got stuck? What made them keep going?",
+    seminarK2:"When Zoey didn't know the answer, what did she do? Have you ever done something like that?",
+    seminarFollow:"Is curiosity enough? What else does a scientist — or a character — need? What's the difference between not knowing the answer and being willing to not know? Has anyone in your book given up? What made the difference?",
+    books56:{gn:["Secret Coders (series) — Gene Luen Yang | Coding as puzzle-solving; logical inquiry; grades 3–5","Nick and Tesla (series) — Bob Pflugfelder | Kids who invent their way out of problems"],lo:["Iggy Peck, Architect — Andrea Beaty | Kid who builds things compulsively; great for K–2","Who Was? series — Marie Curie, Jane Goodall, Albert Einstein | Accessible scientist biographies"],mid:["The Invention of Hugo Cabret — Brian Selznick | Automaton mystery; invention and discovery as plot","Counting by 7s — Holly Goldberg Sloan | Child prodigy who processes the world scientifically","George's Secret Key to the Universe (series) — Lucy & Stephen Hawking | Physics made narrative"],hi:["The Wright Brothers — David McCullough (Young Readers Ed.) | Narrative nonfiction; process of discovery","Hidden Figures Young Readers Edition — Margot Lee Shetterly | Full book for strong readers","Ender's Game — Orson Scott Card | Strategic problem-solving as entire narrative; strong readers"]},
+    books34:{pb:["Rosie Revere, Engineer — Andrea Beaty | Failure as part of the process","Iggy Peck, Architect — Andrea Beaty | Building as calling; great K–2 anchor"],ch:["Zoey & Sassafrass (series) — Asia Citro | Scientific method as narrative; K–3 anchor","Who Was? series — Marie Curie, Jane Goodall | Accessible and engaging"],nov:["The Invention of Hugo Cabret — Brian Selznick | Strong readers; gorgeous","Counting by 7s — Holly Goldberg Sloan | Rich character and inquiry"]},
+    booksK2:{primary:["Zoey & Sassafrass Book 1 — Asia Citro (whole-class anchor)","Rosie Revere, Engineer — Andrea Beaty","What Do You Do With a Problem? — Kobi Yamada"],additional:["Ada Lovelace, Poet of Science — Diane Stanley","Iggy Peck, Architect — Andrea Beaty"],note:"Zoey & Sassafrass is the whole-class K–2 anchor — read together and discussed as a class. K–2 science journal page is the culminating project."},
+    journal56:{"Tracking the Lens":["What is the driving question in your book right now — the thing the character is trying to figure out?","What evidence has your character gathered so far? Is it enough? What are they still missing?","Has your character had to change what they thought they knew? What made them revise their thinking?"],"Thinking Beyond Plot":["What does your book say about what it takes to keep going when you don't know if you're right?","Compare your book's character to the scientist we read about together. What would they have in common?","Is the question at the center of your book a science question, a people question, or both? How can you tell?"],"Personal Connection":["Think of a time you had to figure something out without knowing the answer first. What did you do?","Is there a question you've been curious about for a long time that you haven't answered yet? What would it take to find out?"]},
+    journal34:["What question is your character trying to answer? Has it changed?","What did they try? Did it work? What do they do next?","What makes your character keep going even when things don't work?"],
+    journalK2:{draw:["Draw the question your character was trying to answer. Draw how they tried to find out.","Draw a moment when your character got it wrong. What did they do next?"],oral:["What question was Zoey (or your character) trying to answer?","What did they try? Did it work? What happened next?"]},
+    vocab:["Hypothesis — an educated guess about what might be true","Evidence — information that supports or challenges a claim","Revise — to change your thinking based on new information","Inquiry — the process of asking questions and investigating to find answers","Persistence — continuing to try even when things don't work right away"],
+    writing:{k:"Illustrated science journal page: 'I wondered ___. I tried ___. I found out ___.'" ,g1:"Same as K; write the sentences with support",g2:"2–3 sentence science journal entry describing a question and what was tried",g3:"Paragraph explaining what question drove the book and what kind of evidence was used to answer it",g4:"Multi-paragraph informational piece connecting a character's inquiry process to how a real scientist works"},
+    films:[{t:"October Sky",n:"Boys who teach themselves rocketry; inquiry and persistence as the entire narrative"},{t:"Hidden Figures",n:"Upper grades; mathematicians whose work was essential and invisible"},{t:"Honey, I Shrunk the Kids",n:"Lighter option; inventor whose experiment goes wrong; great for K–4 discussion"},{t:"The Martian",n:"Upper grades only; pure scientific problem-solving as narrative"}],
+  },
+  3:{
+    title:"Who Has Power? Whose Voice Matters?",color:"u3",
+    meta:["Jan–Feb","7 Weeks","Paired: History & Civics"],
+    why:"Every biography makes choices about whose story matters and how to tell it. Reading biographies as arguments — not just as collections of facts — is the literary lens here. When students study real people who used their voice against unfair systems, they're doing both literary analysis (what argument is this text making?) and civic education (what does fairness require of us?). This integrates the Who Has Power? expedition framework: case study clusters, bottle biography, and three final performance task options.",
+    arc:[
+      {l:"Week 1 — Shared Foundation: Power & Fairness",t:"Open with a picture book that puts power and fairness in a context kids immediately understand: Each Kindness or The Other Side by Jacqueline Woodson. Build a class anchor: What is power? Who has it? Who doesn't? What does fairness require? These concepts will be revisited in every case study."},
+      {l:"Weeks 2–3 — Case Study Clusters",t:"Work through the expedition's case study structure: American Revolution (what do people do when ruled but not represented?), Civil Rights Movement (what happens when laws are 'equal' but not fair?), and Global & Labor Resistance (Malala, Clara Lemlich). Students build the bottle biography throughout this stretch."},
+      {l:"Week 4 — Independent Reading + Biography Menu",t:"Students choose a biography from the leveled menu. Reading journal tracks expedition concepts: power, fairness, voice, resistance, consequences."},
+      {l:"Weeks 5–6 — Performance Tasks + Seminar",t:"Students complete their chosen final performance task (Artifact Box, Letter/Podcast, or Concept Map). Seminar brings the whole class together for the larger literary question."},
+      {l:"Week 7 — Culminating Writing",t:"Grades 5–6: Comparative essay connecting their biography subject to another figure from the case studies, arguing what both stories reveal about how resistance works. Grades 3–4: Performance task writing with guided evidence use. K–2: Illustrated explanation of their bottle biography with oral explanation."},
+    ],
+    nfShared:[
+      {t:"Each Kindness",a:"Jacqueline Woodson",n:"Launch anchor; weight of a choice to exclude someone; all ages"},
+      {t:"Martin's Big Words",a:"Doreen Rappaport",n:"Picture book biography; Civil Rights anchor for K–4"},
+      {t:"An Indigenous Peoples' History of the United States for Young People",a:"Dunbar-Ortiz / Mendoza / Reese",n:"Selected chapters; grades 5–6; important counternarrative"},
+    ],
+    nfAdditional:[
+      {t:"Rosa",a:"Nikki Giovanni",n:"Rosa Parks picture book biography; lyrical; all ages"},
+      {t:"Brave Girl",a:"Michelle Markel",n:"Clara Lemlich and the Shirtwaist Makers' Strike; collective labor action"},
+      {t:"Malala's Magic Pencil",a:"Malala Yousafzai",n:"Her own story for younger readers; voice and education as resistance"},
+      {t:"For the Right to Learn",a:"Rebecca Langston-George",n:"Malala biography; grades 3–5"},
+    ],
+    nfBridge:["When someone uses their voice against an unfair system, what are they risking? What makes it worth it?","What is the difference between a rule that is legal and a rule that is fair? Can you find an example in your biography?","What kind of resistance did your biography subject choose — loud or quiet, individual or collective? Why?","What changed because of what they did? What didn't change? Does that affect how you think about their resistance?"],
+    seminar56:"When someone uses their voice against an unfair system, what are they risking — and what makes it worth it?",
+    seminar34:"Is resistance always loud? Can you resist quietly? What's an example from your reading?",
+    seminarK2:"Was it fair? What did they do about it? Was that brave?",
+    seminarFollow:"Is resistance always loud? Can you resist quietly? What's the difference between a hero and someone who just did what was right? Did the people in your books call themselves heroes?",
+    books56:{gn:["I Am Rosa Parks — Brad Meltzer | Lower; great for K–2 shared read","Malala's Magic Pencil — Malala Yousafzai | Lower; powerful for all ages"],lo:["Who Was? series — Rosa Parks, MLK, Harriet Tubman, Abraham Lincoln | Highly accessible","Ruth and the Green Book — Calvin Alexander Ramsey | Historical fiction; Civil Rights era; 2nd–3rd","The Story of Ruby Bridges — Robert Coles | Classic picture book biography"],mid:["I Am Malala (Young Readers Edition) — Malala Yousafzai | Her own story; voice and education as resistance","Number the Stars — Lois Lowry | Historical fiction; quiet resistance in Nazi-occupied Denmark","Esperanza Rising — Pam Muñoz Ryan | Historical fiction; labor rights; belonging and resistance"],hi:["Chains — Laurie Halse Anderson | American Revolution from an enslaved girl's perspective; power and voice in tension","Uprising — Margaret Peterson Haddix | Triangle Shirtwaist Fire; labor movement; three voices","Roll of Thunder, Hear My Cry — Mildred Taylor | Classic; systemic injustice and quiet resistance"]},
+    books34:{pb:["I Am Rosa Parks — Brad Meltzer","Martin's Big Words — Doreen Rappaport","Brave Girl — Michelle Markel"],ch:["Who Was? series — Rosa Parks, MLK, Harriet Tubman | Accessible and engaging","Ruth and the Green Book — Calvin Alexander Ramsey"],nov:["Number the Stars — Lois Lowry | Strong readers","I Am Malala (Young Readers Edition) | Strong readers"]},
+    booksK2:{primary:["Rosa — Nikki Giovanni","Martin's Big Words — Doreen Rappaport","Brave Girl — Michelle Markel | Clara Lemlich"],additional:["Malala's Magic Pencil — Malala Yousafzai","Each Kindness — Jacqueline Woodson | Launch anchor"],note:"K–2 bottle biography relies on drawing and oral explanation. Final task for K–2 is a drawing with dictated or short written explanation."},
+    journal56:{"Tracking the Lens":["Who has power in your book right now? Who doesn't? How can you tell?","What does fairness — or unfairness — look like in your book? Find a specific moment and describe it.","Has anyone in your book used their voice against something unfair? What did they risk? What happened?"],"Thinking Beyond Plot":["What argument is your biography making about this person's life? What does it want you to believe about them?","What did the biographer choose to include? What might they have left out? How might that shape what you think?","Compare your biography subject to someone from our case study clusters. What would they recognize in each other?"],"Personal Connection":["Think of a time something felt unfair to you. What did you do? What were your options?","Is there something in your community or school that you think is unfair? What would it take to change it?"]},
+    journal34:["Who has power in your book? Who doesn't? Is that fair?","What did your character do when something was unfair? Did it work?","Compare the person in your biography to someone we studied in our case clusters. What's the same?"],
+    journalK2:{draw:["Draw who had power. Draw who didn't. Was it fair?","Draw what they did when something was unfair."],oral:["Was it fair? What did they do about it?","Would you have done the same thing? What would you have done differently?"]},
+    vocab:["Power — the ability to make decisions that affect other people","Fairness — treating people in ways that are right and just","Voice — the ability to speak up, be heard, and have your words matter","Resistance — acting against something that is unfair","Consequence — what happens as a result of a choice or action"],
+    writing:{k:"Illustrated explanation of bottle biography with oral dictation: who was this person, what did they face, what did they do",g1:"Same as K; begin writing labels and one sentence independently",g2:"Short written explanation of the bottle biography: who the person was, what was unfair, what they did",g3:"Performance task written component: artifact box labels + explanation, or letter first paragraph, or concept map with written claim",g4:"Full performance task: artifact box with written explanations, or letter in character, or full concept map ending with 'This person's life shows that ___ because ___'"},
+    films:[{t:"Hidden Figures",n:"Upper grades; mathematicians whose work was invisible; connects to Unit 2 as well"},{t:"Selma",n:"Upper grades preview for content; nonviolent resistance; powerful"},{t:"Iron Jawed Angels",n:"Women's suffrage; collective and individual resistance"},{t:"The Boy Who Harnessed the Wind",n:"Access to resources as a power issue; individual ingenuity in the face of systems"}],
+  },
+  4:{
+    title:"Survival & the Natural World",color:"u4",
+    meta:["Feb–Mar","7 Weeks","Paired: Animals & Ecosystems"],
+    why:"Who Would Win is doing exactly what strong nonfiction readers do: gathering evidence, weighing competing claims, and defending a position. The literary lens here is comparison and argument, and it lives most naturally in the nonfiction reading that runs alongside the Animals & Ecosystems science unit. This was the strongest unit of the year — the one where kids were most engaged and the reading felt most alive. The goal of this framework version is to capture that energy and give it full unit architecture.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Launch with the first Who Would Win book as a shared read-aloud. Read it as argument: What claim is this book making? What evidence does it use? Is the evidence convincing? Could you argue the other side? Build a class anchor chart of argument moves: claim, evidence, counterargument. This becomes the reading journal structure for the whole unit."},
+      {l:"Week 2 — Book Choice & Launch",t:"Students choose their books — Who Would Win titles, other comparative nonfiction, or animal/survival fiction. Reading journal tracks: What claim is this book making? What evidence is it using? Do I find it convincing?"},
+      {l:"Weeks 3–4 — Nonfiction Pairing + Independent Reading",t:"Mid-unit pivot into biomes and ecosystem content. Whole class reads shared nonfiction about a specific ecosystem or adaptation. Discussion bridge: This text argues that [this adaptation] is what makes this animal successful. Do you agree? What would make a stronger argument?"},
+      {l:"Week 5 — Mid-Unit Debate",t:"Students choose two animals and prepare a formal argument for which would survive a specific scenario. Pairs present their arguments; the class evaluates the evidence — not just who argued most confidently, but who used the best support."},
+      {l:"Week 6 — Socratic Seminar",t:"Driving question: When two animals compete for survival, what actually determines who wins — strength, adaptations, or something else?"},
+      {l:"Week 7 — Culminating Writing",t:"Grades 5–6: Comparative argument essay — choose two animals, build an evidence-based case, defend the claim with evidence from at least two sources. Grades 3–4: Argument paragraph with one claim, two pieces of evidence, one acknowledgment of the counterargument. K–2: Illustrated comparison with labeled explanation of which would win and why."},
+    ],
+    nfShared:[
+      {t:"Who Would Win? (series)",a:"Jerry Pallotta",n:"The anchor series; use multiple titles across the unit; all grade levels"},
+      {t:"Actual Size",a:"Steve Jenkins",n:"Scale as argument; how size affects survival; gorgeous for all ages"},
+      {t:"What Do You Do With a Tail Like This?",a:"Steve Jenkins & Robin Page",n:"Adaptation as argument; how body parts solve survival problems"},
+      {t:"National Geographic Kids: Predators",a:"National Geographic",n:"Accessible nonfiction with strong text features and comparative content"},
+    ],
+    nfAdditional:[
+      {t:"Deadly! The Truth About the Most Dangerous Creatures on Earth",a:"Nicola Davies",n:"Grades 3–5; argument about what makes something dangerous"},
+      {t:"Eye to Eye: How Animals See the World",a:"Steve Jenkins",n:"Comparative structure throughout; excellent text features"},
+      {t:"Ranger Rick magazine back issues",a:"Various",n:"Leveled articles on animal adaptations; great for mid-unit reading"},
+    ],
+    nfBridge:["What claim is this text making about this animal? What evidence does it use?","Is the evidence convincing? What would make the argument stronger?","What advantage does this adaptation give this animal in its specific environment? Would it work somewhere else?","Compare two animals from different books. If they competed in [specific environment], whose adaptation would give them the advantage? How do you know?"],
+    seminar56:"When two animals compete for survival, what actually determines who wins — strength, adaptations, or something else entirely?",
+    seminar34:"Is the biggest animal always the winner? What else matters? Give an example from your reading.",
+    seminarK2:"Which animal do you think would win? What's your best reason?",
+    seminarFollow:"Can you win a survival competition without being the biggest or strongest? What role does environment play — is there such a thing as a fair competition in nature? What does your reading say about what 'winning' actually means for an animal?",
+    books56:{gn:["Who Would Win? (series) — Jerry Pallotta | The anchor series; choose by interest","Hilo Book 3: The Great Furball — Judd Winick | Animals and ecosystems woven into the plot"],lo:["Owls in the Family — Farley Mowat | Beloved animal story; observation and coexistence","Charlotte's Web — E.B. White | Ecosystem relationships; food chain as backdrop"],mid:["Hatchet — Gary Paulsen | Survival in the wild; human adaptation; food web awareness becomes survival skill","My Side of the Mountain — Jean Craighead George | Boy who learns to live in the wilderness","Island of the Blue Dolphins — Scott O'Dell | Classic survival story; human adaptation to an island ecosystem","Frightful's Mountain — Jean Craighead George | Told from a peregrine falcon's perspective"],hi:["Never Cry Wolf — Farley Mowat | Naturalist studying wolves; argument about how we understand animal behavior","The Wild Robot — Peter Brown | Robot adapting to a wild island ecosystem; every chapter is a survival argument","Call of the Wild — Jack London | Classic; adaptation and survival; animal consciousness as narrator"]},
+    books34:{pb:["Who Would Win? titles — choose by interest","Actual Size — Steve Jenkins","What Do You Do With a Tail Like This? — Steve Jenkins"],ch:["Owls in the Family — Farley Mowat | Accessible animal story","Charlotte's Web — E.B. White | Classic"],nov:["My Side of the Mountain — Jean Craighead George | Strong readers","Hatchet — Gary Paulsen | Strong readers"]},
+    booksK2:{primary:["Who Would Win? (series) — Jerry Pallotta (whole-class anchor; choose titles by interest)","Actual Size — Steve Jenkins","What Do You Do With a Tail Like This? — Steve Jenkins"],additional:["Caterpillar and Bean — Martin Jenkins","National Geographic Kids: Animals","The Magic School Bus Inside a Beehive — Joanna Cole"],note:"Who Would Win books are the primary shared texts for K–2 — read aloud together and discussed as a class. K–2 culminating project is an illustrated comparison with labeled explanation."},
+    journal56:{"Tracking the Lens":["What claim is your book making about this animal or ecosystem? Write it in one sentence.","What evidence does your book use to support that claim? Is it convincing?","What's the strongest counterargument to your book's claim? Does the book address it?"],"Thinking Beyond Plot":["Compare two animals from different books or chapters. Build your own argument for which has the better survival strategy in a specific environment.","What does your book assume the reader already knows? What background knowledge does it rely on?","Find a place where your book uses a photograph, diagram, or illustration as evidence. Is it convincing?"],"Personal Connection":["If you were designing an animal for a specific environment, what adaptations would you give it? What evidence from your reading would support your choices?","Think about a time you had to argue for something you believed. What made your argument strong or weak?"]},
+    journal34:["What are the two animals (or things) being compared? What's each one's best advantage?","Which do you think would win? What's your evidence?","What would change your mind? Is there a counterargument?"],
+    journalK2:{draw:["Draw the two animals. Label each one's best advantage.","Draw which animal you think would win. Write or dictate your reason."],oral:["Which animal do you think would win? Why?","What's the best thing about each animal?"]},
+    vocab:["Adaptation — a feature of an animal that helps it survive in its environment","Ecosystem — a community of living things interacting with each other and their environment","Predator — an animal that hunts other animals for food","Prey — an animal that is hunted by a predator","Evidence — specific information that supports a claim or argument"],
+    writing:{k:"Illustrated comparison: draw two animals with labels, circle the winner, dictate 'I think ___ would win because ___'",g1:"Same as K; write the sentence independently with support",g2:"2–3 sentences: name the two animals, one advantage each, which would win and why",g3:"Argument paragraph: claim (which would win), two pieces of evidence, one counterargument acknowledged",g4:"Multi-paragraph argument: claim, two evidence paragraphs, counterargument and rebuttal, conclusion"},
+    films:[{t:"The Lion King",n:"Ecosystem and food chain dynamics; pride lands as a working ecosystem"},{t:"Finding Nemo",n:"Ocean ecosystem; adaptation and survival; accessible for K–2"},{t:"Planet Earth (BBC clips)",n:"Specific ecosystem segments; ideal for building argument about adaptation"},{t:"March of the Penguins",n:"Survival under extreme conditions; strong for argument writing"}],
+  },
+  5:{
+    title:"Folklore, Fables & Myths",color:"u5",
+    meta:["Apr–May","4 Weeks","Paired: Earth Science"],
+    why:"Every culture has stories that explain the world, teach lessons, and pass down values. Many of the oldest explain natural phenomena — thunder, seasons, earthquakes. By the time students reach this unit, they've spent December comparing Gingerbread Man variants and asking why the same story appears across so many cultures. Now they answer that question in depth. The Earth Science pairing works because creation myths and nature stories are doing exactly what science does — explaining the natural world — just with different tools. Note: this unit was designed but not fully taught in the first run of Rotation A.",
+    arc:[
+      {l:"Week 1 — Shared Foundation",t:"Return to the Gingerbread Man December work: we noticed the same story appears across many cultures. Now zoom out. Share two creation myths from different cultures explaining the same phenomenon — why there is thunder, or why the seasons change. Students notice: what's the same? What's different? What does each story value?"},
+      {l:"Week 2 — Book Choice & Cultural Comparison",t:"Students choose their books from folklore collections, myth retellings, and fiction rooted in folk tradition. Reading journal asks: Where does this story come from? What is it explaining or teaching? What does it suggest this culture values?"},
+      {l:"Week 3 — Earth Science Connection & Nonfiction Pairing",t:"Mid-unit pivot. Read a shared informational text about a natural phenomenon also explained in a myth or folklore story. Discussion bridge: The Greek myth explains thunder as Zeus throwing lightning bolts. This nonfiction text explains what thunder actually is. What does each explanation do that the other can't?"},
+      {l:"Week 4 — Seminar & Culminating Writing",t:"Seminar and writing in the final week. The unit is four weeks rather than seven, so seminar and writing happen in close succession."},
+    ],
+    nfShared:[
+      {t:"Thunderstorm",a:"Arthur Geisert",n:"Wordless picture book; what thunder actually is; rich for inference and discussion"},
+      {t:"National Geographic Kids: Volcanoes / Earthquakes / Weather",a:"National Geographic",n:"Connect to specific myths about natural phenomena depending on science unit focus"},
+      {t:"The Story of Science: Earth, Sea & Sky",a:"Joy Hakim",n:"Narrative nonfiction; how humans have explained the natural world over time; grades 4–6"},
+    ],
+    nfAdditional:[
+      {t:"D'Aulaires' Book of Greek Myths",a:"Ingri & Edgar Parin d'Aulaire",n:"Classic reference; grades 3–6"},
+      {t:"National Geographic Kids: Ancient Greece / Ancient Egypt",a:"National Geographic",n:"Context for mythology"},
+    ],
+    nfBridge:["This nonfiction text explains [natural phenomenon] using science. The myth explains it using story. What can the myth do that the science can't? What can the science do that the myth can't?","What does the myth suggest this culture feared, valued, or wondered about?","Compare two myths from different cultures explaining the same thing. What's the same? What does each culture seem to believe?","Why do you think humans needed to explain this phenomenon with a story before science could explain it? Do we still need those stories now?"],
+    seminar56:"What does the story a culture chooses to keep and retell tell us about what that culture believes?",
+    seminar34:"Why do you think people all over the world made up stories to explain thunder or seasons? What does that tell us about people?",
+    seminarK2:"Why do you think so many different places have a story like this? What were they trying to explain?",
+    seminarFollow:"Can a story be true even if it isn't factually accurate? What does a myth give us that a science explanation doesn't? Are there stories from our own culture that function like myths?",
+    books56:{gn:["Arlo Finch in the Valley of Fire — John August | American folklore woven into adventure","Amulet (series) — Kazu Kibuishi | Fantasy rooted in quest mythology"],lo:["D'Aulaires' Book of Greek Myths — d'Aulaire | Classic; browse and choose favorite myths","In the Beginning: Creation Stories from Around the World — Virginia Hamilton | Multiple traditions; great for comparison","Why Mosquitoes Buzz in People's Ears — Verna Aardema | West African pourquoi tale; picture book; cause and effect in folklore form"],mid:["The Lightning Thief — Rick Riordan | Greek mythology in contemporary setting","Anansi Boys — Neil Gaiman | West African spider-god mythology; richer than Percy Jackson for literary analysis","The Girl Who Drank the Moon — Kelly Barnhill | Original fairy tale with the bones of classic folklore"],hi:["The Epic of Gilgamesh — retelling by Geraldine McCaughrean | One of the oldest stories ever written","The Alchemyst — Michael Scott | World mythology woven into adventure","Tikta'Liktak — James Houston | Inuit survival story rooted in oral tradition"]},
+    books34:{pb:["Why Mosquitoes Buzz in People's Ears — Verna Aardema","Anansi the Spider — Gerald McDermott","The Rough-Face Girl — Rafe Martin | Algonquin Cinderella variant"],ch:["D'Aulaires' Book of Greek Myths — d'Aulaire | Browse and discuss","In the Beginning — Virginia Hamilton | Browse and compare"],nov:["The Lightning Thief — Rick Riordan | Strong readers","The Girl Who Drank the Moon — Kelly Barnhill | Strong readers"]},
+    booksK2:{primary:["Why Mosquitoes Buzz in People's Ears — Verna Aardema","Anansi the Spider — Gerald McDermott","The Rough-Face Girl — Rafe Martin"],additional:["Thunderstorm — Arthur Geisert | Wordless; connects to nonfiction pairing","Various pourquoi tales from multiple cultures"],note:"K–2 culminating project is an original illustrated pourquoi tale: 'Why the _____ is _____.' Discussion question accessible at every age: why do you think people made up this story?"},
+    journal56:{"Tracking the Lens":["Where does your story come from? What culture or tradition is it part of?","What is this story explaining or teaching? Is it about nature, human behavior, or both?","What does this story suggest its culture values or fears? Find specific evidence in the story itself."],"Thinking Beyond Plot":["Compare your story to a story from another culture that explains the same thing. What's the same? What's different?","What would be lost if this story disappeared? Why does it matter that people kept telling it?","Connect your story to a natural phenomenon from our science unit. What does the myth explain? What does the science add?"],"Personal Connection":["Does your family or community have a story they keep retelling? What does it teach or explain?","Is there something in the natural world that you've always wanted a story to explain? What would your story say?"]},
+    journal34:["Where is this story from? What is it explaining or teaching?","What does this story seem to think is most important? How can you tell?","Compare your folklore story to one from a different culture. What's the same? What's different?"],
+    journalK2:{draw:["Draw the story. Draw what it's explaining.","Draw your own pourquoi story. Why does the _____ do that?"],oral:["Where do you think this story comes from? Why do you think people told it?","What does this story teach? Do you think that's true?"]},
+    vocab:["Folklore — traditional stories and beliefs passed down within a culture","Myth — a story that explains something in the natural world or human experience","Fable — a short story with a moral lesson, often featuring animals","Pourquoi tale — a 'why' story that explains why something in nature is the way it is","Oral tradition — stories passed down by speaking and listening rather than writing"],
+    writing:{k:"Original illustrated pourquoi tale: 'Why the _____ is _____.' Dictated or short written text.",g1:"Same as K; write 1–2 sentences of the story independently",g2:"Written pourquoi tale with a clear setting, problem, and explanation",g3:"Written fable with a stated moral, OR paragraph arguing what two myths from different cultures have in common",g4:"Comparative paragraph: two myths from different cultures explaining the same phenomenon; what's the same, what's different, what does each culture seem to believe"},
+    films:[{t:"Moana",n:"Rooted in Polynesian myth and navigation tradition; connects to Rotation B Unit 1 for returning students"},{t:"Hercules",n:"Greek mythology made accessible; connects directly to book menu"},{t:"Brother Bear",n:"Native American story tradition; transformation and nature as connected"},{t:"The Prince of Egypt",n:"Upper grades; myth, history, and story tradition intersecting"}],
+  }
+};
+
+function showPage(p, el) {
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  el.classList.add('active');
+  if (p==='books') buildBooksPage('all');
+  window.scrollTo(0,0);
+}
+
+function switchGrade(g, el) {
+  document.querySelectorAll('.grade-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.grade-band').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('band-'+g).classList.add('active');
+}
+
+function showTab(t, el) {
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-'+t).classList.add('active');
+}
+
+function openUnit(n) {
+  const u = UNITS[n];
+  // Switch to units page
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-units').classList.add('active');
+  document.querySelector('nav a:nth-child(2)').classList.add('active');
+
+  document.getElementById('unit-list').style.display='none';
+  document.getElementById('unit-detail').style.display='block';
+  document.getElementById('ud-hero').className='unit-hero '+u.color;
+  document.getElementById('ud-title').textContent='Unit '+n+' — '+u.title;
+  document.getElementById('ud-meta').innerHTML=u.meta.map(m=>`<span>${m}</span>`).join('');
+
+  // Reset tabs
+  document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('active',i===0)});
+  document.querySelectorAll('.panel').forEach((p,i)=>{p.classList.toggle('active',i===0)});
+
+  // ARC
+  let arc=`<div class="why-box">${u.why}</div><h3 class="sub">Unit Arc</h3>`;
+  u.arc.forEach(w=>{arc+=`<div class="week-block"><div class="week-label">${w.l}</div><div class="week-text">${w.t}</div></div>`;});
+  document.getElementById('panel-arc').innerHTML=arc;
+
+  // NONFICTION
+  let nf=`<h3 class="sub">Whole-Class Shared Nonfiction</h3>`;
+  u.nfShared.forEach(b=>{nf+=`<div class="nfcard"><strong>${b.t}</strong> — ${b.a}<div class="nfnote">${b.n}</div></div>`;});
+  nf+=`<h3 class="sub">Additional Nonfiction</h3>`;
+  u.nfAdditional.forEach(b=>{nf+=`<div class="nfcard"><strong>${b.t}</strong> — ${b.a}<div class="nfnote">${b.n}</div></div>`;});
+  nf+=`<h3 class="sub">Discussion Bridge Questions</h3>`;
+  u.nfBridge.forEach(q=>{nf+=`<div class="prompt">${q}</div>`;});
+  document.getElementById('panel-nonfiction').innerHTML=nf;
+
+  // SEMINAR
+  let sm=`<h3 class="sub">Grades 5–6 Seminar Question</h3>
+    <div class="seminar-q"><div class="sq-label">Grades 5–6</div><p>${u.seminar56}</p><div class="sq-follow">Follow-up: ${u.seminarFollow}</div></div>
+    <h3 class="sub">Grades 3–4 Seminar Question</h3>
+    <div class="seminar-q" style="background:var(--moss)"><div class="sq-label">Grades 3–4</div><p>${u.seminar34}</p></div>
+    <h3 class="sub">K–2 Seminar Question</h3>
+    <div class="seminar-q" style="background:var(--bark)"><div class="sq-label">K–2</div><p>${u.seminarK2}</p></div>`;
+  document.getElementById('panel-seminar').innerHTML=sm;
+
+  // 5-6 BOOKS
+  let b56='<h3 class="sub">5–6 Solo Reading Menu</h3>';
+  [['gn','Graphic Novel','lvl-gn'],['lo','Lower 2nd–3rd','lvl-lo'],['mid','Mid 4th–5th','lvl-mid'],['hi','Higher 6th–7th','lvl-hi']].forEach(([k,lbl,cls])=>{
+    if (u.books56[k] && u.books56[k].length) {
+      b56+=`<h4 class="sublabel">${lbl}</h4><ul class="book-list">`;
+      u.books56[k].forEach(b=>{b56+=`<li><span class="lvl ${cls}">${lbl.split(' ')[0]}</span><span class="book-title">${b}</span></li>`;});
+      b56+='</ul>';
+    }
+  });
+  document.getElementById('panel-books56').innerHTML=b56;
+
+  // 3-4 BOOKS
+  let b34='<h3 class="sub">3–4 Partner Reading Menu</h3>';
+  [['pb','Picture Book','lvl-lo'],['ch','Early Chapter Book','lvl-mid'],['nov','Shorter Novel','lvl-hi']].forEach(([k,lbl,cls])=>{
+    if (u.books34[k] && u.books34[k].length) {
+      b34+=`<h4 class="sublabel">${lbl}</h4><ul class="book-list">`;
+      u.books34[k].forEach(b=>{b34+=`<li><span class="lvl ${cls}">3–4</span><span class="book-title">${b}</span></li>`;});
+      b34+='</ul>';
+    }
+  });
+  document.getElementById('panel-books34').innerHTML=b34;
+
+  // K-2 BOOKS
+  let bk2=`<h3 class="sub">K–2 Picture Book Anchor Texts</h3>
+    <h4 class="sublabel">Primary anchor — whole-unit study</h4><ul class="book-list">`;
+  u.booksK2.primary.forEach(b=>{bk2+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`;});
+  bk2+=`</ul><h4 class="sublabel">Additional read-alouds</h4><ul class="book-list">`;
+  u.booksK2.additional.forEach(b=>{bk2+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`;});
+  bk2+=`</ul><div class="note-box">${u.booksK2.note}</div>`;
+  document.getElementById('panel-booksk2').innerHTML=bk2;
+
+  // VOCAB & WRITING
+  let vw='<h3 class="sub">Vocabulary Anchor Words</h3><div class="vocab-grid">';
+  u.vocab.forEach(v=>{const[w,...rest]=v.split(' — ');vw+=`<div class="vocab-item"><strong>${w}</strong> — ${rest.join(' — ')}</div>`;});
+  vw+='</div><h3 class="sub">Writing Expectations</h3>';
+  const wl=[{k:'k',l:'Kindergarten'},{k:'g1',l:'1st Grade'},{k:'g2',l:'2nd Grade'},{k:'g3',l:'3rd Grade'},{k:'g4',l:'4th Grade'}];
+  wl.forEach(({k,l})=>{vw+=`<div class="writing-band"><div class="writing-band-label">${l}</div>${u.writing[k]}</div>`;});
+  vw+='<h3 class="sub">Reading Journal Prompts — Grades 5–6</h3>';
+  Object.entries(u.journal56).forEach(([cat,prompts])=>{vw+=`<h4 class="sublabel">${cat}</h4>`;prompts.forEach(p=>{vw+=`<div class="prompt">${p}</div>`;});});
+  vw+='<h3 class="sub">Journal Prompts — Grades 3–4</h3>';
+  u.journal34.forEach(p=>{vw+=`<div class="prompt">${p}</div>`;});
+  vw+='<h3 class="sub">Journal / Response Options — K–2</h3><h4 class="sublabel">Draw and label</h4>';
+  u.journalK2.draw.forEach(p=>{vw+=`<div class="prompt">${p}</div>`;});
+  vw+='<h4 class="sublabel">Oral / dictated</h4>';
+  u.journalK2.oral.forEach(p=>{vw+=`<div class="prompt">${p}</div>`;});
+  document.getElementById('panel-vocab').innerHTML=vw;
+
+  // FILMS
+  let fm='<h3 class="sub">Film Anchor</h3><p style="color:var(--muted);margin-bottom:1rem;font-size:.88rem">A well-chosen 10–15 minute clip often does more work than a full viewing.</p><div class="film-grid">';
+  u.films.forEach(f=>{fm+=`<div class="film-card"><strong>${f.t}</strong>${f.n}</div>`;});
+  fm+='</div>';
+  document.getElementById('panel-films').innerHTML=fm;
+
+  window.scrollTo(0,0);
+}
+
+function backToUnits() {
+  document.getElementById('unit-list').style.display='block';
+  document.getElementById('unit-detail').style.display='none';
+}
+
+function filterBooks(filter, el) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  buildBooksPage(filter);
+}
+
+function buildBooksPage(filter) {
+  const container=document.getElementById('books-content');
+  let html='';
+  const showUnit=(n,u)=>{
+    const showK2=['all','k2','u'+n].includes(filter);
+    const show34=['all','g34','u'+n].includes(filter);
+    const show56=['all','g56','u'+n].includes(filter);
+    if(!showK2&&!show34&&!show56) return '';
+    let s=`<h3 class="sub">Unit ${n} — ${u.title}</h3>`;
+    if(showK2){s+='<h4 class="sublabel">K–2 Picture Books</h4><ul class="book-list">';u.booksK2.primary.forEach(b=>{s+=`<li><span class="lvl lvl-k2">K–2</span><span class="book-title">${b}</span></li>`;});s+='</ul>';}
+    if(show34){s+='<h4 class="sublabel">3–4 Partner Reading</h4><ul class="book-list">';[...(u.books34.pb||[]),...(u.books34.ch||[]),...(u.books34.nov||[])].forEach(b=>{s+=`<li><span class="lvl lvl-mid">3–4</span><span class="book-title">${b}</span></li>`;});s+='</ul>';}
+    if(show56){s+='<h4 class="sublabel">5–6 Solo Reading</h4><ul class="book-list">';[['gn','GN','lvl-gn'],['lo','Low','lvl-lo'],['mid','Mid','lvl-mid'],['hi','High','lvl-hi']].forEach(([k,lbl,cls])=>{(u.books56[k]||[]).forEach(b=>{s+=`<li><span class="lvl ${cls}">${lbl}</span><span class="book-title">${b}</span></li>`;});});s+='</ul>';}
+    return s;
+  };
+  for(let i=1;i<=5;i++) html+=showUnit(i,UNITS[i]);
+  container.innerHTML=html;
+}
+
+document.addEventListener('DOMContentLoaded',()=>{});
+</script>
+</body>
+</html>

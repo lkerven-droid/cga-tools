@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading at Curiosity Grove Academy — Rotation A</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #2C4A2E; --moss: #4A7C59; --sage: #8BAF8E;
+    --bark: #6B4226; --warm: #F9F5EF; --paper: #FEFCF8;
+    --ink: #1E1E1E; --soft: #6E6E6E; --gold: #C4943A;
+    --u1: #3B6E8C; --u2: #7A4B8C; --u3: #8C5C3B; --u4: #3B7A5C; --u5: #6B3B8C;
+    --u1l: #EBF3F8; --u2l: #F3EBF8; --u3l: #F8F0EB; --u4l: #EBF8F2; --u5l: #F0EBF8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--warm); color: var(--ink); font-size: 17px; line-height: 1.75; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(44,74,46,0.97); backdrop-filter: blur(8px);
+    display: flex; align-items: center; padding: 0 2rem; height: 60px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 0.75rem; margin-right: auto; }
+  .nav-leaf { width: 32px; height: 32px; background: var(--sage); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; }
+  .nav-brand-text { font-family: 'Fraunces', serif; color: var(--warm); font-size: 1rem; font-weight: 700; letter-spacing: 0.01em; }
+  .nav-brand-text span { color: var(--sage); }
+  nav ul { list-style: none; display: flex; gap: 0; }
+  nav ul a { color: rgba(247,243,238,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 500; padding: 0 1rem; height: 60px; display: flex; align-items: center; transition: color 0.2s; }
+  nav ul a:hover { color: var(--warm); }
+  @media (max-width: 600px) { nav ul { display: none; } }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 100px 2rem 5rem; background: var(--forest); position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(74,124,89,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(107,66,38,0.2) 0%, transparent 50%); }
+  .hero-leaves { position: absolute; right: -60px; bottom: -40px; width: 500px; height: 500px; opacity: 0.07; background-image: radial-gradient(circle, #8BAF8E 2px, transparent 2px); background-size: 30px 30px; }
+  .hero-content { max-width: 700px; margin: 0 auto; position: relative; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(196,148,58,0.2); border: 1px solid rgba(196,148,58,0.4); color: var(--gold); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 2rem; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; line-height: 1.05; color: var(--warm); margin-bottom: 1.5rem; }
+  .hero h1 em { color: var(--sage); font-style: italic; }
+  .hero-sub { font-size: 1.15rem; color: rgba(247,243,238,0.75); line-height: 1.7; max-width: 560px; margin: 0 auto 3rem; }
+  .hero-scroll { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--sage); font-size: 0.85rem; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+  section { padding: 6rem 2rem; }
+  section:nth-child(even) { background: var(--paper); }
+  .section-inner { max-width: 860px; margin: 0 auto; }
+  .section-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--moss); margin-bottom: 0.75rem; }
+  h2.section-h { font-family: 'Fraunces', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; line-height: 1.15; color: var(--forest); margin-bottom: 1rem; }
+  h2.section-h em { color: var(--bark); font-style: italic; }
+  .section-lead { font-size: 1.1rem; color: var(--soft); max-width: 640px; line-height: 1.75; margin-bottom: 3rem; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1.5rem; }
+  .step { background: var(--warm); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(0,0,0,0.07); position: relative; }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--forest); color: var(--warm); font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 0.75rem; }
+  .step h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--forest); margin-bottom: 0.4rem; }
+  .step p { font-size: 0.88rem; color: var(--soft); line-height: 1.65; }
+
+  .unit-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 640px) { .unit-cards { grid-template-columns: 1fr; } }
+  .unit-card { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.07); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+  .unit-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+  .uc-top { padding: 2rem 2rem 1.5rem; }
+  .uc-top.u1{background:var(--u1)}.uc-top.u2{background:var(--u2)}.uc-top.u3{background:var(--u3)}.uc-top.u4{background:var(--u4)}.uc-top.u5{background:var(--u5)}
+  .uc-season { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+  .uc-top h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 900; color: white; line-height: 1.2; margin-bottom: 0.25rem; }
+  .uc-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .uc-body { background: white; padding: 1.5rem 2rem; }
+  .uc-q { font-family: 'Fraunces', serif; font-size: 0.95rem; font-style: italic; color: var(--ink); line-height: 1.5; margin-bottom: 1rem; }
+  .uc-pairing { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; color: var(--soft); }
+  .uc-pairing::before { content: '⬡'; font-size: 0.9em; }
+  .uc-expand { margin-top: 1rem; font-size: 0.82rem; color: var(--moss); font-weight: 600; letter-spacing: 0.03em; }
+
+  .unit-expanded { display: none; background: white; border-radius: 16px; margin-top: 1.5rem; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.08); }
+  .unit-expanded.open { display: block; }
+  .ue-header { padding: 2rem 2.5rem 1.5rem; }
+  .ue-header.u1{background:var(--u1l);border-left:5px solid var(--u1)}.ue-header.u2{background:var(--u2l);border-left:5px solid var(--u2)}.ue-header.u3{background:var(--u3l);border-left:5px solid var(--u3)}.ue-header.u4{background:var(--u4l);border-left:5px solid var(--u4)}.ue-header.u5{background:var(--u5l);border-left:5px solid var(--u5)}
+  .ue-body { padding: 2rem 2.5rem; }
+  .ue-body h4 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--forest); margin: 1.5rem 0 0.5rem; }
+  .ue-body h4:first-child { margin-top: 0; }
+  .ue-body p { font-size: 0.93rem; color: var(--soft); line-height: 1.7; margin-bottom: 0.5rem; }
+  .book-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0; }
+  .book-chip { background: var(--warm); border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; padding: 0.25rem 0.8rem; font-size: 0.82rem; color: var(--ink); }
+  .book-chip.hi { border-color: var(--u2); color: var(--u2); }
+  .ue-close { display: block; text-align: center; padding: 1rem; font-size: 0.82rem; color: var(--soft); cursor: pointer; border-top: 1px solid rgba(0,0,0,0.07); font-weight: 600; letter-spacing: 0.05em; }
+  .ue-close:hover { color: var(--forest); }
+
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
+  @media (max-width: 640px) { .choice-grid { grid-template-columns: 1fr; } }
+  .choice-card { background: var(--warm); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(0,0,0,0.07); text-align: center; }
+  .choice-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+  .choice-card h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--forest); margin-bottom: 0.5rem; }
+  .choice-card p { font-size: 0.85rem; color: var(--soft); line-height: 1.6; }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--sage); border-radius: 2px; }
+  .tl-item { position: relative; margin-bottom: 1.75rem; }
+  .tl-dot { position: absolute; left: -2.35rem; top: 0.35rem; width: 14px; height: 14px; border-radius: 50%; background: var(--forest); border: 3px solid var(--warm); }
+  .tl-dot.u1{background:var(--u1)}.tl-dot.u2{background:var(--u2)}.tl-dot.u3{background:var(--u3)}.tl-dot.u4{background:var(--u4)}.tl-dot.u5{background:var(--u5)}.tl-dot.special{background:var(--gold)}
+  .tl-date { font-size: 0.75rem; font-weight: 600; color: var(--soft); margin-bottom: 0.15rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .tl-title { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--forest); font-weight: 700; }
+  .tl-note { font-size: 0.85rem; color: var(--soft); margin-top: 0.2rem; }
+
+  .faq { display: grid; gap: 1rem; }
+  .faq-item { background: var(--warm); border-radius: 10px; overflow: hidden; border: 1px solid rgba(0,0,0,0.07); }
+  .faq-q { padding: 1.1rem 1.5rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--forest); }
+  .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--sage); transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { display: none; padding: 0 1.5rem 1.25rem; font-size: 0.92rem; color: var(--soft); line-height: 1.75; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 1rem; }
+  .faq-item.open .faq-a { display: block; }
+
+  .cta { background: var(--forest); color: white; text-align: center; padding: 5rem 2rem; }
+  .cta h2 { font-family: 'Fraunces', serif; font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 900; margin-bottom: 1rem; }
+  .cta p { color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 2rem; }
+  .cta-btn { display: inline-block; background: var(--gold); color: var(--forest); font-weight: 700; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 8px; text-decoration: none; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.9; }
+  footer { text-align: center; padding: 2rem; font-size: 0.82rem; color: var(--soft); background: var(--paper); border-top: 1px solid rgba(0,0,0,0.07); }
+
+  .rotation-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(107,59,140,0.15); border: 1px solid rgba(107,59,140,0.3); color: #6B3B8C; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; margin-left: 0.75rem; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-leaf"></div>
+    <div class="nav-brand-text">Curiosity Grove <span>Academy</span></div>
+  </div>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#units">The Units</a></li>
+    <li><a href="#year">Full Year</a></li>
+    <li><a href="#faq">Questions</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-leaves"></div>
+  <div class="hero-content">
+    <div class="hero-badge">📚 Rotation A · Family Guide</div>
+    <h1>Reading at<br><em>Curiosity Grove</em></h1>
+    <p class="hero-sub">Real books. Real arguments. Real stories. This year your reader will read beneath the surface, study people who changed history, argue like a scientist, and discover why humans have always told the same kinds of stories.</p>
+    <div class="hero-scroll">↓ Learn how it works</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">The Approach</div>
+    <h2 class="section-h">One framework.<br><em>Every reader.</em></h2>
+    <p class="section-lead">Every student — from kindergarten to 6th grade — works through the same big questions together. The difference is which book they're holding.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Everyone launches together</h3>
+        <p>Each unit begins with a shared text or film clip that the whole class experiences together, building common vocabulary and a shared question before students branch into their own books.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Students choose their book</h3>
+        <p>From a curated menu spanning 2nd through 7th grade reading levels, students pick a book in their zone — in a genre they love. The lens, not the book, holds the class together.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Nonfiction meets fiction mid-unit</h3>
+        <p>Every unit includes a shared nonfiction text the whole class reads together — connecting the literary lens to a real content area like history, science, or biography.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Everyone discusses together</h3>
+        <p>The Socratic seminar is where it all comes together — students arguing from different books, different evidence, toward the same big question. Mixed-age discussion is one of CGA's greatest assets.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <h3>Writing with evidence</h3>
+        <p>Each unit ends with writing that asks students to make an argument, not just retell. Opinion and analytical writing build across the year toward the most ambitious piece in the spring.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <h3>Two rotations, one complete education</h3>
+        <p>Rotation A focuses on nonfiction, argument, biography, and folklore. Rotation B (the alternating year) centers on fiction and literary analysis. Together they cover every major reading and writing standard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK GENRES -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">What They'll Read</div>
+    <h2 class="section-h">Books for every <em>kind</em> of reader</h2>
+    <p class="section-lead">Every unit has options across genres and reading levels. Students pick what excites them — and then we hold them to the same high-level thinking as everyone else.</p>
+    <div class="choice-grid">
+      <div class="choice-card">
+        <div class="choice-icon">🔬</div>
+        <h3>Science & Inquiry</h3>
+        <p>From Zoey & Sassafrass to the Wright Brothers — books about curious people figuring out how the world works.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🦁</div>
+        <h3>Animals & Nature</h3>
+        <p>Who Would Win, My Side of the Mountain, Hatchet — survival, adaptation, and the argument about what it takes to thrive.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🏛️</div>
+        <h3>Biography & History</h3>
+        <p>Real people who used their voices — Rosa Parks, Malala, Clara Lemlich — read as case studies in power and fairness.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🎨</div>
+        <h3>Graphic Novels</h3>
+        <p>Every unit has a graphic novel option. Smile, Secret Coders, New Kid — visual storytelling at its most rigorous.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">🌍</div>
+        <h3>Folklore & Myth</h3>
+        <p>Greek myths, West African trickster tales, pourquoi stories — the stories every culture keeps retelling, and why.</p>
+      </div>
+      <div class="choice-card">
+        <div class="choice-icon">📖</div>
+        <h3>Realistic & Historical Fiction</h3>
+        <p>The War That Saved My Life, Esperanza Rising, Roll of Thunder — stories rooted in real times and real struggles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNITS -->
+<section id="units">
+  <div class="section-inner">
+    <div class="section-tag">This Year's Units</div>
+    <h2 class="section-h">Five big <em>questions</em></h2>
+    <p class="section-lead">Each unit is anchored by a question worth arguing about — one every student can engage with, no matter which book they're reading.</p>
+
+    <div class="unit-cards">
+      <div class="unit-card" onclick="toggleUnit(1)">
+        <div class="uc-top u1">
+          <div class="uc-icon">🔍</div>
+          <div class="uc-season">Fall · September–October</div>
+          <h3>Reading Between the Lines</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"What does the author want you to feel or believe that they never actually say out loud?"</div>
+          <div class="uc-pairing">Connected to: Geography & Community</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(2)">
+        <div class="uc-top u2">
+          <div class="uc-icon">🔭</div>
+          <div class="uc-season">Fall · October–November</div>
+          <h3>Forces at Work</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"What makes someone keep going when they don't know if they're right?"</div>
+          <div class="uc-pairing">Connected to: Physical Science & Scientists</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(3)">
+        <div class="uc-top u3">
+          <div class="uc-icon">✊</div>
+          <div class="uc-season">Winter · January–February</div>
+          <h3>Who Has Power?</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"When someone uses their voice against an unfair system, what are they risking — and what makes it worth it?"</div>
+          <div class="uc-pairing">Connected to: History & Civics</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(4)">
+        <div class="uc-top u4">
+          <div class="uc-icon">🦁</div>
+          <div class="uc-season">Spring · February–March</div>
+          <h3>Survival & the Natural World</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"When two animals compete for survival, what actually determines who wins — strength, adaptations, or something else?"</div>
+          <div class="uc-pairing">Connected to: Animals & Ecosystems</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+      <div class="unit-card" onclick="toggleUnit(5)">
+        <div class="uc-top u5">
+          <div class="uc-icon">🌍</div>
+          <div class="uc-season">Spring · April–May</div>
+          <h3>Folklore, Fables & Myths</h3>
+        </div>
+        <div class="uc-body">
+          <div class="uc-q">"What does the story a culture chooses to keep and retell tell us about what that culture believes?"</div>
+          <div class="uc-pairing">Connected to: Earth Science</div>
+          <div class="uc-expand">Learn more ↓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPANDED UNIT DETAILS -->
+    <div id="unit-exp-1" class="unit-expanded">
+      <div class="ue-header u1">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u1);">Unit 1 — Reading Between the Lines</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">September – October · Paired with Geography & Community</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Students learn to read what's underneath what an author actually says — the feelings, beliefs, and meanings that are implied rather than stated. We launch with picture books that reward inference (like Voices in the Park, where four characters experience the same scene with wildly different perspectives) before students branch into their own books. Mid-unit, the class reads nonfiction about how geography shapes communities — and asks the same question: what does this photograph or map leave out?</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"What does the author want you to feel or believe that they never actually say out loud?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Smile (graphic novel)</span>
+          <span class="book-chip">Charlotte's Web</span>
+          <span class="book-chip">The One and Only Ivan</span>
+          <span class="book-chip">Bud, Not Buddy</span>
+          <span class="book-chip hi">The Giver</span>
+          <span class="book-chip hi">A Long Walk to Water</span>
+          <span class="book-chip hi">The House on Mango Street</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>We use Inside Out (emotions as subtext made visible) and Zootopia (what the film implies about bias vs. what it says directly) to build the shared vocabulary before students branch into books.</p>
+        <h4>For K–2 students</h4>
+        <p>Younger students explore inference through shared picture book read-alouds — The Mysteries of Harris Burdick (images that demand inference with no text to rescue you), Voices in the Park, and Home by Carson Ellis. The question is the same: what did the author leave out? K–2 students respond by drawing what the author implied rather than writing it.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading from a tiered menu — picture books for developing readers, early chapter books for mid-level, and options like The One and Only Ivan or Bud, Not Buddy for strong readers. Journal responses are written but scaffolded: "The author never said ___, but I could tell because ___."</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(1)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-2" class="unit-expanded">
+      <div class="ue-header u2">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u2);">Unit 2 — Forces at Work</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">October – November · Paired with Physical Science & Scientists</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Scientists and inventors read the world the way good readers read books — they notice what doesn't fit, ask why, form a hypothesis, and test it. This unit pairs physical science content with books about curious people figuring things out. The anchor series for younger students is Zoey & Sassafrass, which makes the scientific method the plot. Older students read scientist biographies and fiction about inventors, asking: what does it take to keep going when you don't know if you're right?</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"What makes someone keep going when they don't know if they're right?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Zoey & Sassafrass (series)</span>
+          <span class="book-chip">Secret Coders (graphic novel)</span>
+          <span class="book-chip">The Invention of Hugo Cabret</span>
+          <span class="book-chip">Counting by 7s</span>
+          <span class="book-chip hi">Hidden Figures (Young Readers Ed.)</span>
+          <span class="book-chip hi">The Wright Brothers</span>
+        </div>
+        <h4>Film connection</h4>
+        <p>Clips from October Sky (boys who teach themselves rocketry in a coal mining town) and Hidden Figures. For younger students, Honey, I Shrunk the Kids works as a lighter entry point about what happens when experiments go wrong.</p>
+        <h4>For K–2 students</h4>
+        <p>Zoey & Sassafrass serves as the whole-class anchor for K–2 — we read it together as a class and use it to build the vocabulary of scientific inquiry: question, observe, predict, test, revise. Picture book biographies like Rosie Revere, Engineer bring the lens to real scientists.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading includes the Zoey & Sassafrass series, the Who Was? scientist biographies (Marie Curie, Jane Goodall, Albert Einstein), and for strong readers, The Invention of Hugo Cabret or Counting by 7s.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(2)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-3" class="unit-expanded">
+      <div class="ue-header u3">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u3);">Unit 3 — Who Has Power? Whose Voice Matters?</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">January – February · Paired with History & Civics</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>This is our biography unit — but with a specific lens: students read real people's lives as arguments about power, fairness, and resistance. Every biography makes choices about whose story matters and how to tell it. Students study case clusters (the American Revolution, the Civil Rights Movement, and global figures like Malala), build a "bottle biography" hands-on project for their chosen figure, and then choose a final performance task to show their understanding.</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"When someone uses their voice against an unfair system, what are they risking — and what makes it worth it?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">I Am Rosa Parks</span>
+          <span class="book-chip">Malala's Magic Pencil</span>
+          <span class="book-chip">Who Was? series</span>
+          <span class="book-chip">Number the Stars</span>
+          <span class="book-chip hi">Chains</span>
+          <span class="book-chip hi">Uprising</span>
+          <span class="book-chip hi">Roll of Thunder, Hear My Cry</span>
+        </div>
+        <h4>The bottle biography project</h4>
+        <p>All students build a bottle biography — a hands-on model representing the life of a historical figure, using symbols, images, and labels to show important events, moments of unfairness, and acts of resistance. This is built throughout the unit, not just at the end, and serves as the foundation for the final performance task.</p>
+        <h4>For K–2 students</h4>
+        <p>Shared picture book biographies anchor K–2 — Rosa by Nikki Giovanni, Martin's Big Words, Brave Girl (Clara Lemlich). Students discuss: who had power? Was it fair? What did they do? Bottle biographies for younger students rely on drawing and oral explanation.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading includes the Who Was? series, Ruth and the Green Book, and for strong readers, Number the Stars or I Am Malala (Young Readers Edition). Final task options include an artifact box, a letter from the person's perspective, or a concept map.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(3)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-4" class="unit-expanded">
+      <div class="ue-header u4">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u4);">Unit 4 — Survival & the Natural World</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">February – March · Paired with Animals & Ecosystems</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>This is the unit students talk about for years. Anchored by the Who Would Win series, students learn to read nonfiction like an argument — gathering evidence, weighing competing claims, and defending a position. The literary lens is comparison and argument: which animal has the better adaptation? Which would survive this specific environment? Students read across nonfiction, build the scientific knowledge to make their arguments real, and then defend them in a formal mid-unit debate.</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"When two animals compete for survival, what actually determines who wins — strength, adaptations, or something else entirely?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">Who Would Win? (series)</span>
+          <span class="book-chip">Owls in the Family</span>
+          <span class="book-chip">The One and Only Ivan</span>
+          <span class="book-chip">My Side of the Mountain</span>
+          <span class="book-chip hi">Never Cry Wolf</span>
+          <span class="book-chip hi">The Wild Robot</span>
+          <span class="book-chip hi">Call of the Wild</span>
+        </div>
+        <h4>The mid-unit debate</h4>
+        <p>Students choose two animals, build an evidence-based argument for which would survive a specific scenario, and present their case to the class. The class evaluates the evidence — not just who argued most confidently, but who used the best support. This is one of the most genuinely fun academic moments of the year.</p>
+        <h4>For K–2 students</h4>
+        <p>Who Would Win books are the primary shared texts for K–2, read aloud as a class. Students discuss: What are the two animals? What's each one's best advantage? Which do you think would win — and why? The illustrated comparison is the K–2 culminating project.</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading includes Who Would Win titles chosen by interest, Charlotte's Web, Owls in the Family, and for strong readers, Hatchet or My Side of the Mountain. Argument paragraph is the culminating writing: one claim, two pieces of evidence, one acknowledgment of the counterargument.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(4)">Close ↑</div>
+    </div>
+
+    <div id="unit-exp-5" class="unit-expanded">
+      <div class="ue-header u5">
+        <strong style="font-family:'Fraunces',serif;font-size:1.2rem;color:var(--u5);">Unit 5 — Folklore, Fables & Myths</strong>
+        <p style="color:var(--soft);font-size:0.9rem;margin-top:0.3rem;">April – May · Paired with Earth Science</p>
+      </div>
+      <div class="ue-body">
+        <h4>What your child will do</h4>
+        <p>Every culture has stories that explain the world, teach lessons, and pass down values. Many of the oldest are about natural phenomena — thunder, seasons, why the sun moves across the sky. In December, students got a taste of this comparing Gingerbread Man variants across cultures. Now they go deep: reading myths and folklore from multiple traditions, comparing what stays the same and what changes, and asking the biggest question: what does the story a culture keeps retelling tell us about what that culture believes?</p>
+        <h4>The big question</h4>
+        <p style="font-style:italic;color:var(--forest);">"What does the story a culture chooses to keep and retell tell us about what that culture believes?"</p>
+        <h4>Some books students might choose</h4>
+        <div class="book-chips">
+          <span class="book-chip">D'Aulaires' Book of Greek Myths</span>
+          <span class="book-chip">Why Mosquitoes Buzz in People's Ears</span>
+          <span class="book-chip">Arlo Finch (graphic novel)</span>
+          <span class="book-chip">The Lightning Thief</span>
+          <span class="book-chip hi">Anansi Boys</span>
+          <span class="book-chip hi">The Epic of Gilgamesh</span>
+        </div>
+        <h4>The Earth Science connection</h4>
+        <p>Many myths explain natural phenomena — thunder, earthquakes, seasons. Students compare what a myth says about thunder to what the science says, asking: what does each explanation do that the other can't? What does the myth give us that the science can't? This is one of the richest cross-curricular discussions of the year.</p>
+        <h4>For K–2 students</h4>
+        <p>Shared picture book folklore from multiple cultures — Why Mosquitoes Buzz in People's Ears, Anansi stories, pourquoi tales. K–2 students write and illustrate their own pourquoi tale ("Why the _____ is _____"). The question is accessible at every age: why do you think people made up this story?</p>
+        <h4>For 3rd and 4th graders</h4>
+        <p>Partner reading from folklore collections and myth retellings. Culminating writing is a written fable with a stated moral, or a paragraph arguing what two myths from different cultures have in common.</p>
+      </div>
+      <div class="ue-close" onclick="toggleUnit(5)">Close ↑</div>
+    </div>
+  </div>
+</section>
+
+<!-- YEAR TIMELINE -->
+<section id="year">
+  <div class="section-inner">
+    <div class="section-tag">The Full Year</div>
+    <h2 class="section-h">A year of <em>connected</em> learning</h2>
+    <p class="section-lead">Literacy and content work together all year long. Here's the full calendar for Rotation A.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot u1"></div>
+        <div class="tl-date">September – October</div>
+        <div class="tl-title">Unit 1 — Reading Between the Lines</div>
+        <div class="tl-note">Alongside: Geography & Community · Nonfiction: How places shape people and communities</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u2"></div>
+        <div class="tl-date">October – November</div>
+        <div class="tl-title">Unit 2 — Forces at Work</div>
+        <div class="tl-note">Alongside: Physical Science · Nonfiction: Scientists & inventors, curiosity as a way of reading</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot special"></div>
+        <div class="tl-date">December 1 – 19</div>
+        <div class="tl-title">Gingerbread Man & Winter Stories</div>
+        <div class="tl-note">Comparing folklore variants across cultures · Short creative writing project</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u3"></div>
+        <div class="tl-date">January – February</div>
+        <div class="tl-title">Unit 3 — Who Has Power? Whose Voice Matters?</div>
+        <div class="tl-note">Alongside: History & Civics · Biography case studies: American Revolution, Civil Rights, Malala, Clara Lemlich</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u4"></div>
+        <div class="tl-date">February – March</div>
+        <div class="tl-title">Unit 4 — Survival & the Natural World</div>
+        <div class="tl-note">Alongside: Animals & Ecosystems · Who Would Win, comparative argument, mid-unit debate</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot u5"></div>
+        <div class="tl-date">April – May</div>
+        <div class="tl-title">Unit 5 — Folklore, Fables & Myths</div>
+        <div class="tl-note">Alongside: Earth Science · Myths from multiple cultures, Earth Science connection, original pourquoi tale</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-tag">Questions</div>
+    <h2 class="section-h">What families <em>ask us</em></h2>
+    <p class="section-lead">A few things that come up often.</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How is Rotation A different from Rotation B?</div>
+        <div class="faq-a">Rotation B (the alternating year) focuses on fiction and literary analysis — hero's journey, character transformation, point of view, and belonging. Rotation A pulls harder on nonfiction, argument, biography, and real-world texts. A student who completes both has read across every major genre and practiced every major reading and writing standard. The rotations are designed as two halves of a complete education in literary thinking.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How does my child choose their book? What if they pick something too easy or hard?</div>
+        <div class="faq-a">We guide students toward books that are a great fit for their reading level — but we frame it around genre and interest, not labels. A student who loves animals might choose Who Would Win, Owls in the Family, or The Wild Robot depending on where they are as a reader. We'll talk with you and your child at the start of each unit if there are any concerns.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Will my child read the same books as their classmates?</div>
+        <div class="faq-a">Not necessarily — and that's the point. Students choose from a menu of 8–12 books per unit, so a mixed-age group might have five or six different books in one class discussion. The magic is that they're all answering the same question, just with different evidence. This develops higher-order thinking skills that reading the same book together simply can't.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the bottle biography project?</div>
+        <div class="faq-a">In Unit 3, every student builds a bottle biography — a hands-on model of a historical figure's life using symbols, images, and labels. The bottle represents the person: who they were, what they faced, and how they responded. Younger students rely on drawing and oral explanation; older students include written captions and clearer symbolism. It's built throughout the unit rather than saved for the end, so it becomes a tool for thinking rather than just a finished product.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is a Socratic seminar and how does my child prepare for it?</div>
+        <div class="faq-a">A Socratic seminar is a structured discussion where students bring their books and ideas and talk through a big question together. There's no right answer — the goal is to make an argument, listen to others, and change your thinking when someone makes a good point. Students prepare by keeping a reading journal throughout the unit, so they have notes and thinking ready to bring to the discussion.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">My child doesn't love reading. Will this work for them?</div>
+        <div class="faq-a">Student choice is one of the most powerful tools for building reading engagement. When a child picks a book they actually want to read — in a genre they care about, at a level that feels manageable — something shifts. We also include graphic novels in every unit specifically because they are fully rigorous works of literature and a great bridge for students who find prose challenging. The Who Would Win unit in particular tends to hook reluctant readers who love facts and arguments. We'd love to talk about your child specifically.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What standards does this cover?</div>
+        <div class="faq-a">Rotation A is built on Common Core State Standards for ELA, with a particular focus on the nonfiction and argument standards that Rotation B touches more lightly: RI.5.6 / RI.6.6 (author's purpose in informational text), RI.5.8 / RI.6.8 (evaluating arguments and claims), and the comparison standards RI.5.9 / RI.6.9. Opinion writing (W.5.1, W.6.1) builds across the year, and Unit 5 adds narrative writing (W.5.3) through the original fable or myth project.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2>Questions about your reader?</h2>
+  <p>We'd love to talk through how this framework fits your child and what books might be the best fit for them.</p>
+  <a href="mailto:hello@curiositygrove.org" class="cta-btn">Get in touch →</a>
+</div>
+
+<footer>
+  © Curiosity Grove Academy · Grand Junction, Colorado · Rotation A Family Guide · All rights reserved
+</footer>
+
+<script>
+function toggleUnit(n) {
+  const el = document.getElementById('unit-exp-' + n);
+  el.classList.toggle('open');
+  if (el.classList.contains('open')) {
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+}
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>
